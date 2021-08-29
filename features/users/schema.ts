@@ -47,7 +47,7 @@ export const UserType = objectType({
       },
       resolve: ({ id }, query: IBookingsQuery, { dataSources }, _info): Promise<IBooking[]> => {
         const bookingAPI: IBookingAPI = dataSources.bookingAPI;
-        return bookingAPI.getBookings({ bookerId: id, ...query });
+        return bookingAPI.getBookings({ ...query, bookerId: id });
       },
     });
   },

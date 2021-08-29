@@ -55,7 +55,7 @@ export const BookableType = objectType({
       },
       resolve: ({ id }, query: IBookingsQuery, { dataSources }, _info): Promise<IBooking[]> => {
         const bookingAPI: IBookingAPI = dataSources.bookingAPI;
-        return bookingAPI.getBookings({ bookableId: id, ...query });
+        return bookingAPI.getBookings({ ...query, bookableId: id });
       },
     });
   },
