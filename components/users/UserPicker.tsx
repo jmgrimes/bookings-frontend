@@ -8,7 +8,8 @@ type UserPickerReadyProps = {
   users: User[];
 };
 
-const UserPickerReady: FunctionComponent<UserPickerReadyProps> = ({ users }: UserPickerReadyProps) => {
+const UserPickerReady: FunctionComponent<UserPickerReadyProps> = (props: UserPickerReadyProps) => {
+  const { users } = props;
   const [user, setUser] = useUser();
 
   type ChangeEventTarget = { name?: string, value: unknown };

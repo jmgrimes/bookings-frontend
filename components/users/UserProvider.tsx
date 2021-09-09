@@ -6,7 +6,8 @@ type UserProviderProps = {
   children?: ReactNode[]
 };
 
-export const UserProvider: FunctionComponent<UserProviderProps> = ({ children }: UserProviderProps) => {
+export const UserProvider: FunctionComponent<UserProviderProps> = (props: UserProviderProps) => {
+  const { children } = props;
   const [user, setUser] = useState<User>();
   return (
     <UserContext.Provider value={user}>

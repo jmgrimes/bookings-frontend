@@ -16,14 +16,18 @@ type ViewErrorProps = {
   message: string;
 };
 
-export const SimpleError: FunctionComponent<SimpleErrorProps> = ({ message }: SimpleErrorProps) => {
+export const SimpleError: FunctionComponent<SimpleErrorProps> = (props: SimpleErrorProps) => {
+  const { message } = props;
+
   return (
     <Typography variant="body1" component="div">{message}</Typography>
   );
 };
 
-export const ViewError: FunctionComponent<ViewErrorProps> = ({ title, message }: ViewErrorProps) => {
+export const ViewError: FunctionComponent<ViewErrorProps> = (props: ViewErrorProps) => {
+  const { title, message } = props;
   const classes = useStyles();
+
   return (
     <Grid container
           alignItems="center"

@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { FunctionComponent } from "react";
 
 import { User } from "../../features/users";
@@ -8,26 +8,25 @@ import { User } from "../../features/users";
 type GetUrl = (id: number) => (string);
 
 type UsersListProps = {
-  user?: User;
+  user: User;
   users: User[];
   getUrl: GetUrl;
 };
 
-export const UsersList: FunctionComponent<UsersListProps> = ({ user, users, getUrl }: UsersListProps) => {
-  const router = useRouter();
+export const UsersList: FunctionComponent<UsersListProps> = (props: UsersListProps) => {
+  const { user, users, getUrl } = props;
   return (
     <List>
       {
         users.map(u => (
-          <ListItem key={u.id}
-                    button={true}
-                    selected={u.id === user?.id}
-                    onClick={() => router.push(getUrl(u.id))}>
-            <ListItemIcon>
-              <Person/>
-            </ListItemIcon>
-            <ListItemText primary={u.name}/>
-          </ListItem>
+          <Link key={u.id} href={getUrl(u.id)} passHref={true}>
+            <ListItem button={true} selected={u.id === user.id} onClick={() => {}} component="a">
+              <ListItemIcon>
+                <Person/>
+              </ListItemIcon>
+              <ListItemText primary={u.name}/>
+            </ListItem>
+          </Link>
         ))
       }
     </List>

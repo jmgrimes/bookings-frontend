@@ -4,13 +4,11 @@ import { FunctionComponent } from "react";
 import { User } from "../../features/users";
 
 type UserDetailsProps = {
-  user?: User;
+  user: User;
 };
 
-export const UserDetails: FunctionComponent<UserDetailsProps> = ({ user }: UserDetailsProps) => {
-  if (!user) {
-    return null;
-  }
+export const UserDetails: FunctionComponent<UserDetailsProps> = (props: UserDetailsProps) => {
+  const { user } = props;
   return (
     <Card>
       <CardHeader title={user.name} subheader={user.title}/>

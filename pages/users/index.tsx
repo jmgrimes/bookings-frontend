@@ -5,7 +5,7 @@ import { Fragment } from "react";
 
 import { UsersView } from "../../components/users";
 
-const UsersPage: NextPage = () => {
+const UsersViewPage: NextPage = () => {
   return (
     <Fragment>
       <Head>
@@ -19,4 +19,4 @@ const UsersPage: NextPage = () => {
   );
 };
 
-export default UsersPage;
+export default UsersViewPage;

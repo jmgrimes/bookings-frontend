@@ -1,9 +1,9 @@
-import { createContext, useContext } from "react";
+import { Dispatch, SetStateAction, createContext, useContext } from "react";
 
 import { User } from "./user";
 
 type Maybe<T> = T | undefined;
-type SetUser = (user: User | undefined) => void;
+type SetUser = Dispatch<SetStateAction<Maybe<User>>>;
 type UseUser = () => [Maybe<User>, SetUser];
 
 const UserContext = createContext<Maybe<User>>(undefined);

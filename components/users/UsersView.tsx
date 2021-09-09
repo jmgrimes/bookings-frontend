@@ -26,12 +26,13 @@ const UsersViewLoading: FunctionComponent = () => {
   );
 };
 
-const UsersViewReady: FunctionComponent<UsersViewReadyProps> = ({ users }: UsersViewReadyProps) => {
+const UsersViewReady: FunctionComponent<UsersViewReadyProps> = (props: UsersViewReadyProps) => {
+  const { users } = props;
   const router = useRouter();
   const [currentUser] = useUser();
 
-  const id = router.query.id as string;
-  const user = id ? users.find(u => u.id === parseInt(id, 10)) || users[0] : currentUser;
+  const id = parseInt(router.query.id as string, 10);
+  const user = (id ? users.find(u => u.id === id) : currentUser) || users[0];
 
   return (
     <Grid container spacing={3}>
@@ -47,7 +48,6 @@ const UsersViewReady: FunctionComponent<UsersViewReadyProps> = ({ users }: Users
 
 export const UsersView: FunctionComponent = () => {
   const { data, loading, error } = useUsers();
-
   if (loading) {
     return <UsersViewLoading/>
   }

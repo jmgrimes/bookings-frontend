@@ -11,7 +11,8 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
+const MyApp: NextPage<AppProps> = (props: AppProps) => {
+  const { Component, pageProps } = props;
   return (
     <ApolloProvider client={apolloClient}>
       <UserProvider>
