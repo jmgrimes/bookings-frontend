@@ -1,9 +1,9 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import {FunctionComponent, ReactNode, useState} from "react";
 
 import { User, UserContext, UserSetContext } from "../../features/users";
 
 type UserProviderProps = {
-  children?: ReactElement[]
+  children?: ReactNode[]
 };
 
 export const UserProvider: FunctionComponent<UserProviderProps> = ({ children }: UserProviderProps) => {
