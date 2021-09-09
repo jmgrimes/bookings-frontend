@@ -10,7 +10,6 @@ import {
   stringArg,
 } from "nexus";
 
-
 import {
   IBookable,
   IBookableAPI,

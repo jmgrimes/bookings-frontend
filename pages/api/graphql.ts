@@ -4,31 +4,23 @@ import {
 import {
   ApolloServer,
 } from "apollo-server-micro";
-import { 
-  NextApiHandler, 
-  NextApiRequest, 
-  NextApiResponse 
-} from "next";
 import {
-  makeSchema,
-} from "nexus";
+  NextApiHandler,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
 
-import * as dataSources from "../../features/datasource";
-import * as types from "../../features/schema";
+import {
+  dataSources,
+  schema,
+} from "../../server";
 
 const server: ApolloServer = new ApolloServer({
-  dataSources: () => ({
-    bookableAPI: new dataSources.BookableAPI("http://localhost:3001"),
-    bookingAPI: new dataSources.BookingAPI("http://localhost:3001"),
-    userAPI: new dataSources.UserAPI("http://localhost:3001"),
-  }),
+  dataSources,
   plugins: [
     ApolloServerPluginLandingPageDisabled(),
   ],
-  schema: makeSchema({ 
-    types: types, 
-    shouldGenerateArtifacts: false,
-  }),
+  schema,
 });
 
 const apolloServerHandler: Promise<NextApiHandler> = 

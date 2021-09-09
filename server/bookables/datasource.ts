@@ -12,7 +12,7 @@ export interface IBookableModel {
 
 export interface IBookable extends IBookableModel {
   id: number;
-};
+}
 
 export interface IBookableAPI {
   getBookables: () => Promise<IBookable[]>;
@@ -50,4 +50,4 @@ export class BookableAPI extends RESTDataSource implements IBookableAPI {
     const _response = await this.put(`/bookables/${bookable.id.toString(10)}`, bookable);
     return bookable.id;
   };
-};
+}
