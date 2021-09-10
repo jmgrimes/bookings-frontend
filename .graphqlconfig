@@ -1,6 +1,6 @@
 {
   "name": "Bookings GraphQL Schema",
-  "schemaPath": "generated/nexus/bookings-schema.graphql",
+  "schemaPath": "generated/nexus/bookings-schema.gql",
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
