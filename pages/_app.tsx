@@ -7,7 +7,7 @@ import {Navigation} from "../components/application"
 import {UserProvider} from "../components/users"
 
 const apolloClient = new ApolloClient({
-  uri: "http://localhost:3000/api/graphql",
+  uri: "/api/graphql",
   cache: new InMemoryCache()
 })
 

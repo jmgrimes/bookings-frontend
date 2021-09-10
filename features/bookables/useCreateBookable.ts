@@ -15,8 +15,19 @@ type UseCreateBookable = (onSuccess: OnSuccess) => [UseCreateBookableMutate, Mut
 
 export const UseCreateBookableMutation = gql`
     mutation useCreateBookable(
-            $title: String!, $group: String!, $notes: String, $days: [BookableDay!]!, $sessions: [BookableSession!]!) {
-        createBookable(title: $title, group: $group, notes: $notes, days: $days, sessions: $sessions)
+        $title: String!, 
+        $group: String!, 
+        $notes: String, 
+        $days: [BookableDay!]!, 
+        $sessions: [BookableSession!]!
+    ) {
+        createBookable(
+            title: $title, 
+            group: $group, 
+            notes: $notes, 
+            days: $days, 
+            sessions: $sessions
+        )
     } 
 `
 

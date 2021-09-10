@@ -5,12 +5,11 @@ import {FunctionComponent} from "react"
 
 import {User} from "../../features/users"
 
-type GetUrl = (id: number) => (string)
-
+type UsersListGetUrl = (id: number) => (string)
 type UsersListProps = {
   user: User
   users: User[]
-  getUrl: GetUrl
+  getUrl: UsersListGetUrl
 }
 
 export const UsersList: FunctionComponent<UsersListProps> = (props: UsersListProps) => {

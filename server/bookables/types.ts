@@ -1,8 +1,5 @@
 import {enumType, intArg, list, mutationField, nonNull, nullable, objectType, queryField, stringArg} from "nexus"
 
-import {Bookable, BookableAPI} from "./datasource"
-import {Booking, BookingAPI} from "../bookings/datasource"
-
 export const BookableDayEnumType = enumType({
   name: "BookableDay",
   description: "a day on which a bookable resource can be booked",
@@ -61,11 +58,10 @@ export const BookableType = objectType({
         startDate: nullable(stringArg()),
         endDate: nullable(stringArg())
       },
-      resolve: (parent, args, {dataSources}, _info): Promise<Booking[]> => {
+      resolve: (parent, args, context, _info) => {
         const {id} = parent;
         const {bookerId, startDate, endDate} = args;
-        const bookingAPI: BookingAPI = dataSources.bookingAPI
-        return bookingAPI.getBookings({
+        return context.dataSources.bookingAPI.getBookings({
           bookerId: bookerId ? bookerId : undefined,
           bookableId: id,
           startDate: startDate ? startDate : undefined,
@@ -82,20 +78,17 @@ export const BookableQuery = queryField("bookable", {
   args: {
     id: nonNull(intArg())
   },
-  resolve: (_parent, args, context, _info): Promise<Bookable> => {
+  resolve: (_parent, args, context, _info) => {
     const {id} = args;
-    const {dataSources} = context
-    const bookableAPI: BookableAPI = dataSources.bookableAPI
-    return bookableAPI.getBookable(id)
+    return context.dataSources.bookableAPI.getBookable(id)
   }
 })
 
 export const BookablesQuery = queryField("bookables", {
   description: "get a list of all bookables",
   type: nonNull(list(nonNull("Bookable"))),
-  resolve: (_parent, _args, {dataSources }, _info): Promise<Bookable[]> => {
-    const bookableAPI: BookableAPI = dataSources.bookableAPI
-    return bookableAPI.getBookables()
+  resolve: (_parent, _args, context, _info) => {
+    return context.dataSources.bookableAPI.getBookables()
   }
 })
 
@@ -111,9 +104,7 @@ export const CreateBookableMutation = mutationField("createBookable", {
   },
   resolve: (_parent, args, context, _info): Promise<number> => {
     const {title, group, notes, days, sessions} = args;
-    const {dataSources} = context;
-    const bookableAPI: BookableAPI = dataSources.bookableAPI
-    return bookableAPI.createBookable({
+    return context.dataSources.bookableAPI.createBookable({
       title,
       group,
       notes: notes ? notes : undefined,
@@ -131,9 +122,7 @@ export const DeleteBookableMutation = mutationField("deleteBookable", {
   },
   resolve: (_parent, args, context, _info): Promise<number> => {
     const {id} = args;
-    const {dataSources} = context;
-    const bookableAPI: BookableAPI = dataSources.bookableAPI
-    return bookableAPI.deleteBookable(id)
+    return context.dataSources.bookableAPI.deleteBookable(id)
   }
 })
 
@@ -150,9 +139,7 @@ export const UpdateBookableMutation = mutationField("updateBookable", {
   },
   resolve: (_parent, args, context, _info): Promise<number> => {
     const {id, title, group, notes, days, sessions} = args;
-    const {dataSources} = context;
-    const bookableAPI: BookableAPI = dataSources.bookableAPI
-    return bookableAPI.updateBookable({
+    return context.dataSources.bookableAPI.updateBookable({
       id,
       title,
       group,

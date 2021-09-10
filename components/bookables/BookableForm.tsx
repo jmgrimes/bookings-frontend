@@ -4,7 +4,6 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  Checkbox,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -13,7 +12,7 @@ import {
   ListItemText,
   MenuItem,
   Select,
-  TextField,
+  TextField as MTextField,
   makeStyles
 } from "@material-ui/core"
 import {Cancel, Delete, Save} from "@material-ui/icons"
@@ -21,15 +20,18 @@ import {FunctionComponent, useEffect, useMemo} from "react"
 import {Control, FieldPath, FieldPathValue, UnpackNestedValue, useController, useForm} from "react-hook-form"
 
 import {Bookable, BookableDay, BookableDays, BookableSession, BookableSessions} from "../../features/bookables"
-import {Extra} from "@typescript-eslint/typescript-estree/dist/parser-options";
 
 type OnSave = (bookable: Bookable) => void
-
 type OnDelete = (bookable: Bookable) => void
-
 type OnCancel = (bookable: Bookable) => void
+type BookableFormProps = {
+  bookable: Bookable
+  onSave: OnSave
+  onCancel: OnCancel
+  onDelete?: OnDelete
+}
 
-type Values = {
+type BookableFormValues = {
   id: number
   group: string
   title: string
@@ -38,31 +40,24 @@ type Values = {
   sessions: BookableSession[]
 }
 
-type TextFieldPath = Extract<FieldPath<Values>, "title" | "group" | "notes">
-type MultiSelectPath = Extract<FieldPath<Values>, "days" | "sessions">
-
-type TextFieldProps<TName extends TextFieldPath> = {
-  control: Control<Values>
+type MultiSelectFieldPath = Extract<FieldPath<BookableFormValues>, "days" | "sessions">
+type MultiSelectFieldProps<TName extends MultiSelectFieldPath> = {
+  control: Control<BookableFormValues>
   name: TName
   label: string
+  values: UnpackNestedValue<FieldPathValue<BookableFormValues, TName>>
+}
+
+type TextFieldPath = Extract<FieldPath<BookableFormValues>, "title" | "group" | "notes">
+type TextFieldProps<TName extends TextFieldPath> = {
+  control: Control<BookableFormValues>
+  name: TName
+  label: string
+  multiline?: boolean
   required?: boolean
 }
 
-type MultiSelectProps<TName extends MultiSelectPath> = {
-  control: Control<Values>
-  name: TName
-  label: string
-  values: UnpackNestedValue<FieldPathValue<Values, TName>>
-}
-
-type BookableFormProps = {
-  bookable: Bookable
-  onSave: OnSave
-  onCancel: OnCancel
-  onDelete?: OnDelete
-}
-
-const toBookable = (values: Values) => {
+const toBookable = (values: BookableFormValues) => {
   const booking: Bookable = {
     ...values,
     notes: values.notes.length > 0 ? values.notes : undefined
@@ -71,7 +66,7 @@ const toBookable = (values: Values) => {
 }
 
 const toValues = (bookable: Bookable) => {
-  const values: Values = {
+  const values: BookableFormValues = {
     id: bookable.id,
     group: bookable.group,
     title: bookable.title,
@@ -98,34 +93,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const BookableFormTextField = <TName extends TextFieldPath>(props: TextFieldProps<TName>) => {
-  const classes = useStyles();
-  const {control, name, label, required = false} = props;
-  const {field, fieldState} = useController({control, name, rules: { required }})
-  return (
-    <TextField label={label}
-               fullWidth={true}
-               className={classes.textField}
-               error={fieldState.invalid}
-               helperText={fieldState.error ? `${label} is required.` : null}
-               {...field}/>
-  )
-}
-
-const BookableFormMultiSelect = <TName extends MultiSelectPath>(props: MultiSelectProps<TName>) => {
+const MultiSelectField = <TName extends MultiSelectFieldPath>(props: MultiSelectFieldProps<TName>) => {
   const classes = useStyles();
   const renderValue = (selected: unknown) => (selected as string[]).join(', ')
   const {control, name, label, values} = props;
   const {field, fieldState} = useController({control, name, rules: { validate: values => values.length > 0 }})
+  const helperText = fieldState.error ? `${label} must have at least one selected option.`: null
   return (
     <div>
       <FormControl className={classes.selectField} error={fieldState.invalid}>
         <InputLabel id={`${name}-label`} error={fieldState.invalid}>{label}</InputLabel>
-        <Select labelId={`${name}-label`}
-                multiple={true}
-                renderValue={renderValue}
-                error={fieldState.invalid}
-                {...field}>
+        <Select multiple={true} renderValue={renderValue}
+                labelId={`${name}-label`} error={fieldState.invalid} {...field}>
           {
             values.map(value => (
               <MenuItem key={value} value={value}>
@@ -134,11 +113,20 @@ const BookableFormMultiSelect = <TName extends MultiSelectPath>(props: MultiSele
             ))
           }
         </Select>
-        <FormHelperText error={fieldState.invalid}>
-          {fieldState.error ? `${label} must have at least one selected option.`: null}
-        </FormHelperText>
+        <FormHelperText error={fieldState.invalid}>{helperText}</FormHelperText>
       </FormControl>
     </div>
+  )
+}
+
+const TextField = <TName extends TextFieldPath>(props: TextFieldProps<TName>) => {
+  const classes = useStyles();
+  const {control, name, label, multiline = false, required = false} = props;
+  const {field, fieldState} = useController({control, name, rules: { required }})
+  const helperText = fieldState.error ? `${label} is required.` : null
+  return (
+    <MTextField fullWidth={true} multiline={multiline} className={classes.textField}
+                label={label} error={fieldState.invalid} helperText={helperText} {...field}/>
   )
 }
 
@@ -146,12 +134,12 @@ export const BookableForm: FunctionComponent<BookableFormProps> = (props: Bookab
   const {bookable, onCancel, onDelete, onSave} = props;
   const classes = useStyles()
 
-  const defaultValues: Values = useMemo(
+  const defaultValues: BookableFormValues = useMemo(
     () => toValues(bookable),
     [bookable]
   )
 
-  const {control, handleSubmit, register, reset} = useForm<Values>({defaultValues})
+  const {control, handleSubmit, register, reset} = useForm<BookableFormValues>({defaultValues})
 
   const _cancel = () => {
     onCancel(bookable)
@@ -178,14 +166,14 @@ export const BookableForm: FunctionComponent<BookableFormProps> = (props: Bookab
           <Grid item xs={6}>
             <FormLabel component="legend" className={classes.sectionLabel}>Details</FormLabel>
             <input type="hidden" {...register("id",{valueAsNumber: true})}/>
-            <BookableFormTextField control={control} name="title" label="Title" required={true}/>
-            <BookableFormTextField control={control} name="group" label="Group" required={true}/>
-            <BookableFormTextField control={control} name="notes" label="Notes" required={false}/>
+            <TextField control={control} name="title" label="Title" multiline={false} required={true}/>
+            <TextField control={control} name="group" label="Group" multiline={false} required={true}/>
+            <TextField control={control} name="notes" label="Notes" multiline={true} required={false}/>
           </Grid>
           <Grid item xs={6}>
             <FormLabel component="legend" className={classes.sectionLabel}>Scheduling</FormLabel>
-            <BookableFormMultiSelect control={control} name="days" label="Days" values={BookableDays}/>
-            <BookableFormMultiSelect control={control} name="sessions" label="Sessions" values={BookableSessions}/>
+            <MultiSelectField control={control} name="days" label="Days" values={BookableDays}/>
+            <MultiSelectField control={control} name="sessions" label="Sessions" values={BookableSessions}/>
           </Grid>
         </Grid>
       </CardContent>

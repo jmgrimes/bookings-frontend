@@ -6,12 +6,11 @@ import {ChangeEvent, Fragment, FunctionComponent} from "react"
 
 import {Bookable} from "../../features/bookables"
 
-type GetUrl = (id: number) => string
-
+type BookablesListGetUrl = (id: number) => string
 type BookablesListProps = {
   bookable: Bookable
   bookables: Bookable[]
-  getUrl: GetUrl
+  getUrl: BookablesListGetUrl
 }
 
 export const BookablesList: FunctionComponent<BookablesListProps> = (props: BookablesListProps) => {

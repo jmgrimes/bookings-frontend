@@ -8,7 +8,7 @@ import {ViewError, CardLoading, ListLoading} from "../application"
 import {User, useUser, useUsers} from "../../features/users"
 
 type UsersViewLayoutProps = {
-  sidebarContent: ReactNode,
+  sidebarContent: ReactNode
   mainContent: ReactNode
 }
 

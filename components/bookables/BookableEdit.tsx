@@ -3,7 +3,7 @@ import {FunctionComponent} from "react"
 
 import {BookableForm} from "./BookableForm"
 import {CardLoading, ViewError} from "../application"
-import {Bookable, useBookable} from "../../features/bookables"
+import {Bookable, useBookable, useDeleteBookable, useUpdateBookable} from "../../features/bookables"
 
 type BookableEditReadyProps = {
   bookable: Bookable
@@ -12,8 +12,8 @@ type BookableEditReadyProps = {
 const BookableEditReady: FunctionComponent<BookableEditReadyProps> = (props: BookableEditReadyProps) => {
   const {bookable} = props
   const router = useRouter()
-  const onSave = () => router.push(`/bookables/${bookable.id}`)
-  const onDelete = () => router.push(`/bookables/${bookable.id}`)
+  const [onSave] = useUpdateBookable(id => router.push(`/bookables/${bookable.id}`))
+  const [onDelete] = useDeleteBookable(() => router.push(`/bookables`))
   const onCancel = () => router.push(`/bookables/${bookable.id}`)
   return <BookableForm bookable={bookable} onSave={onSave} onDelete={onDelete} onCancel={onCancel}/>
 }

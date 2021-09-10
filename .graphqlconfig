@@ -1,0 +1,15 @@
+{
+  "name": "Bookings GraphQL Schema",
+  "schemaPath": "generated/nexus/bookings-schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:3000/api/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}

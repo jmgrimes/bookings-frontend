@@ -2,8 +2,6 @@ import {QueryResult, gql, useQuery} from "@apollo/client"
 
 import {Bookable} from "./bookable"
 
-
-
 type UseBookableData = {
   bookable: Bookable
 }

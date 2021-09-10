@@ -10,7 +10,7 @@ import {CardLoading, ListLoading, ViewError} from "../application"
 import {Bookable, useBookables} from "../../features/bookables"
 
 type BookablesViewLayoutProps = {
-  sidebarContent: ReactNode,
+  sidebarContent: ReactNode
   mainContent: ReactNode
 }
 
