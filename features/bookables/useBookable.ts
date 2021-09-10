@@ -2,27 +2,29 @@ import {QueryResult, gql, useQuery} from "@apollo/client"
 
 import {Bookable} from "./bookable"
 
-const query = gql`
-  query useBookable($id: Int!) {
-    bookable(id: $id) {
-      id
-      group
-      title
-      notes
-      days
-      sessions
-    }
-  }
-`
 
-type Data = {
+
+type UseBookableData = {
   bookable: Bookable
 }
 
-type UseBookable = (id: number) => QueryResult<Data>
+type UseBookable = (id: number) => QueryResult<UseBookableData>
+
+export const UseBookableQuery = gql`
+    query UseBookable($id: Int!) {
+        bookable(id: $id) {
+            id
+            group
+            title
+            notes
+            days
+            sessions
+        }
+    }
+`
 
 export const useBookable: UseBookable = (id) => {
-  return useQuery<Data>(query, {
+  return useQuery<UseBookableData>(UseBookableQuery, {
     variables: {
       id
     }

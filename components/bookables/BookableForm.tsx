@@ -22,6 +22,48 @@ import {useController, useForm} from "react-hook-form"
 
 import {Bookable, BookableDay, BookableDays, BookableSession, BookableSessions} from "../../features/bookables"
 
+type OnSave = (bookable: Bookable) => void
+
+type OnDelete = (bookable: Bookable) => void
+
+type OnCancel = (bookable: Bookable) => void
+
+type BookableFormProps = {
+  bookable: Bookable
+  onSave: OnSave
+  onCancel: OnCancel
+  onDelete?: OnDelete
+}
+
+type BookableFormValues = {
+  id: number
+  group: string
+  title: string
+  notes: string
+  days: BookableDay[]
+  sessions: BookableSession[]
+}
+
+const toBookable = (values: BookableFormValues) => {
+  const booking: Bookable = {
+    ...values,
+    notes: values.notes.length > 0 ? values.notes : undefined
+  }
+  return booking;
+}
+
+const toValues = (bookable: Bookable) => {
+  const values: BookableFormValues = {
+    id: bookable.id,
+    group: bookable.group,
+    title: bookable.title,
+    notes: bookable.notes || "",
+    days: bookable.days,
+    sessions: bookable.sessions
+  }
+  return values;
+}
+
 const useStyles = makeStyles((theme) => ({
   flexSpacer: {
     flexGrow: 1
@@ -38,25 +80,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-type BookableFormValues = {
-  id?: number
-  group: string
-  title: string
-  notes: string
-  days: BookableDay[]
-  sessions: BookableSession[]
-}
-
-export const BookableForm: FunctionComponent<any> = ({bookable, onCancel, onDelete, onSave}: any) => {
+export const BookableForm: FunctionComponent<BookableFormProps> = (props: BookableFormProps) => {
+  const {bookable, onCancel, onDelete, onSave} = props;
   const classes = useStyles()
 
-  const defaultValues: Bookable = useMemo(
-    () => bookable,
+  const defaultValues: BookableFormValues = useMemo(
+    () => toValues(bookable),
     [bookable]
   )
 
   const {control, handleSubmit, register, reset} = useForm<BookableFormValues>({defaultValues})
-  const idField = register("id", {valueAsNumber: true})
+  const idField = register("id",{valueAsNumber: true})
   const {field: titleField, fieldState: titleFieldState} = useController({
     control,
     name: "title",
@@ -73,30 +107,26 @@ export const BookableForm: FunctionComponent<any> = ({bookable, onCancel, onDele
   })
   const {field: notesField, fieldState: notesFieldState} = useController({
     control,
-    name: "notes",
-    rules: {
-      required: true
-    }
+    name: "notes"
   })
   const {field: daysField, fieldState: daysFieldState} = useController({
     control,
     name: "days",
     rules: {
-      required: true
+      validate: days => days.length > 0
     }
   })
   const {field: sessionsField, fieldState: sessionsFieldState} = useController({
     control,
     name: "sessions",
     rules: {
-      required: true
+      validate: sessions => sessions.length > 0
     }
   })
   const titleError = titleFieldState.error?.type === "required" ? "Title is required." : null
   const groupError = groupFieldState.error?.type === "required" ? "Group is required." : null
-  const notesError = notesFieldState.error?.type === "required" ? "Notes is required" : null
-  const daysError = daysFieldState.error?.type === "required" ? "Days is required": null
-  const sessionsError = sessionsFieldState.error?.type === "required" ? "Days is required": null
+  const daysError = daysFieldState.error ? "At least one day must be selected.": null
+  const sessionsError = sessionsFieldState.error ? "At least one session must be selected.": null
 
   const renderValue = (selected: unknown) => (selected as string[]).join(', ')
 
@@ -105,15 +135,15 @@ export const BookableForm: FunctionComponent<any> = ({bookable, onCancel, onDele
   }
 
   const _delete = () => {
-    onDelete(bookable)
+    onDelete && onDelete(bookable)
   }
 
   const _save = handleSubmit((values) => {
-    onSave(values)
+    onSave(toBookable(values))
   })
 
   useEffect(
-    () => reset(bookable),
+    () => reset(toValues(bookable)),
     [bookable, reset]
   )
 
@@ -130,7 +160,7 @@ export const BookableForm: FunctionComponent<any> = ({bookable, onCancel, onDele
             <TextField label="Group" className={classes.textField} fullWidth={true}
                        error={groupFieldState.invalid} helperText={groupError} {...groupField}/>
             <TextField label="Notes" className={classes.textField} fullWidth={true} multiline={true}
-                       error={notesFieldState.invalid} helperText={notesError} {...notesField}/>
+                       error={notesFieldState.invalid} {...notesField}/>
           </Grid>
           <Grid item xs={6}>
             <FormLabel component="legend" className={classes.sectionLabel}>Scheduling</FormLabel>

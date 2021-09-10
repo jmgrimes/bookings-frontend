@@ -2,23 +2,21 @@ import {useRouter} from "next/router"
 import {FunctionComponent} from "react"
 
 import {BookableForm} from "./BookableForm"
-import {Bookable} from "../../features/bookables"
+import {Bookable, useCreateBookable} from "../../features/bookables"
+
+const newBookable: Bookable = {
+  id: 0,
+  group: "",
+  title: "",
+  days: [],
+  sessions: []
+}
 
 export const BookableNew: FunctionComponent = () => {
   const router = useRouter()
-  const bookable: Bookable = {
-    id: 0,
-    group: "",
-    title: "",
-    notes: "",
-    days: [],
-    sessions: []
-  }
+  const [createBookable] = useCreateBookable(id => router.push(`/bookables/${id}`))
+  const onCancel = () => router.push(`/bookables`)
   return (
-    <BookableForm
-      bookable={bookable}
-      onSave={() => router.push(`/bookables`)}
-      onCancel={() => router.push(`/bookables`)}
-    />
+    <BookableForm bookable={newBookable} onSave={createBookable} onCancel={onCancel}/>
   )
 }
