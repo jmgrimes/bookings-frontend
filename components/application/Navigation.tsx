@@ -1,28 +1,28 @@
-import { AppBar, Tab, Tabs, Toolbar, makeStyles } from "@material-ui/core";
-import { DevicesOther, Event, Home, People } from "@material-ui/icons";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { FunctionComponent } from "react";
+import {AppBar, Tab, Tabs, Toolbar, makeStyles} from "@material-ui/core"
+import {DevicesOther, Event, Home, People} from "@material-ui/icons"
+import Link from "next/link"
+import {useRouter} from "next/router"
+import {FunctionComponent} from "react"
 
-import { UserPicker } from "../users";
+import {UserPicker} from "../users"
 
 const useStyles = makeStyles(() => ({
   appbar: {
-    marginBottom: 20,
+    marginBottom: 20
   },
   menuTabs: {
-    flexGrow: 1,
-  },
-}));
+    flexGrow: 1
+  }
+}))
 
 export const Navigation: FunctionComponent = () => {
-  const classes = useStyles();
-  const router = useRouter();
+  const classes = useStyles()
+  const router = useRouter()
   const selectedTab =
     router.pathname.startsWith("/bookings") ? 1 :
     router.pathname.startsWith("/bookables") ? 2 :
     router.pathname.startsWith("/users") ? 3 :
-    0;
+    0
 
   return (
     <AppBar position="static" color="transparent" className={classes.appbar}>
@@ -44,5 +44,5 @@ export const Navigation: FunctionComponent = () => {
         <UserPicker/>
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}

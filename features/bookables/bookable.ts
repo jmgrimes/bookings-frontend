@@ -1,4 +1,4 @@
-import { Booking } from "../bookings";
+import {Booking} from "../bookings"
 
 export enum BookableDay {
   Sunday = "Sunday",
@@ -19,14 +19,14 @@ export enum BookableSession {
 }
 
 export type Bookable = {
-  id: number;
-  group: string;
-  title: string;
-  notes?: string;
-  days: BookableDay[];
-  sessions: BookableSession[];
-  bookings?: Booking[];
-};
+  id: number
+  group: string
+  title: string
+  notes?: string
+  days: BookableDay[]
+  sessions: BookableSession[]
+  bookings?: Booking[]
+}
 
 export const BookableDays: BookableDay[] = [
   BookableDay.Sunday,
@@ -36,7 +36,7 @@ export const BookableDays: BookableDay[] = [
   BookableDay.Thursday,
   BookableDay.Friday,
   BookableDay.Saturday
-];
+]
 
 export const BookableSessions: BookableSession[] = [
   BookableSession.Breakfast,
@@ -44,4 +44,4 @@ export const BookableSessions: BookableSession[] = [
   BookableSession.Lunch,
   BookableSession.Afternoon,
   BookableSession.Evening
-];
+]

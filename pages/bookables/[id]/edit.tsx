@@ -1,9 +1,9 @@
-import { Container } from "@material-ui/core"
-import { NextPage } from "next";
-import Head from "next/head";
-import { Fragment } from "react";
+import {Container} from "@material-ui/core"
+import {NextPage} from "next"
+import Head from "next/head"
+import {Fragment} from "react"
 
-import { BookableEdit } from "../../../components/bookables";
+import {BookableEdit} from "../../../components/bookables"
 
 const BookableEditPage: NextPage = () => {
   return (
@@ -16,7 +16,7 @@ const BookableEditPage: NextPage = () => {
         <BookableEdit />
       </Container>
     </Fragment>
-  );
-};
+  )
+}
 
-export default BookableEditPage;
+export default BookableEditPage

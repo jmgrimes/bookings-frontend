@@ -1,9 +1,9 @@
-import { Container } from "@material-ui/core"
-import { NextPage } from "next";
+import {Container} from "@material-ui/core"
+import {NextPage} from "next";
 import Head from "next/head";
-import { Fragment } from "react";
+import {Fragment} from "react";
 
-import { UsersView } from "../../../components/users";
+import {UsersView} from "../../../components/users";
 
 const UserViewPage: NextPage = () => {
   return (

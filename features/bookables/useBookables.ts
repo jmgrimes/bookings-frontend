@@ -1,6 +1,6 @@
-import { QueryResult, gql, useQuery } from "@apollo/client";
+import {QueryResult, gql, useQuery} from "@apollo/client"
 
-import { Bookable } from "./bookable";
+import {Bookable} from "./bookable"
 
 const query = gql`
   query useBookables {
@@ -13,13 +13,14 @@ const query = gql`
       sessions
     }
   }
-`;
+`
 
 type Data = {
-  bookables: Bookable[];
+  bookables: Bookable[]
 }
-type UseBookables = () => QueryResult<Data>;
+
+type UseBookables = () => QueryResult<Data>
 
 export const useBookables: UseBookables = () => {
-  return useQuery<Data>(query);
+  return useQuery<Data>(query)
 }

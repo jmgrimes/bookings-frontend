@@ -1,14 +1,14 @@
-import { Card, CardContent, CardHeader, Typography } from "@material-ui/core";
-import { FunctionComponent } from "react";
+import {Card, CardContent, CardHeader, Typography} from "@material-ui/core"
+import {FunctionComponent} from "react"
 
-import { User } from "../../features/users";
+import {User} from "../../features/users"
 
 type UserDetailsProps = {
-  user: User;
+  user: User
 };
 
 export const UserDetails: FunctionComponent<UserDetailsProps> = (props: UserDetailsProps) => {
-  const { user } = props;
+  const {user} = props
   return (
     <Card>
       <CardHeader title={user.name} subheader={user.title}/>
@@ -16,5 +16,5 @@ export const UserDetails: FunctionComponent<UserDetailsProps> = (props: UserDeta
         <Typography variant="body1" color="textPrimary">{user.notes}</Typography>
       </CardContent>
     </Card>
-  );
-};
+  )
+}

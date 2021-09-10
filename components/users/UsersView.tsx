@@ -1,17 +1,17 @@
-import { Grid } from "@material-ui/core";
-import { useRouter } from "next/router";
-import { FunctionComponent } from "react";
+import {Grid} from "@material-ui/core"
+import {useRouter} from "next/router"
+import {FunctionComponent} from "react"
 
-import { UserDetails } from "./UserDetails";
-import { UsersList } from "./UsersList";
-import { ViewError, CardLoading, ListLoading } from "../application";
-import { User, useUser, useUsers } from "../../features/users";
+import {UserDetails} from "./UserDetails"
+import {UsersList} from "./UsersList"
+import {ViewError, CardLoading, ListLoading} from "../application"
+import {User, useUser, useUsers} from "../../features/users"
 
 type UsersViewReadyProps = {
-  users: User[];
-};
+  users: User[]
+}
 
-const getUrl = (id: number) => `/users/${id}`;
+const getUrl = (id: number) => `/users/${id}`
 
 const UsersViewLoading: FunctionComponent = () => {
   return (
@@ -23,16 +23,16 @@ const UsersViewLoading: FunctionComponent = () => {
         <CardLoading/>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
 const UsersViewReady: FunctionComponent<UsersViewReadyProps> = (props: UsersViewReadyProps) => {
-  const { users } = props;
-  const router = useRouter();
-  const [currentUser] = useUser();
+  const {users} = props
+  const [currentUser] = useUser()
+  const router = useRouter()
 
-  const id = parseInt(router.query.id as string, 10);
-  const user = (id ? users.find(u => u.id === id) : currentUser) || users[0];
+  const id = parseInt(router.query.id as string, 10)
+  const user = (id ? users.find(u => u.id === id) : currentUser) || users[0]
 
   return (
     <Grid container spacing={3}>
@@ -43,25 +43,29 @@ const UsersViewReady: FunctionComponent<UsersViewReadyProps> = (props: UsersView
         <UserDetails user={user}/>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
 export const UsersView: FunctionComponent = () => {
-  const { data, loading, error } = useUsers();
+  const {data, loading, error} = useUsers()
   if (loading) {
-    return <UsersViewLoading/>
+    return (
+      <UsersViewLoading/>
+    )
   }
   if (error) {
     return (
       <ViewError title="An error occurred while loading users." message={error.message}/>
-    );
+    )
   }
   if (!data) {
     return (
       <ViewError title="An error occurred while loading users."
              message="An unexpected error occurred: users were not available when loading completed."
       />
-    );
+    )
   }
-  return <UsersViewReady users={data.users}/>
-};
+  return (
+    <UsersViewReady users={data.users}/>
+  )
+}

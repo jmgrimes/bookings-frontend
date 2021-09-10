@@ -7,9 +7,9 @@ import {
   ListItem,
   ListItemText,
   Typography
-} from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
-import { FunctionComponent } from "react";
+} from "@material-ui/core"
+import {Skeleton} from "@material-ui/lab"
+import {FunctionComponent} from "react"
 
 export const CardLoading: FunctionComponent = () => {
   return (
@@ -30,8 +30,8 @@ export const CardLoading: FunctionComponent = () => {
         </Typography>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
 export const ListLoading: FunctionComponent = () => {
   return (
@@ -44,11 +44,11 @@ export const ListLoading: FunctionComponent = () => {
         ))
       }
     </List>
-  );
-};
+  )
+}
 
 export const SimpleLoading: FunctionComponent = () => {
   return (
     <CircularProgress/>
-  );
-};
+  )
+}

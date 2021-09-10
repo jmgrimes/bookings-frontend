@@ -1,9 +1,9 @@
-import { Container, Typography } from "@material-ui/core"
-import { NextPage } from "next";
-import Head from "next/head";
-import { Fragment } from "react";
+import {Container} from "@material-ui/core"
+import {NextPage} from "next"
+import Head from "next/head"
+import {Fragment} from "react"
 
-import { BookablesView } from "../../../components/bookables";
+import {BookablesView} from "../../../components/bookables"
 
 const BookablesViewPage: NextPage = () => {
   return (
@@ -16,7 +16,7 @@ const BookablesViewPage: NextPage = () => {
         <BookablesView/>
       </Container>
     </Fragment>
-  );
-};
+  )
+}
 
-export default BookablesViewPage;
+export default BookablesViewPage

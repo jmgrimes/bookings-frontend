@@ -24,7 +24,7 @@ const server: ApolloServer = new ApolloServer({
 });
 
 const apolloServerHandler: Promise<NextApiHandler> = 
-  server.start().then(_value => server.createHandler({ path: "/api/graphql" }));
+  server.start().then(_value => server.createHandler({path: "/api/graphql" }));
 
 const apiHandler: NextApiHandler = async (request: NextApiRequest, response: NextApiResponse) => {
   const handle = await apolloServerHandler;

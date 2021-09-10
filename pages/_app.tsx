@@ -1,18 +1,18 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { CssBaseline } from "@material-ui/core";
-import { NextPage } from "next";
-import { AppProps } from "next/app";
+import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client"
+import {CssBaseline} from "@material-ui/core"
+import {NextPage} from "next"
+import {AppProps} from "next/app"
 
-import { Navigation } from "../components/application";
-import { UserProvider } from "../components/users";
+import {Navigation} from "../components/application"
+import {UserProvider} from "../components/users"
 
 const apolloClient = new ApolloClient({
   uri: "http://localhost:3000/api/graphql",
-  cache: new InMemoryCache(),
-});
+  cache: new InMemoryCache()
+})
 
 const MyApp: NextPage<AppProps> = (props: AppProps) => {
-  const { Component, pageProps } = props;
+  const {Component, pageProps} = props;
   return (
     <ApolloProvider client={apolloClient}>
       <UserProvider>
@@ -21,7 +21,7 @@ const MyApp: NextPage<AppProps> = (props: AppProps) => {
         <Component {...pageProps}/>
       </UserProvider>
     </ApolloProvider>
-  );
-};
+  )
+}
 
-export default MyApp;
+export default MyApp

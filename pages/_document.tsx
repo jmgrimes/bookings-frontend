@@ -1,7 +1,7 @@
-import { ServerStyleSheets } from '@material-ui/core/styles';
-import { NextPage } from "next";
-import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from 'next/document';
-import { Children } from 'react';
+import {ServerStyleSheets} from '@material-ui/core/styles'
+import {NextPage} from "next"
+import Document, {DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript} from 'next/document'
+import {Children} from 'react'
 
 const MyDocument: NextPage<DocumentInitialProps> = () => {
   return (
@@ -14,23 +14,23 @@ const MyDocument: NextPage<DocumentInitialProps> = () => {
         <NextScript/>
       </body>
     </Html>
-  );
-};
+  )
+}
 
 MyDocument.getInitialProps = async (context: DocumentContext) => {
-  const sheets = new ServerStyleSheets();
-  const originalRenderPage = context.renderPage;
+  const sheets = new ServerStyleSheets()
+  const originalRenderPage = context.renderPage
 
   context.renderPage = () => originalRenderPage({
     enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-  });
+  })
 
-  const initialProps = await Document.getInitialProps(context);
+  const initialProps = await Document.getInitialProps(context)
 
   return {
     ...initialProps,
     styles: [...Children.toArray(initialProps.styles), sheets.getStyleElement()],
-  };
-};
+  }
+}
 
-export default MyDocument;
+export default MyDocument

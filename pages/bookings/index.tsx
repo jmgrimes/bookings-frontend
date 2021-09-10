@@ -1,7 +1,7 @@
-import { Container, Typography } from "@material-ui/core"
-import { NextPage } from "next";
-import Head from "next/head";
-import { Fragment } from "react";
+import {Container, Typography} from "@material-ui/core"
+import {NextPage} from "next"
+import Head from "next/head"
+import {Fragment} from "react"
 
 const BookingsPage: NextPage = () => {
   return (
@@ -14,7 +14,7 @@ const BookingsPage: NextPage = () => {
         <Typography variant="h1">Bookings Page</Typography>
       </Container>
     </Fragment>
-  );
-};
+  )
+}
 
-export default BookingsPage;
+export default BookingsPage

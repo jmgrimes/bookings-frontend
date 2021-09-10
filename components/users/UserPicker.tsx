@@ -1,32 +1,36 @@
-import { FormControl, MenuItem, Select } from "@material-ui/core";
-import { ChangeEvent, FunctionComponent, useEffect } from "react";
+import {FormControl, MenuItem, Select} from "@material-ui/core"
+import {ChangeEvent, FunctionComponent, useEffect} from "react"
 
-import { SimpleError, SimpleLoading } from "../application";
-import { User, useUser, useUsers } from "../../features/users";
+import {SimpleError, SimpleLoading} from "../application"
+import {User, useUser, useUsers} from "../../features/users"
 
 type UserPickerReadyProps = {
-  users: User[];
-};
+  users: User[]
+}
 
 const UserPickerReady: FunctionComponent<UserPickerReadyProps> = (props: UserPickerReadyProps) => {
-  const { users } = props;
-  const [user, setUser] = useUser();
+  const {users} = props
+  const [user, setUser] = useUser()
 
-  type ChangeEventTarget = { name?: string, value: unknown };
-  type ChangeEventHandler = (event: ChangeEvent<ChangeEventTarget>) => void;
+  type ChangeEventTarget = {
+    name?: string
+    value: unknown
+  }
+  
+  type ChangeEventHandler = (event: ChangeEvent<ChangeEventTarget>) => void
 
   const changeUser: ChangeEventHandler = event => {
-    const selectedUserId = parseInt(event.target.value as string, 10);
-    const selectedUser = users.find(u => u.id === selectedUserId);
-    setUser(selectedUser);
+    const selectedUserId = parseInt(event.target.value as string, 10)
+    const selectedUser = users.find(u => u.id === selectedUserId)
+    setUser(selectedUser)
   };
 
   useEffect(
     () => {
-      setUser(users[0]);
+      setUser(users[0])
     },
     [users, setUser]
-  );
+  )
 
   return (
     <FormControl>
@@ -36,20 +40,27 @@ const UserPickerReady: FunctionComponent<UserPickerReadyProps> = (props: UserPic
         }
       </Select>
     </FormControl>
-  );
-};
+  )
+}
 
 export const UserPicker: FunctionComponent = () => {
-  const { data, loading, error } = useUsers();
-
+  const {data, loading, error} = useUsers()
   if (loading) {
-    return <SimpleLoading />;
+    return (
+      <SimpleLoading/>
+    )
   }
   if (error) {
-    return <SimpleError message={error.message}/>;
+    return (
+      <SimpleError message={error.message}/>
+    )
   }
   if (!data) {
-    return <SimpleError message="Unable to load users."/>;
+    return (
+      <SimpleError message="Unable to load users."/>
+    )
   }
-  return <UserPickerReady users={data.users}/>
-};
+  return (
+    <UserPickerReady users={data.users}/>
+  )
+}

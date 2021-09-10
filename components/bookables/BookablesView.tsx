@@ -1,23 +1,23 @@
-import { Button, Grid, Typography, makeStyles } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { FunctionComponent } from "react";
+import {Button, Grid, Typography, makeStyles} from "@material-ui/core"
+import {Add} from "@material-ui/icons"
+import Link from "next/link"
+import {useRouter} from "next/router"
+import {FunctionComponent} from "react"
 
-import { BookableDetails } from "./BookableDetails";
-import { BookablesList } from "./BookablesList";
-import {CardLoading, ListLoading, ViewError} from "../application";
-import { Bookable, useBookables } from "../../features/bookables";
+import {BookableDetails} from "./BookableDetails"
+import {BookablesList} from "./BookablesList"
+import {CardLoading, ListLoading, ViewError} from "../application"
+import {Bookable, useBookables} from "../../features/bookables"
 
 const useStyles = makeStyles(() => ({
   spacer: {
     marginBottom: 10
   }
-}));
+}))
 
 type BookablesViewReadyProps = {
-  bookables: Bookable[];
-};
+  bookables: Bookable[]
+}
 
 const BookablesViewLoading: FunctionComponent = () => {
   return (
@@ -29,16 +29,16 @@ const BookablesViewLoading: FunctionComponent = () => {
         <CardLoading/>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
 const BookablesViewReady: FunctionComponent<BookablesViewReadyProps> = (props: BookablesViewReadyProps) => {
-  const { bookables } = props;
-  const classes = useStyles();
-  const router = useRouter();
-  const id = parseInt(router.query.id as string);
-  const bookable = id ? bookables.find(b => b.id === id) || bookables[0] : bookables[0];
-  const getUrl = (id: number) => `/bookables/${id}`;
+  const {bookables} = props
+  const classes = useStyles()
+  const router = useRouter()
+  const id = parseInt(router.query.id as string)
+  const bookable = id ? bookables.find(b => b.id === id) || bookables[0] : bookables[0]
+  const getUrl = (id: number) => `/bookables/${id}`
 
   return (
     <Grid container spacing={3}>
@@ -59,25 +59,29 @@ const BookablesViewReady: FunctionComponent<BookablesViewReadyProps> = (props: B
         <BookableDetails bookable={bookable}/>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
 export const BookablesView = () => {
-  const { data, loading, error } = useBookables();
+  const {data, loading, error} = useBookables();
   if (loading) {
-    return <BookablesViewLoading/>
+    return (
+      <BookablesViewLoading/>
+    )
   }
   if (error) {
     return (
       <ViewError title="An error occurred while loading bookables." message={error.message}/>
-    );
+    )
   }
   if (!data) {
     return (
       <ViewError title="An error occurred while loading bookables."
                  message="An unexpected error occurred: bookables were not available when loading completed."
       />
-    );
+    )
   }
-  return <BookablesViewReady bookables={data.bookables}/>
+  return (
+    <BookablesViewReady bookables={data.bookables}/>
+  )
 }

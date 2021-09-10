@@ -1,33 +1,31 @@
-import { Grid, Typography, makeStyles } from "@material-ui/core";
-import { FunctionComponent } from "react";
+import {Grid, Typography, makeStyles} from "@material-ui/core"
+import {FunctionComponent} from "react"
 
 const useStyles = makeStyles(() => ({
   jumbotron: {
     marginTop: 75
   }
-}));
+}))
 
 type SimpleErrorProps = {
-  message: string;
-};
+  message: string
+}
 
 type ViewErrorProps = {
-  title: string;
-  message: string;
-};
+  title: string
+  message: string
+}
 
 export const SimpleError: FunctionComponent<SimpleErrorProps> = (props: SimpleErrorProps) => {
-  const { message } = props;
-
+  const {message} = props
   return (
     <Typography variant="body1" component="div">{message}</Typography>
-  );
-};
+  )
+}
 
 export const ViewError: FunctionComponent<ViewErrorProps> = (props: ViewErrorProps) => {
-  const { title, message } = props;
-  const classes = useStyles();
-
+  const {title, message} = props
+  const classes = useStyles()
   return (
     <Grid container
           alignItems="center"
@@ -37,5 +35,5 @@ export const ViewError: FunctionComponent<ViewErrorProps> = (props: ViewErrorPro
       <Typography variant="h6" component="h6">{title}</Typography>
       <Typography variant="body1" component="p">{message}</Typography>
     </Grid>
-  );
-};
+  )
+}

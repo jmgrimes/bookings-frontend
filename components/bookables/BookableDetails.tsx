@@ -9,21 +9,21 @@ import {
   ListItemIcon,
   ListItemText,
   Typography
-} from "@material-ui/core";
-import { CalendarToday, Edit, Event, Visibility, VisibilityOff } from "@material-ui/icons";
-import Link from "next/link";
-import { FunctionComponent, useState } from "react";
+} from "@material-ui/core"
+import {CalendarToday, Edit, Event, Visibility, VisibilityOff} from "@material-ui/icons"
+import Link from "next/link"
+import {FunctionComponent, useState} from "react"
 
-import { Bookable } from "../../features/bookables";
+import {Bookable} from "../../features/bookables"
 
 type BookableDetailsProps = {
-  bookable: Bookable;
+  bookable: Bookable
 }
 
 export const BookableDetails: FunctionComponent<BookableDetailsProps> = (props: BookableDetailsProps) => {
-  const { bookable } = props;
-  const [showDetails, setShowDetails] = useState(true);
-  const toggleDetails = () => setShowDetails(showDetails => !showDetails);
+  const {bookable} = props
+  const [showDetails, setShowDetails] = useState(true)
+  const toggleDetails = () => setShowDetails(showDetails => !showDetails)
   return (
     <Card>
       <CardHeader
@@ -31,7 +31,7 @@ export const BookableDetails: FunctionComponent<BookableDetailsProps> = (props: 
         action={
           <>
             <IconButton onClick={toggleDetails}>
-              { showDetails ? <VisibilityOff /> : <Visibility /> }
+              {showDetails ? <VisibilityOff /> : <Visibility />}
             </IconButton>
             <Link href={`/bookables/${bookable.id}/edit`} passHref={true}>
               <IconButton component="a">
@@ -81,5 +81,5 @@ export const BookableDetails: FunctionComponent<BookableDetailsProps> = (props: 
         </CardContent>
       }
     </Card>
-  );
-};
+  )
+}
