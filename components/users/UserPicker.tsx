@@ -46,21 +46,13 @@ const UserPickerReady: FunctionComponent<UserPickerReadyProps> = (props: UserPic
 export const UserPicker: FunctionComponent = () => {
   const {data, loading, error} = useUsers()
   if (loading) {
-    return (
-      <SimpleLoading/>
-    )
+    return <SimpleLoading/>
   }
   if (error) {
-    return (
-      <SimpleError message={error.message}/>
-    )
+    return <SimpleError message={error.message}/>
   }
   if (!data) {
-    return (
-      <SimpleError message="Unable to load users."/>
-    )
+    return <SimpleError message="Unable to load users."/>
   }
-  return (
-    <UserPickerReady users={data.users}/>
-  )
+  return <UserPickerReady users={data.users}/>
 }

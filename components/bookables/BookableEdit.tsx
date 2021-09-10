@@ -12,12 +12,10 @@ type BookableEditReadyProps = {
 const BookableEditReady: FunctionComponent<BookableEditReadyProps> = (props: BookableEditReadyProps) => {
   const {bookable} = props
   const router = useRouter()
-  return (
-    <BookableForm bookable={bookable}
-                  onSave={() => router.push(`/bookables/${bookable.id}`)}
-                  onDelete={() => router.push(`/bookables/${bookable.id}`)}
-                  onCancel={() => router.push(`/bookables/${bookable.id}`)}/>
-  )
+  const onSave = () => router.push(`/bookables/${bookable.id}`)
+  const onDelete = () => router.push(`/bookables/${bookable.id}`)
+  const onCancel = () => router.push(`/bookables/${bookable.id}`)
+  return <BookableForm bookable={bookable} onSave={onSave} onDelete={onDelete} onCancel={onCancel}/>
 }
 
 export const BookableEdit: FunctionComponent = () => {
@@ -25,23 +23,16 @@ export const BookableEdit: FunctionComponent = () => {
   const id = parseInt(router.query.id as string, 10)
   const {data, loading, error} = useBookable(id)
   if (loading) {
-    return (
-      <CardLoading/>
-    )
+    return <CardLoading/>
   }
   if (error) {
-    return (
-      <ViewError title="An error occurred while loading the bookable." message={error.message}/>
-    )
+    const title = "An error occurred while loading the bookable."
+    return <ViewError title={title} message={error.message}/>
   }
   if (!data) {
-    return (
-      <ViewError title="An error occurred while loading the bookable."
-                 message="An unexpected error occurred: bookable was not available when loading completed."
-      />
-    )
+    const title = "An error occurred while loading the bookable."
+    const message = "An unexpected error occurred: bookable was not available when loading completed."
+    return <ViewError title={title} message={message}/>
   }
-  return (
-    <BookableEditReady bookable={data.bookable}/>
-  )
+  return <BookableEditReady bookable={data.bookable}/>
 }

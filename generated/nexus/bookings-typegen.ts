@@ -39,6 +39,8 @@ export interface NexusGenObjects {
     title: string; // String!
   }
   Booking: { // root type
+    bookableId: number; // Int!
+    bookerId: number; // Int!
     date: string; // String!
     id: number; // Int!
     notes?: string | null; // String
@@ -78,7 +80,9 @@ export interface NexusGenFieldTypes {
   }
   Booking: { // field return type
     bookable: NexusGenRootTypes['Bookable']; // Bookable!
+    bookableId: number; // Int!
     booker: NexusGenRootTypes['User']; // User!
+    bookerId: number; // Int!
     date: string; // String!
     id: number; // Int!
     notes: string | null; // String
@@ -123,7 +127,9 @@ export interface NexusGenFieldTypeNames {
   }
   Booking: { // field return type name
     bookable: 'Bookable'
+    bookableId: 'Int'
     booker: 'User'
+    bookerId: 'Int'
     date: 'String'
     id: 'Int'
     notes: 'String'
@@ -159,6 +165,7 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Bookable: {
     bookings: { // args
+      bookerId?: number | null; // Int
       endDate?: string | null; // String
       startDate?: string | null; // String
     }

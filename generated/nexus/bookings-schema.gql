@@ -5,7 +5,7 @@
 """a bookable resource in the bookings application"""
 type Bookable {
   """the bookings made for the bookable"""
-  bookings(endDate: String, startDate: String): [Booking!]!
+  bookings(bookerId: Int, endDate: String, startDate: String): [Booking!]!
 
   """the list of days on which the bookable resource can be booked"""
   days: [BookableDay!]!
@@ -51,8 +51,16 @@ type Booking {
   """the bookable resource of the booking, reservation, or appointment"""
   bookable: Bookable!
 
+  """the id of the bookable for the booking, reservation, or appointment"""
+  bookableId: Int!
+
   """the booker of the booking, reservation, or appointment"""
   booker: User!
+
+  """
+  the id of the booking user for the booking, reservation, or appointment
+  """
+  bookerId: Int!
 
   """the date on which the booking, reservation, or appointment occurs"""
   date: String!

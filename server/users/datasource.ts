@@ -1,29 +1,24 @@
 import {RESTDataSource} from "apollo-datasource-rest"
 
-export interface IUser {
+export type User = {
   id: number
   name: string
   title: string
   img: string
-  notes: string | undefined
+  notes?: string
 }
 
-export interface IUserAPI {
-  getUsers: () => Promise<IUser[]>
-  getUser: (id: number) => Promise<IUser>
-}
-
-export class UserAPI extends RESTDataSource implements IUserAPI {
+export class UserAPI extends RESTDataSource {
   constructor(baseURL: string) {
     super()
     this.baseURL = baseURL
   }
 
-  getUsers(): Promise<IUser[]> {
-    return this.get<IUser[]>(`/users`)
+  getUsers(): Promise<User[]> {
+    return this.get<User[]>(`/users`)
   }
 
-  getUser(id: number): Promise<IUser> {
-    return this.get<IUser>(`/users/${id.toString(10)}`)
+  getUser(id: number): Promise<User> {
+    return this.get<User>(`/users/${id.toString(10)}`)
   }
 }

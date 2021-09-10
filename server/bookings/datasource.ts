@@ -1,40 +1,32 @@
 import {RESTDataSource} from "apollo-datasource-rest"
 
-export interface IBookingModel {
+import {BookableSession} from "../bookables/datasource";
+
+export type BookingModel = {
   bookerId: number
   bookableId: number
   title: string
   date: string
-  session: number
-  notes: string | undefined
+  session: BookableSession
+  notes?: string
 }
 
-export interface IBooking extends IBookingModel {
-  id: number
+export type Booking = {id: number} & BookingModel
+
+export type BookingsQuery = {
+  bookerId?: number
+  bookableId?: number
+  startDate?: string
+  endDate?: string
 }
 
-export interface IBookingsQuery {
-  bookerId: number | undefined
-  bookableId: number | undefined
-  startDate: string | undefined
-  endDate: string | undefined
-}
-
-export interface IBookingAPI {
-  getBookings: (query: IBookingsQuery) => Promise<IBooking[]>
-  getBooking: (id: number) => Promise<IBooking>
-  createBooking: (model: IBookingModel) => Promise<number>
-  deleteBooking: (id: number) => Promise<number>
-  updateBooking: (booking: IBooking) => Promise<number>
-}
-
-export class BookingAPI extends RESTDataSource implements IBookingAPI {
+export class BookingAPI extends RESTDataSource {
   constructor(baseURL: string) {
     super()
     this.baseURL = baseURL
   }
 
-  getBookings(query: IBookingsQuery): Promise<IBooking[]> {
+  getBookings(query: BookingsQuery): Promise<Booking[]> {
     const searchParams = {
       bookerId: query.bookerId,
       bookableId: query.bookableId,
@@ -45,15 +37,15 @@ export class BookingAPI extends RESTDataSource implements IBookingAPI {
     if (!query.bookableId) delete searchParams.bookableId
     if (!query.startDate) delete searchParams.date_gte
     if (!query.endDate) delete searchParams.date_lte
-    return this.get<IBooking[]>(`/bookings`, searchParams)
+    return this.get<Booking[]>(`/bookings`, searchParams)
   }
 
-  getBooking(id: number): Promise<IBooking> {
-    return this.get<IBooking>(`/bookings/${id.toString(10)}`)
+  getBooking(id: number): Promise<Booking> {
+    return this.get<Booking>(`/bookings/${id.toString(10)}`)
   }
 
-  async createBooking(model: IBookingModel): Promise<number> {
-    const response = await this.post<IBooking>(`/bookings`, model)
+  async createBooking(model: BookingModel): Promise<number> {
+    const response = await this.post<Booking>(`/bookings`, model)
     return response.id
   };
 
@@ -62,7 +54,7 @@ export class BookingAPI extends RESTDataSource implements IBookingAPI {
     return id
   };
 
-  async updateBooking(booking: IBooking): Promise<number> {
+  async updateBooking(booking: Booking): Promise<number> {
     await this.put(`/bookings/${booking.id.toString(10)}`, booking)
     return booking.id
   }

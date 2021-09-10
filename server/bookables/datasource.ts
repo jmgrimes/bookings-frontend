@@ -1,41 +1,35 @@
 import {RESTDataSource} from "apollo-datasource-rest"
 
-export interface IBookableModel {
+export type BookableDay = 0 | 1 | 2 | 3 | 4 | 5 | 6
+
+export type BookableSession = 0 | 1 | 2 | 3 | 4
+
+export type BookableModel = {
   group: string
   title: string
-  days: Int16Array
-  sessions: Int16Array
-  notes: string | undefined
+  days: BookableDay[]
+  sessions: BookableSession[]
+  notes?: string
 }
 
-export interface IBookable extends IBookableModel {
-  id: number
-}
+export type Bookable = {id: number} & BookableModel
 
-export interface IBookableAPI {
-  getBookables: () => Promise<IBookable[]>
-  getBookable: (id: number) => Promise<IBookable>
-  createBookable: (model: IBookableModel) => Promise<number>
-  deleteBookable: (id: number) => Promise<number>
-  updateBookable: (bookable: IBookable) => Promise<number>
-}
-
-export class BookableAPI extends RESTDataSource implements IBookableAPI {
+export class BookableAPI extends RESTDataSource {
   constructor(baseURL: string) {
     super()
     this.baseURL = baseURL
   }
 
-  getBookables(): Promise<IBookable[]> {
-    return this.get<IBookable[]>(`/bookables`)
+  getBookables(): Promise<Bookable[]> {
+    return this.get<Bookable[]>(`/bookables`)
   }
 
-  getBookable(id: number): Promise<IBookable> {
-    return this.get<IBookable>(`/bookables/${id.toString(10)}`)
+  getBookable(id: number): Promise<Bookable> {
+    return this.get<Bookable>(`/bookables/${id.toString(10)}`)
   }
 
-  async createBookable(model: IBookableModel): Promise<number> {
-    const response = await this.post<IBookable>(`/bookables`, model)
+  async createBookable(model: BookableModel): Promise<number> {
+    const response = await this.post<Bookable>(`/bookables`, model)
     return response.id
   }
 
@@ -44,7 +38,7 @@ export class BookableAPI extends RESTDataSource implements IBookableAPI {
     return id
   }
 
-  async updateBookable(bookable: IBookable): Promise<number> {
+  async updateBookable(bookable: Bookable): Promise<number> {
     const _response = await this.put(`/bookables/${bookable.id.toString(10)}`, bookable)
     return bookable.id
   }

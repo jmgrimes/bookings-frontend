@@ -1,29 +1,39 @@
 import {Grid} from "@material-ui/core"
 import {useRouter} from "next/router"
-import {FunctionComponent} from "react"
+import {FunctionComponent, ReactNode} from "react"
 
 import {UserDetails} from "./UserDetails"
 import {UsersList} from "./UsersList"
 import {ViewError, CardLoading, ListLoading} from "../application"
 import {User, useUser, useUsers} from "../../features/users"
 
+type UsersViewLayoutProps = {
+  sidebarContent: ReactNode,
+  mainContent: ReactNode
+}
+
 type UsersViewReadyProps = {
   users: User[]
 }
 
-const getUrl = (id: number) => `/users/${id}`
-
-const UsersViewLoading: FunctionComponent = () => {
+const UsersViewLayout: FunctionComponent<UsersViewLayoutProps> = (props: UsersViewLayoutProps) => {
+  const {sidebarContent, mainContent} = props;
   return (
     <Grid container spacing={3}>
       <Grid item xs={3}>
-        <ListLoading/>
+        {sidebarContent}
       </Grid>
       <Grid item xs={9}>
-        <CardLoading/>
+        {mainContent}
       </Grid>
     </Grid>
   )
+}
+
+const UsersViewLoading: FunctionComponent = () => {
+  const sidebarContent = <ListLoading/>
+  const mainContent = <CardLoading/>
+  return <UsersViewLayout sidebarContent={sidebarContent} mainContent={mainContent}/>
 }
 
 const UsersViewReady: FunctionComponent<UsersViewReadyProps> = (props: UsersViewReadyProps) => {
@@ -34,38 +44,24 @@ const UsersViewReady: FunctionComponent<UsersViewReadyProps> = (props: UsersView
   const id = parseInt(router.query.id as string, 10)
   const user = (id ? users.find(u => u.id === id) : currentUser) || users[0]
 
-  return (
-    <Grid container spacing={3}>
-      <Grid item xs={3}>
-        <UsersList users={users} user={user} getUrl={getUrl}/>
-      </Grid>
-      <Grid item xs={9}>
-        <UserDetails user={user}/>
-      </Grid>
-    </Grid>
-  )
+  const sidebarContent = <UsersList users={users} user={user} getUrl={id => `/users/${id}`}/>
+  const mainContent = <UserDetails user={user}/>
+  return <UsersViewLayout sidebarContent={sidebarContent} mainContent={mainContent}/>
 }
 
 export const UsersView: FunctionComponent = () => {
   const {data, loading, error} = useUsers()
   if (loading) {
-    return (
-      <UsersViewLoading/>
-    )
+    return <UsersViewLoading/>
   }
   if (error) {
-    return (
-      <ViewError title="An error occurred while loading users." message={error.message}/>
-    )
+    const title = "An error occurred while loading users."
+    return <ViewError title={title} message={error.message}/>
   }
   if (!data) {
-    return (
-      <ViewError title="An error occurred while loading users."
-             message="An unexpected error occurred: users were not available when loading completed."
-      />
-    )
+    const title = "An error occurred while loading users."
+    const message = "An unexpected error occurred: users were not available when loading completed."
+    return <ViewError title={title} message={message}/>
   }
-  return (
-    <UsersViewReady users={data.users}/>
-  )
+  return <UsersViewReady users={data.users}/>
 }

@@ -1,7 +1,7 @@
 import {intArg, list, nonNull, nullable, objectType, queryField, stringArg} from "nexus"
 
-import {IUser, IUserAPI} from "./datasource"
-import {IBooking, IBookingAPI, IBookingsQuery} from "../bookings/datasource"
+import {User, UserAPI} from "./datasource"
+import {Booking, BookingAPI} from "../bookings/datasource"
 
 export const UserType = objectType({
   name: "User",
@@ -30,10 +30,13 @@ export const UserType = objectType({
         startDate: nullable(stringArg()),
         endDate: nullable(stringArg())
       },
-      resolve: ({id }, query: IBookingsQuery, {dataSources }, _info): Promise<IBooking[]> => {
-        const bookingAPI: IBookingAPI = dataSources.bookingAPI
+      resolve: ({id}, {bookableId, startDate, endDate}, {dataSources}, _info): Promise<Booking[]> => {
+        const bookingAPI: BookingAPI = dataSources.bookingAPI
         return bookingAPI.getBookings({
-          ...query, bookerId: id
+          bookerId: id,
+          bookableId: bookableId ? bookableId : undefined,
+          startDate: startDate ? startDate : undefined,
+          endDate: endDate ? endDate : undefined
         })
       }
     })
@@ -46,8 +49,8 @@ export const UserQuery = queryField("user", {
   args: {
     id: nonNull(intArg())
   },
-  resolve: (_parent, {id }, {dataSources }, _info): Promise<IUser> => {
-    const userAPI: IUserAPI = dataSources.userAPI
+  resolve: (_parent, {id}, {dataSources}, _info): Promise<User> => {
+    const userAPI: UserAPI = dataSources.userAPI
     return userAPI.getUser(id)
   }
 })
@@ -55,8 +58,8 @@ export const UserQuery = queryField("user", {
 export const UsersQuery = queryField("users", {
   description: "get a list of all users",
   type: nonNull(list(nonNull("User"))),
-  resolve: (_parent, _args, {dataSources }, _info): Promise<IUser[]> => {
-    const userAPI: IUserAPI = dataSources.userAPI
+  resolve: (_parent, _args, {dataSources}, _info): Promise<User[]> => {
+    const userAPI: UserAPI = dataSources.userAPI
     return userAPI.getUsers()
   }
 })
