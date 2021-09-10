@@ -74,7 +74,7 @@ export const BookableDetails: FunctionComponent<BookableDetailsProps> = (props: 
   )
   return (
     <Card>
-      <CardHeader title={bookable.title} action={action}/>
+      <CardHeader title={bookable.title} subheader={bookable.group} action={action}/>
       <CardContent>
         <Typography variant="body1" component="p">{bookable.notes}</Typography>
       </CardContent>
