@@ -1,5 +1,6 @@
 import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client"
 import {CssBaseline} from "@material-ui/core"
+import {DateTime} from "luxon"
 import {NextPage} from "next"
 import {AppProps} from "next/app"
 
@@ -8,7 +9,17 @@ import {UserProvider} from "../components/users"
 
 const apolloClient = new ApolloClient({
   uri: "/api/graphql",
-  cache: new InMemoryCache()
+  cache: new InMemoryCache({
+    typePolicies: {
+      Booking: {
+        fields: {
+          date: {
+            read: (date: string) => DateTime.fromISO(date)
+          }
+        }
+      }
+    }
+  })
 })
 
 const MyApp: NextPage<AppProps> = (props: AppProps) => {

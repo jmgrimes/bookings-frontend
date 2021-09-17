@@ -1,5 +1,6 @@
 import {Button, Card, CardActions, CardContent, CardHeader, TextField, Typography, makeStyles} from "@material-ui/core"
 import {Cancel, Delete, Save} from "@material-ui/icons"
+import {DateTime} from "luxon"
 import {FunctionComponent, useEffect, useMemo} from "react"
 import {useController, useForm} from "react-hook-form"
 
@@ -46,7 +47,7 @@ const toBookingModel = (values: BookingFormValues) => {
   return new BookingModel(
     values.id,
     values.bookerId,
-    values.date,
+    DateTime.fromISO(values.date),
     values.session,
     values.title,
     values.notes
@@ -57,7 +58,7 @@ const fromBookingModel = (bookingModel: BookingModel) => {
   const values: BookingFormValues = {
     id: bookingModel.id || 0,
     bookerId: bookingModel.bookerId,
-    date: bookingModel.date,
+    date: bookingModel.date.toISODate(),
     session: bookingModel.session,
     title: bookingModel.title,
     notes: bookingModel.notes
@@ -132,7 +133,7 @@ export const BookingModelForm: FunctionComponent<BookingFormProps> = (props: Boo
                    label="Date"
                    contentEditable={false}
                    className={classes.textField}
-                   value={bookingModel.date}/>
+                   value={bookingModel.date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}/>
         <TextField fullWidth
                    label="Session"
                    contentEditable={false}

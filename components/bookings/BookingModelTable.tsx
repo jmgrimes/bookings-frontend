@@ -47,11 +47,13 @@ export const BookingModelTable: FunctionComponent<BookingModelTableProps> = (pro
 
   const BookingModelCell: FunctionComponent<BookingCellProps> = (props: BookingCellProps) => {
     const {day, session} = props
-    const booking = bookings.find(b => b.session === session.session && b.date === day.date.toISODate())
+    const booking = bookings.find(b => b.session === session.session && b.date.toISODate() === day.date.toISODate())
     const cellBookingModel = booking ?
       BookingModel.fromBooking(booking) :
       BookingModel.fromSessionOnDay(day, session, user)
-    const selected = cellBookingModel.date === bookingModel?.date && cellBookingModel.session === bookingModel?.session
+    const selected =
+      cellBookingModel.date.toISODate() === bookingModel?.date.toISODate() &&
+      cellBookingModel.session === bookingModel?.session
     return (
       <TableCell variant="body" align="center" onClick={() => setBookingModel(cellBookingModel)}
                  className={selected ? classes.bookingSelected : classes.booking}>

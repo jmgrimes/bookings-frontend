@@ -1,5 +1,6 @@
 import {Bookable, BookableDayModel, BookableSessionEnum, BookableSessionModel} from "../bookables"
 import {User} from "../users"
+import {DateTime} from "luxon";
 
 export type Booking = {
   id: number
@@ -7,7 +8,7 @@ export type Booking = {
   bookerId: number
   bookable?: Bookable
   bookableId: number
-  date: string
+  date: DateTime
   session: BookableSessionEnum
   title: string
   notes?: string
@@ -16,7 +17,7 @@ export type Booking = {
 export class BookingModel {
   id: number
   bookerId: number
-  date: string
+  date: DateTime
   session: BookableSessionEnum
   title: string
   notes?: string
@@ -24,7 +25,7 @@ export class BookingModel {
   constructor(
     id: number,
     bookerId: number,
-    date: string,
+    date: DateTime,
     session: BookableSessionEnum,
     title: string = "",
     notes?: string
@@ -65,7 +66,7 @@ export class BookingModel {
     return new BookingModel(
       0,
       booker?.id || 0,
-      day.date.toISODate(),
+      day.date,
       session.session
     )
   }

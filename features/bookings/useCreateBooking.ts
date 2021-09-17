@@ -1,4 +1,5 @@
 import {FetchResult, MutationResult, gql, useApolloClient, useMutation} from "@apollo/client"
+import {DateTime} from "luxon"
 
 import {Booking} from "./booking"
 import {UseBookingsQuery} from "./useBookings";
@@ -6,7 +7,7 @@ import {UseBookingsQuery} from "./useBookings";
 type OnSuccess = (booking: Booking) => void
 
 type UseCreateBookingData = {
-  createBooking: Booking
+  createBooking: Omit<Booking, "date"> & {date: string}
 }
 
 type UseCreateBookingMutate = (booking: Booking) => Promise<FetchResult<UseCreateBookingData>>
@@ -60,10 +61,14 @@ export const useCreateBooking: UseCreateBooking = (onSuccess: OnSuccess) => {
   const client = useApolloClient();
   const [mutate, result] = useMutation<UseCreateBookingData>(UseCreateBookingMutation, {
     onCompleted: async (data: UseCreateBookingData) => {
+      const booking: Booking = {
+        ...data.createBooking,
+        date: DateTime.fromISO(data.createBooking.date)
+      }
       await client.refetchQueries({
         include: [UseBookingsQuery]
       })
-      onSuccess(data.createBooking)
+      onSuccess(booking)
     }
   })
   const createBooking: UseCreateBookingMutate = async (booking: Booking) => {
@@ -71,7 +76,7 @@ export const useCreateBooking: UseCreateBooking = (onSuccess: OnSuccess) => {
       variables: {
         bookerId: booking.bookerId,
         bookableId: booking.bookableId,
-        date: booking.date,
+        date: booking.date.toISODate(),
         session: booking.session,
         title: booking.title,
         notes: booking.notes

@@ -5,6 +5,7 @@ import {Fragment, FunctionComponent, ReactNode} from "react"
 import {Bookable} from "../../features/bookables"
 import {BookingModel} from "../../features/bookings"
 import {useUser} from "../../features/users"
+import {DateTime} from "luxon";
 
 type BookingDetailsLayoutProps = {
   actionContent?: ReactNode
@@ -100,7 +101,7 @@ const BookingDetailsSelected: FunctionComponent<BookingDetailsSelectedProps> = (
       </div>
       <div className={classes.field}>
         <Typography variant="body1" component="label">Booking Date</Typography>
-        <Typography variant="body1" component="p">{date}</Typography>
+        <Typography variant="body1" component="p">{date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}</Typography>
       </div>
       <div className={classes.field}>
         <Typography variant="body1" component="label">Session</Typography>
