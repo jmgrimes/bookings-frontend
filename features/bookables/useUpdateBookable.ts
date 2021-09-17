@@ -4,10 +4,10 @@ import {Bookable} from "./bookable"
 import {UseBookableQuery} from "./useBookable";
 import {UseBookablesQuery} from "./useBookables";
 
-type OnSuccess = (id: number) => void
+type OnSuccess = (bookable: Bookable) => void
 
 type UseUpdateBookableData = {
-  updateBookable: number
+  updateBookable: Bookable
 }
 
 type UseUpdateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseUpdateBookableData>>
@@ -30,7 +30,14 @@ export const UseUpdateBookableMutation = gql`
             notes: $notes 
             days: $days
             sessions: $sessions
-        )
+        ) {
+            id
+            title
+            group
+            notes
+            days
+            sessions
+        }
     }
 `
 

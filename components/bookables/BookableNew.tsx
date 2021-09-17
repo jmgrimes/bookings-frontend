@@ -14,7 +14,7 @@ const newBookable: Bookable = {
 
 export const BookableNew: FunctionComponent = () => {
   const router = useRouter()
-  const [createBookable] = useCreateBookable(id => router.push(`/bookables/${id}`))
+  const [createBookable] = useCreateBookable(bookable => router.push(`/bookables/${bookable.id}`))
   const onCancel = () => router.push(`/bookables`)
   return (
     <BookableForm bookable={newBookable} onSave={createBookable} onCancel={onCancel}/>

@@ -58,12 +58,11 @@ export const BookableType = objectType({
         startDate: nullable(stringArg()),
         endDate: nullable(stringArg())
       },
-      resolve: (parent, args, context, _info) => {
-        const {id} = parent;
+      resolve: (bookable, args, context, _info) => {
         const {bookerId, startDate, endDate} = args;
         return context.dataSources.bookingAPI.getBookings({
+          bookableId: bookable.id,
           bookerId: bookerId ? bookerId : undefined,
-          bookableId: id,
           startDate: startDate ? startDate : undefined,
           endDate: endDate ? endDate : undefined
         })
@@ -94,7 +93,7 @@ export const BookablesQuery = queryField("bookables", {
 
 export const CreateBookableMutation = mutationField("createBookable", {
   description: "add a new bookable",
-  type: nonNull("Int"),
+  type: nonNull("Bookable"),
   args: {
     title: nonNull(stringArg()),
     group: nonNull(stringArg()),
@@ -102,14 +101,10 @@ export const CreateBookableMutation = mutationField("createBookable", {
     days: nonNull(list(nonNull("BookableDay"))),
     sessions: nonNull(list(nonNull("BookableSession")))
   },
-  resolve: (_parent, args, context, _info): Promise<number> => {
-    const {title, group, notes, days, sessions} = args;
+  resolve: (_parent, args, context, _info) => {
     return context.dataSources.bookableAPI.createBookable({
-      title,
-      group,
-      notes: notes ? notes : undefined,
-      days,
-      sessions
+      ...args,
+      notes: args.notes ? args.notes : undefined
     })
   }
 })
@@ -120,15 +115,14 @@ export const DeleteBookableMutation = mutationField("deleteBookable", {
   args: {
     id: nonNull(intArg())
   },
-  resolve: (_parent, args, context, _info): Promise<number> => {
-    const {id} = args;
-    return context.dataSources.bookableAPI.deleteBookable(id)
+  resolve: (_parent, args, context, _info) => {
+    return context.dataSources.bookableAPI.deleteBookable(args.id)
   }
 })
 
 export const UpdateBookableMutation = mutationField("updateBookable", {
   description: "update a bookable",
-  type: nonNull("Int"),
+  type: nonNull("Bookable"),
   args: {
     id : nonNull(intArg()),
     title: nonNull(stringArg()),
@@ -137,15 +131,10 @@ export const UpdateBookableMutation = mutationField("updateBookable", {
     days: nonNull(list(nonNull("BookableDay"))),
     sessions: nonNull(list(nonNull("BookableSession")))
   },
-  resolve: (_parent, args, context, _info): Promise<number> => {
-    const {id, title, group, notes, days, sessions} = args;
+  resolve: (_parent, args, context, _info) => {
     return context.dataSources.bookableAPI.updateBookable({
-      id,
-      title,
-      group,
-      notes: notes ? notes : undefined,
-      days,
-      sessions
+      ...args,
+      notes: args.notes ? args.notes : undefined
     })
   }
 })

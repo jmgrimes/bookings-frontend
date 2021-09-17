@@ -1,7 +1,6 @@
 import {FetchResult, MutationResult, gql, useApolloClient, useMutation} from "@apollo/client"
 
 import {Bookable} from "./bookable"
-import {UseBookableQuery} from "./useBookable";
 import {UseBookablesQuery} from "./useBookables";
 
 type OnSuccess = (id: number) => void

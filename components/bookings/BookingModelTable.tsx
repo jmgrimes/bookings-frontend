@@ -4,7 +4,7 @@ import {Dispatch, FunctionComponent, SetStateAction} from "react"
 
 import {Booking, BookingModel, useBookingsParams} from "../../features/bookings"
 import {Bookable, BookableDay, BookableDayModel, BookableSession, BookableSessionModel} from "../../features/bookables"
-import {useUser} from "../../features/users";
+import {useUser} from "../../features/users"
 
 type BookingCellProps = {
   day: BookableDayModel

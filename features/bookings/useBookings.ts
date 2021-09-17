@@ -21,6 +21,7 @@ export const UseBookingsQuery = gql`
                 img
                 notes
             }
+            bookerId
             bookable {
                 id
                 group
@@ -29,7 +30,6 @@ export const UseBookingsQuery = gql`
                 sessions
                 notes
             }
-            bookerId
             bookableId
             date
             session

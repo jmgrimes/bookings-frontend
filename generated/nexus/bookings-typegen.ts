@@ -90,12 +90,12 @@ export interface NexusGenFieldTypes {
     title: string; // String!
   }
   Mutation: { // field return type
-    createBookable: number; // Int!
-    createBooking: number; // Int!
+    createBookable: NexusGenRootTypes['Bookable']; // Bookable!
+    createBooking: NexusGenRootTypes['Booking']; // Booking!
     deleteBookable: number; // Int!
     deleteBooking: number; // Int!
-    updateBookable: number; // Int!
-    updateBooking: number; // Int!
+    updateBookable: NexusGenRootTypes['Bookable']; // Bookable!
+    updateBooking: NexusGenRootTypes['Booking']; // Booking!
   }
   Query: { // field return type
     bookable: NexusGenRootTypes['Bookable'] | null; // Bookable
@@ -137,12 +137,12 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
   }
   Mutation: { // field return type name
-    createBookable: 'Int'
-    createBooking: 'Int'
+    createBookable: 'Bookable'
+    createBooking: 'Booking'
     deleteBookable: 'Int'
     deleteBooking: 'Int'
-    updateBookable: 'Int'
-    updateBooking: 'Int'
+    updateBookable: 'Bookable'
+    updateBooking: 'Booking'
   }
   Query: { // field return type name
     bookable: 'Bookable'

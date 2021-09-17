@@ -1,10 +1,10 @@
 import {Dispatch, FunctionComponent, SetStateAction, useEffect, useState} from "react"
 
-import {BookingModelDetails} from "./BookingModelDetails";
+import {BookingModelDetails} from "./BookingModelDetails"
+import {BookingModelForm} from "./BookingModelForm"
 import {Bookable} from "../../features/bookables"
 import {BookingModel, useCreateBooking, useDeleteBooking, useUpdateBooking} from "../../features/bookings"
 import {useUser} from "../../features/users"
-import {BookingModelForm} from "./BookingModelForm";
 
 type BookingControllerProps = {
   bookable: Bookable
@@ -13,20 +13,20 @@ type BookingControllerProps = {
 }
 
 export const BookingModelController: FunctionComponent<BookingControllerProps> = (props: BookingControllerProps) => {
-  const {bookable, bookingModel, setBookingModel} = props;
+  const {bookable, bookingModel, setBookingModel} = props
   const isUpdate = bookingModel?.id !== 0
-  const [user] = useUser();
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [user] = useUser()
+  const [isEditing, setIsEditing] = useState(false)
 
-  const [createBooking] = useCreateBooking((id) => {
+  const [createBooking] = useCreateBooking((booking) => {
     setIsEditing(false)
-    setBookingModel(undefined)
+    setBookingModel(BookingModel.fromBooking(booking))
   })
 
-  const [updateBooking] = useUpdateBooking((id) => {
+  const [updateBooking] = useUpdateBooking((booking) => {
     setIsEditing(false)
-    setBookingModel(undefined)
+    setBookingModel(BookingModel.fromBooking(booking))
   })
 
   const [deleteBooking] = useDeleteBooking(()=> {

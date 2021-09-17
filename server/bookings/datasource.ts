@@ -2,7 +2,8 @@ import {RESTDataSource} from "apollo-datasource-rest"
 
 import {BookableSession} from "../bookables/datasource";
 
-export type BookingModel = {
+export type Booking = {
+  id: number
   bookerId: number
   bookableId: number
   title: string
@@ -11,7 +12,7 @@ export type BookingModel = {
   notes?: string
 }
 
-export type Booking = {id: number} & BookingModel
+export type BookingModel = Omit<Booking, "id">
 
 export type BookingsQuery = {
   bookerId?: number
@@ -44,18 +45,16 @@ export class BookingAPI extends RESTDataSource {
     return this.get<Booking>(`/bookings/${id.toString(10)}`)
   }
 
-  async createBooking(model: BookingModel): Promise<number> {
-    const response = await this.post<Booking>(`/bookings`, model)
-    return response.id
+  createBooking(model: BookingModel): Promise<Booking> {
+    return this.post<Booking>(`/bookings`, model)
   };
+
+  updateBooking(booking: Booking): Promise<Booking> {
+    return this.put<Booking>(`/bookings/${booking.id.toString(10)}`, booking)
+  }
 
   async deleteBooking(id: number): Promise<number> {
     await this.delete(`/bookings/${id.toString(10)}`)
     return id
   };
-
-  async updateBooking(booking: Booking): Promise<number> {
-    await this.put(`/bookings/${booking.id.toString(10)}`, booking)
-    return booking.id
-  }
 }

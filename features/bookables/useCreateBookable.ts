@@ -3,10 +3,10 @@ import {FetchResult, MutationResult, gql, useApolloClient, useMutation} from "@a
 import {Bookable} from "./bookable"
 import {UseBookablesQuery} from "./useBookables";
 
-type OnSuccess = (id: number) => void
+type OnSuccess = (bookable: Bookable) => void
 
 type UseCreateBookableData = {
-  createBookable: number
+  createBookable: Bookable
 }
 
 type UseCreateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseCreateBookableData>>
@@ -27,7 +27,14 @@ export const UseCreateBookableMutation = gql`
             notes: $notes 
             days: $days
             sessions: $sessions
-        )
+        ) {
+            id
+            title
+            group
+            notes
+            days
+            sessions
+        }
     } 
 `
 

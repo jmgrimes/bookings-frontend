@@ -82,10 +82,10 @@ type Booking {
 
 type Mutation {
   """add a new bookable"""
-  createBookable(days: [BookableDay!]!, group: String!, notes: String, sessions: [BookableSession!]!, title: String!): Int!
+  createBookable(days: [BookableDay!]!, group: String!, notes: String, sessions: [BookableSession!]!, title: String!): Bookable!
 
   """add a new booking"""
-  createBooking(bookableId: Int!, bookerId: Int!, date: String!, notes: String, session: BookableSession!, title: String!): Int!
+  createBooking(bookableId: Int!, bookerId: Int!, date: String!, notes: String, session: BookableSession!, title: String!): Booking!
 
   """delete a bookable"""
   deleteBookable(id: Int!): Int!
@@ -94,10 +94,10 @@ type Mutation {
   deleteBooking(id: Int!): Int!
 
   """update a bookable"""
-  updateBookable(days: [BookableDay!]!, group: String!, id: Int!, notes: String, sessions: [BookableSession!]!, title: String!): Int!
+  updateBookable(days: [BookableDay!]!, group: String!, id: Int!, notes: String, sessions: [BookableSession!]!, title: String!): Bookable!
 
   """update a booking"""
-  updateBooking(bookableId: Int!, bookerId: Int!, date: String!, id: Int!, notes: String, session: BookableSession!, title: String!): Int!
+  updateBooking(bookableId: Int!, bookerId: Int!, date: String!, id: Int!, notes: String, session: BookableSession!, title: String!): Booking!
 }
 
 type Query {

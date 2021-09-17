@@ -12,7 +12,7 @@ type BookableEditReadyProps = {
 const BookableEditReady: FunctionComponent<BookableEditReadyProps> = (props: BookableEditReadyProps) => {
   const {bookable} = props
   const router = useRouter()
-  const [onSave] = useUpdateBookable(id => router.push(`/bookables/${bookable.id}`))
+  const [onSave] = useUpdateBookable(bookable => router.push(`/bookables/${bookable.id}`))
   const [onDelete] = useDeleteBookable(() => router.push(`/bookables`))
   const onCancel = () => router.push(`/bookables/${bookable.id}`)
   return <BookableForm bookable={bookable} onSave={onSave} onDelete={onDelete} onCancel={onCancel}/>

@@ -3,8 +3,8 @@ import {Cancel, Delete, Save} from "@material-ui/icons"
 import {FunctionComponent, useEffect, useMemo} from "react"
 import {useController, useForm} from "react-hook-form"
 
-import {BookingModel} from "../../features/bookings";
-import {Bookable, BookableSessionEnum} from "../../features/bookables";
+import {BookingModel} from "../../features/bookings"
+import {Bookable, BookableSessionEnum} from "../../features/bookables"
 
 type OnSave = (booking: BookingModel) => void
 type OnDelete = (booking: BookingModel) => void

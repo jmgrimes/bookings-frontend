@@ -1,10 +1,10 @@
 import {RESTDataSource} from "apollo-datasource-rest"
 
 export type BookableDay = 0 | 1 | 2 | 3 | 4 | 5 | 6
-
 export type BookableSession = 0 | 1 | 2 | 3 | 4
 
-export type BookableModel = {
+export type Bookable = {
+  id: number
   group: string
   title: string
   days: BookableDay[]
@@ -12,7 +12,7 @@ export type BookableModel = {
   notes?: string
 }
 
-export type Bookable = {id: number} & BookableModel
+export type BookableModel = Omit<Bookable, "id">
 
 export class BookableAPI extends RESTDataSource {
   constructor(baseURL: string) {
@@ -28,18 +28,16 @@ export class BookableAPI extends RESTDataSource {
     return this.get<Bookable>(`/bookables/${id.toString(10)}`)
   }
 
-  async createBookable(model: BookableModel): Promise<number> {
-    const response = await this.post<Bookable>(`/bookables`, model)
-    return response.id
+  createBookable(model: BookableModel): Promise<Bookable> {
+    return this.post<Bookable>(`/bookables`, model)
+  }
+
+  updateBookable(bookable: Bookable): Promise<Bookable> {
+    return this.put<Bookable>(`/bookables/${bookable.id.toString(10)}`, bookable)
   }
 
   async deleteBookable(id: number): Promise<number> {
-    const _response = await this.delete(`/bookables/${id.toString(10)}`)
+    await this.delete(`/bookables/${id.toString(10)}`)
     return id
-  }
-
-  async updateBookable(bookable: Bookable): Promise<number> {
-    const _response = await this.put(`/bookables/${bookable.id.toString(10)}`, bookable)
-    return bookable.id
   }
 }
