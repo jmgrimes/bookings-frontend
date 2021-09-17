@@ -52,8 +52,7 @@ export const BookingModelTable: FunctionComponent<BookingModelTableProps> = (pro
       BookingModel.fromBooking(booking) :
       BookingModel.fromSessionOnDay(day, session, user)
     const selected =
-      cellBookingModel.date.toISODate() === bookingModel?.date.toISODate() &&
-      cellBookingModel.session === bookingModel?.session
+      bookingModel?.date.equals(cellBookingModel.date) && bookingModel?.session === cellBookingModel.session
     return (
       <TableCell variant="body" align="center" onClick={() => setBookingModel(cellBookingModel)}
                  className={selected ? classes.bookingSelected : classes.booking}>
