@@ -6,6 +6,11 @@ import {
   List,
   ListItem,
   ListItemText,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Typography
 } from "@material-ui/core"
 import {Skeleton} from "@material-ui/lab"
@@ -50,5 +55,54 @@ export const ListLoading: FunctionComponent = () => {
 export const SimpleLoading: FunctionComponent = () => {
   return (
     <CircularProgress/>
+  )
+}
+
+export const TableLoading: FunctionComponent = () => {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow key="header">
+          <TableCell align="center" valign="middle">
+            <Skeleton variant="text" animation="wave"/>
+          </TableCell>
+          <TableCell align="center" valign="middle">
+            <Skeleton variant="text" animation="wave"/>
+          </TableCell>
+          <TableCell align="center" valign="middle">
+            <Skeleton variant="text" animation="wave"/>
+          </TableCell>
+          <TableCell align="center" valign="middle">
+            <Skeleton variant="text" animation="wave"/>
+          </TableCell>
+          <TableCell align="center" valign="middle">
+            <Skeleton variant="text" animation="wave"/>
+          </TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {
+          [0, 1, 2, 3].map(key => (
+            <TableRow key={key}>
+              <TableCell align="center" valign="middle">
+                <Skeleton variant="text" animation="wave"/>
+              </TableCell>
+              <TableCell align="center" valign="middle">
+                <Skeleton variant="text" animation="wave"/>
+              </TableCell>
+              <TableCell align="center" valign="middle">
+                <Skeleton variant="text" animation="wave"/>
+              </TableCell>
+              <TableCell align="center" valign="middle">
+                <Skeleton variant="text" animation="wave"/>
+              </TableCell>
+              <TableCell align="center" valign="middle">
+                <Skeleton variant="text" animation="wave"/>
+              </TableCell>
+            </TableRow>
+          ))
+        }
+      </TableBody>
+    </Table>
   )
 }

@@ -16,19 +16,19 @@ type UseUpdateBookable = (onSuccess: OnSuccess) => [UseUpdateBookableMutate, Mut
 
 export const UseUpdateBookableMutation = gql`
     mutation useUpdateBookable(
-        $id: Int!, 
-        $title: String!, 
-        $group: String!,
-        $notes: String, 
-        $days: [BookableDay!]!, 
+        $id: Int!
+        $title: String! 
+        $group: String!
+        $notes: String 
+        $days: [BookableDay!]! 
         $sessions: [BookableSession!]!
     ) {
         updateBookable(
-            id: $id, 
-            title: $title, 
-            group: $group, 
-            notes: $notes, 
-            days: $days, 
+            id: $id
+            title: $title 
+            group: $group 
+            notes: $notes 
+            days: $days
             sessions: $sessions
         )
     }

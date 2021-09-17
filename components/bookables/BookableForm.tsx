@@ -19,11 +19,11 @@ import {Cancel, Delete, Save} from "@material-ui/icons"
 import {FunctionComponent, useEffect, useMemo} from "react"
 import {Control, FieldPath, FieldPathValue, UnpackNestedValue, useController, useForm} from "react-hook-form"
 
-import {Bookable, BookableDay, BookableDays, BookableSession, BookableSessions} from "../../features/bookables"
+import {Bookable, BookableDay, BookableDayEnum, BookableSession, BookableSessionEnum} from "../../features/bookables"
 
 type OnSave = (bookable: Bookable) => void
 type OnDelete = (bookable: Bookable) => void
-type OnCancel = (bookable: Bookable) => void
+type OnCancel = () => void
 type BookableFormProps = {
   bookable: Bookable
   onSave: OnSave
@@ -36,8 +36,8 @@ type BookableFormValues = {
   group: string
   title: string
   notes: string
-  days: BookableDay[]
-  sessions: BookableSession[]
+  days: BookableDayEnum[]
+  sessions: BookableSessionEnum[]
 }
 
 type MultiSelectFieldPath = Extract<FieldPath<BookableFormValues>, "days" | "sessions">
@@ -142,7 +142,7 @@ export const BookableForm: FunctionComponent<BookableFormProps> = (props: Bookab
   const {control, handleSubmit, register, reset} = useForm<BookableFormValues>({defaultValues})
 
   const _cancel = () => {
-    onCancel(bookable)
+    onCancel()
   }
 
   const _delete = () => {
@@ -172,8 +172,8 @@ export const BookableForm: FunctionComponent<BookableFormProps> = (props: Bookab
           </Grid>
           <Grid item xs={6}>
             <FormLabel component="legend" className={classes.sectionLabel}>Scheduling</FormLabel>
-            <MultiSelectField control={control} name="days" label="Days" values={BookableDays}/>
-            <MultiSelectField control={control} name="sessions" label="Sessions" values={BookableSessions}/>
+            <MultiSelectField control={control} name="days" label="Days" values={BookableDay.values}/>
+            <MultiSelectField control={control} name="sessions" label="Sessions" values={BookableSession.values}/>
           </Grid>
         </Grid>
       </CardContent>
