@@ -1,8 +1,18 @@
-import {QueryResult, gql, useQuery} from "@apollo/client"
+import {
+  QueryResult,
+  gql,
+  useQuery
+} from "@apollo/client"
+import {
+  DateTime
+} from "luxon"
 
-import {Booking} from "./booking"
-import {Bookable} from "../bookables";
-import {DateTime} from "luxon";
+import {
+  Booking
+} from "./booking"
+import {
+  Bookable
+} from "../bookables"
 
 type UseBookingsData = {
   bookings: Booking[]
@@ -39,7 +49,7 @@ export const UseBookingsQuery = gql`
     }
 `
 
-export const useBookings: UseBookings = (bookable: Bookable, startDate: DateTime, endDate: DateTime) => {
+const useBookings: UseBookings = (bookable, startDate, endDate) => {
   return useQuery<UseBookingsData>(UseBookingsQuery, {
     variables: {
       bookableId: bookable.id,
@@ -48,3 +58,5 @@ export const useBookings: UseBookings = (bookable: Bookable, startDate: DateTime
     }
   })
 }
+
+export default useBookings

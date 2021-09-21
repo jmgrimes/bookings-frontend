@@ -1,8 +1,9 @@
-import {DateTime} from "luxon"
-import {useRouter} from "next/router"
-
-type SetBookingsDate = (date: DateTime) => void
-type SetBookableId = (bookableId: number) => void
+import {
+  DateTime
+} from "luxon"
+import {
+  useRouter
+} from "next/router"
 
 type Week = {
   start: DateTime
@@ -13,13 +14,13 @@ type BookingParams = {
   bookableId?: number
   date: DateTime
   week: Week
-  setBookingsDate: SetBookingsDate
-  setBookableId: SetBookableId
+  setBookingsDate: (date: DateTime) => void
+  setBookableId: (bookableId: number) => void
 }
 
 type UseBookingParams = () => BookingParams
 
-export const useBookingsParams: UseBookingParams = () => {
+const useBookingsParams: UseBookingParams = () => {
   const router = useRouter()
 
   const dateParam = router.query.date ? DateTime.fromISO(router.query.date as string) : DateTime.now()
@@ -32,7 +33,7 @@ export const useBookingsParams: UseBookingParams = () => {
   const bookableIdParam = router.query.bookableId ? parseInt(router.query.bookableId as string, 10) : undefined
   const bookableId = bookableIdParam ? bookableIdParam : undefined
 
-  const setBookingsDate: SetBookingsDate = (date: DateTime) => {
+  const setBookingsDate = (date: DateTime) => {
     router.push({
       pathname: router.pathname,
       query: {
@@ -42,7 +43,7 @@ export const useBookingsParams: UseBookingParams = () => {
     })
   }
 
-  const setBookableId: SetBookableId = (bookableId: number) => {
+  const setBookableId = (bookableId: number) => {
     router.push({
       pathname: router.pathname,
       query: {
@@ -60,3 +61,5 @@ export const useBookingsParams: UseBookingParams = () => {
     setBookableId
   }
 }
+
+export default useBookingsParams

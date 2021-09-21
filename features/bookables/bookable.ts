@@ -1,5 +1,9 @@
-import {Booking} from "../bookings"
-import {DateTime} from "luxon";
+import {
+  Booking
+} from "../bookings"
+import {
+  DateTime
+} from "luxon"
 
 export enum BookableDayEnum {
   Sunday = "Sunday",
@@ -11,14 +15,6 @@ export enum BookableDayEnum {
   Saturday = "Saturday"
 }
 
-export enum BookableSessionEnum {
-  Breakfast = "Breakfast",
-  Morning = "Morning",
-  Lunch = "Lunch",
-  Afternoon = "Afternoon",
-  Evening = "Evening"
-}
-
 export type BookableDayModel = {
   index: number
   day: BookableDayEnum
@@ -28,26 +24,6 @@ export type BookableDayModel = {
 type BookableDayType = {
   values: BookableDayEnum[]
   toModel: (weekStart: DateTime, day: BookableDayEnum) => BookableDayModel
-}
-
-export type BookableSessionModel = {
-  index: number
-  session: BookableSessionEnum
-}
-
-type BookableSessionType = {
-  values: BookableSessionEnum[]
-  toModel: (session: BookableSessionEnum) => BookableSessionModel
-}
-
-export type Bookable = {
-  id: number
-  group: string
-  title: string
-  notes?: string
-  days: BookableDayEnum[]
-  sessions: BookableSessionEnum[]
-  bookings?: Booking[]
 }
 
 export const BookableDay: BookableDayType ={
@@ -68,6 +44,24 @@ export const BookableDay: BookableDayType ={
   }
 }
 
+export enum BookableSessionEnum {
+  Breakfast = "Breakfast",
+  Morning = "Morning",
+  Lunch = "Lunch",
+  Afternoon = "Afternoon",
+  Evening = "Evening"
+}
+
+export type BookableSessionModel = {
+  index: number
+  session: BookableSessionEnum
+}
+
+type BookableSessionType = {
+  values: BookableSessionEnum[]
+  toModel: (session: BookableSessionEnum) => BookableSessionModel
+}
+
 export const BookableSession: BookableSessionType = {
   values: [
     BookableSessionEnum.Breakfast,
@@ -81,4 +75,14 @@ export const BookableSession: BookableSessionType = {
     const model: BookableSessionModel = {index, session}
     return model
   }
+}
+
+export type Bookable = {
+  id: number
+  group: string
+  title: string
+  notes?: string
+  days: BookableDayEnum[]
+  sessions: BookableSessionEnum[]
+  bookings?: Booking[]
 }

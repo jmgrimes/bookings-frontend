@@ -1,8 +1,20 @@
-import {FetchResult, MutationResult, gql, useApolloClient, useMutation} from "@apollo/client"
+import {
+  FetchResult,
+  MutationResult,
+  gql,
+  useApolloClient,
+  useMutation
+} from "@apollo/client"
+import {
+  DateTime
+} from "luxon"
 
-import {Booking} from "./booking"
-import {UseBookingsQuery} from "./useBookings";
-import {DateTime} from "luxon";
+import {
+  Booking
+} from "./booking"
+import {
+  UseBookingsQuery
+} from "./useBookings"
 
 type OnSuccess = (booking: Booking) => void
 
@@ -14,7 +26,7 @@ type UseUpdateBookingMutate = (booking: Booking) => Promise<FetchResult<UseUpdat
 
 type UseUpdateBooking = (onSuccess: OnSuccess) => [UseUpdateBookingMutate, MutationResult<UseUpdateBookingData>]
 
-export const UseUpdateBookingMutation = gql`
+const UseUpdateBookingMutation = gql`
     mutation useUpdateBooking(
         $id: Int!
         $bookerId: Int!
@@ -59,10 +71,10 @@ export const UseUpdateBookingMutation = gql`
     }
 `
 
-export const useUpdateBooking: UseUpdateBooking = (onSuccess: OnSuccess) => {
+const useUpdateBooking: UseUpdateBooking = (onSuccess) => {
   const client = useApolloClient();
   const [mutate, result] = useMutation<UseUpdateBookingData>(UseUpdateBookingMutation, {
-    onCompleted: async (data: UseUpdateBookingData) => {
+    onCompleted: async (data) => {
       const booking: Booking = {
         ...data.updateBooking,
         date: DateTime.fromISO(data.updateBooking.date)
@@ -73,7 +85,7 @@ export const useUpdateBooking: UseUpdateBooking = (onSuccess: OnSuccess) => {
       onSuccess(booking)
     }
   })
-  const updateBooking: UseUpdateBookingMutate = async (booking: Booking) => {
+  const updateBooking: UseUpdateBookingMutate = async (booking) => {
     return mutate({
       variables: {
         id: booking.id,
@@ -88,3 +100,5 @@ export const useUpdateBooking: UseUpdateBooking = (onSuccess: OnSuccess) => {
   }
   return [updateBooking, result]
 }
+
+export default useUpdateBooking

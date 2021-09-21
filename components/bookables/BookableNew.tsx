@@ -1,8 +1,16 @@
-import {useRouter} from "next/router"
-import {FunctionComponent} from "react"
+import {
+  useRouter
+} from "next/router"
+import {
+  FunctionComponent
+} from "react"
 
-import {BookableForm} from "./BookableForm"
-import {Bookable, useCreateBookable} from "../../features/bookables"
+import {
+  Bookable,
+  useCreateBookable
+} from "../../features/bookables"
+
+import BookableForm from "./BookableForm"
 
 const newBookable: Bookable = {
   id: 0,
@@ -12,11 +20,11 @@ const newBookable: Bookable = {
   sessions: []
 }
 
-export const BookableNew: FunctionComponent = () => {
+const BookableNew: FunctionComponent = () => {
   const router = useRouter()
-  const [createBookable] = useCreateBookable(bookable => router.push(`/bookables/${bookable.id}`))
   const onCancel = () => router.push(`/bookables`)
-  return (
-    <BookableForm bookable={newBookable} onSave={createBookable} onCancel={onCancel}/>
-  )
+  const [onSave] = useCreateBookable(bookable => router.push(`/bookables/${bookable.id}`))
+  return <BookableForm bookable={newBookable} onSave={onSave} onCancel={onCancel}/>
 }
+
+export default BookableNew

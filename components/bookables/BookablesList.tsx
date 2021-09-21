@@ -1,34 +1,47 @@
-import {Button, ButtonGroup, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select} from "@material-ui/core"
-import {ArrowLeft, ArrowRight, DevicesOther} from "@material-ui/icons"
+import {
+  Button,
+  ButtonGroup,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Select
+} from "@material-ui/core"
+import {
+  ArrowLeft,
+  ArrowRight,
+  DevicesOther
+} from "@material-ui/icons"
 import Link from "next/link"
-import {useRouter} from "next/router"
-import {ChangeEvent, Fragment, FunctionComponent} from "react"
+import {
+  useRouter
+} from "next/router"
+import {
+  ChangeEvent,
+  Fragment,
+  FunctionComponent
+} from "react"
 
-import {Bookable} from "../../features/bookables"
+import {
+  Bookable
+} from "../../features/bookables"
 
-type BookablesListGetUrl = (id: number) => string
 type BookablesListProps = {
   bookable: Bookable
   bookables: Bookable[]
-  getUrl: BookablesListGetUrl
+  getUrl: (id: number) => string
 }
 
-export const BookablesList: FunctionComponent<BookablesListProps> = (props: BookablesListProps) => {
+const BookablesList: FunctionComponent<BookablesListProps> = (props: BookablesListProps) => {
   const {bookable, bookables, getUrl} = props
   const router = useRouter()
 
-  const group = bookable.group
+  const group = bookable.group || ""
   const groups = [...new Set(bookables.map(b => b.group))]
   const bookablesInGroup = bookables.filter(b => b.group === group)
 
-  type ChangeEventTarget = {
-    name?: string
-    value: unknown
-  }
-
-  type ChangeEventHandler = (event: ChangeEvent<ChangeEventTarget>) => void
-
-  const changeGroup: ChangeEventHandler = (event: ChangeEvent<ChangeEventTarget>) => {
+  const changeGroup = (event: ChangeEvent<{name?: string, value: unknown}>) => {
     const bookablesInSelectedGroup = bookables.filter(b => b.group === event.target.value)
     return router.push(getUrl(bookablesInSelectedGroup[0].id))
   }
@@ -49,10 +62,8 @@ export const BookablesList: FunctionComponent<BookablesListProps> = (props: Book
 
   return (
     <Fragment>
-      <Select fullWidth value={group || ""} onChange={changeGroup}>
-        {
-          groups.map(group => <MenuItem value={group} key={group}>{group}</MenuItem>)
-        }
+      <Select fullWidth value={group} onChange={changeGroup}>
+        {groups.map(group => <MenuItem value={group} key={group}>{group}</MenuItem>)}
       </Select>
       <List>
         {
@@ -75,3 +86,5 @@ export const BookablesList: FunctionComponent<BookablesListProps> = (props: Book
     </Fragment>
   )
 }
+
+export default BookablesList

@@ -1,40 +1,38 @@
 import {
-  ApolloServerPluginLandingPageDisabled,
-} from "apollo-server-core";
+  ApolloServerPluginLandingPageDisabled
+} from "apollo-server-core"
 import {
-  ApolloServer,
-} from "apollo-server-micro";
+  ApolloServer
+} from "apollo-server-micro"
 import {
-  NextApiHandler,
-  NextApiRequest,
-  NextApiResponse,
-} from "next";
+  NextApiHandler
+} from "next"
 
 import {
   dataSources,
-  schema,
-} from "../../server";
+  schema
+} from "../../server"
 
 const server: ApolloServer = new ApolloServer({
   dataSources,
   plugins: [
     ApolloServerPluginLandingPageDisabled(),
   ],
-  schema,
-});
+  schema
+})
 
-const apolloServerHandler: Promise<NextApiHandler> = 
+const apolloServerHandler: Promise<NextApiHandler> =
   server.start().then(_value => server.createHandler({path: "/api/graphql" }));
 
-const apiHandler: NextApiHandler = async (request: NextApiRequest, response: NextApiResponse) => {
-  const handle = await apolloServerHandler;
-  return handle(request, response);
-};
+const apiHandler: NextApiHandler = async (request, response) => {
+  const handle = await apolloServerHandler
+  return handle(request, response)
+}
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 }
 
-export default apiHandler;
+export default apiHandler

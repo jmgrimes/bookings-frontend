@@ -1,7 +1,17 @@
-import {FetchResult, MutationResult, gql, useApolloClient, useMutation} from "@apollo/client"
+import {
+  FetchResult,
+  MutationResult,
+  gql,
+  useApolloClient,
+  useMutation
+} from "@apollo/client"
 
-import {Booking} from "./booking"
-import {UseBookingsQuery} from "./useBookings";
+import {
+  Booking
+} from "./booking"
+import {
+  UseBookingsQuery
+} from "./useBookings"
 
 type OnSuccess = (id: number) => void
 
@@ -13,23 +23,23 @@ type UseDeleteBookingMutate = (booking: Booking) => Promise<FetchResult<UseDelet
 
 type UseDeleteBooking = (onSuccess: OnSuccess) => [UseDeleteBookingMutate, MutationResult<UseDeleteBookingData>]
 
-export const UseDeleteBookingMutation = gql`
+const UseDeleteBookingMutation = gql`
     mutation useDeleteBooking($id: Int!) {
         deleteBooking(id: $id)
     }
 `
 
-export const useDeleteBooking: UseDeleteBooking = (onSuccess: OnSuccess) => {
+const useDeleteBooking: UseDeleteBooking = (onSuccess) => {
   const client = useApolloClient();
   const [mutate, result] = useMutation<UseDeleteBookingData>(UseDeleteBookingMutation, {
-    onCompleted: async (data: UseDeleteBookingData) => {
+    onCompleted: async (data) => {
       await client.refetchQueries({
         include: [UseBookingsQuery]
       })
       onSuccess(data.deleteBooking)
     }
   })
-  const deleteBooking: UseDeleteBookingMutate = async (booking: Booking) => {
+  const deleteBooking: UseDeleteBookingMutate = async (booking) => {
     return mutate({
       variables: {
         id: booking.id
@@ -38,3 +48,5 @@ export const useDeleteBooking: UseDeleteBooking = (onSuccess: OnSuccess) => {
   }
   return [deleteBooking, result]
 }
+
+export default useDeleteBooking

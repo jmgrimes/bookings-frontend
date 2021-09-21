@@ -10,21 +10,32 @@ import {
   ListItemText,
   Typography
 } from "@material-ui/core"
-import {CalendarToday, Edit, Event, Visibility, VisibilityOff} from "@material-ui/icons"
+import {
+  CalendarToday,
+  Edit,
+  Event,
+  Visibility,
+  VisibilityOff
+} from "@material-ui/icons"
 import Link from "next/link"
-import {Fragment, FunctionComponent, useState} from "react"
+import {
+  Fragment,
+  FunctionComponent,
+  useState
+} from "react"
 
-import {Bookable} from "../../features/bookables"
+import {
+  Bookable
+} from "../../features/bookables"
 
 type BookableDetailsProps = {
   bookable: Bookable
 }
 
-export const BookableDetails: FunctionComponent<BookableDetailsProps> = (props: BookableDetailsProps) => {
+const BookableDetails: FunctionComponent<BookableDetailsProps> = (props) => {
   const {bookable} = props
   const [showDetails, setShowDetails] = useState(true)
   const toggleDetails = () => setShowDetails(showDetails => !showDetails)
-
   const action = (
     <Fragment>
       <IconButton onClick={toggleDetails}>
@@ -82,3 +93,5 @@ export const BookableDetails: FunctionComponent<BookableDetailsProps> = (props: 
     </Card>
   )
 }
+
+export default BookableDetails

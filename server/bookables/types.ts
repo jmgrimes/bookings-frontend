@@ -1,4 +1,14 @@
-import {enumType, intArg, list, mutationField, nonNull, nullable, objectType, queryField, stringArg} from "nexus"
+import {
+  enumType,
+  intArg,
+  list,
+  mutationField,
+  nonNull,
+  nullable,
+  objectType,
+  queryField,
+  stringArg
+} from "nexus"
 
 export const BookableDayEnumType = enumType({
   name: "BookableDay",

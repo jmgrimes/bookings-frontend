@@ -1,8 +1,20 @@
-
-import {ServerStyleSheets} from '@material-ui/core/styles'
-import {NextPage} from "next"
-import Document, {DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript} from 'next/document'
-import {Children} from 'react'
+import {
+  ServerStyleSheets
+} from '@material-ui/core/styles'
+import {
+  NextPage
+} from "next"
+import Document, {
+  DocumentContext,
+  DocumentInitialProps,
+  Html,
+  Head,
+  Main,
+  NextScript
+} from 'next/document'
+import {
+  Children
+} from 'react'
 
 const MyDocument: NextPage<DocumentInitialProps> = () => {
   return (

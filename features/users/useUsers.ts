@@ -1,8 +1,20 @@
-import {QueryResult, gql, useQuery} from "@apollo/client"
+import {
+  QueryResult,
+  gql,
+  useQuery
+} from "@apollo/client"
 
-import {User} from "./user"
+import {
+  User
+} from "./user"
 
-const query = gql`
+type UseUsersData = {
+  users: User[]
+}
+
+type UseUsers = () => QueryResult<UseUsersData>
+
+export const UseUsersQuery = gql`
   query useUsers {
     users {
       id
@@ -13,12 +25,8 @@ const query = gql`
   }
 `
 
-type Data = {
-  users: User[]
+const useUsers: UseUsers = () => {
+  return useQuery<UseUsersData>(UseUsersQuery)
 }
 
-type UseUsers = () => QueryResult<Data>
-
-export const useUsers: UseUsers = () => {
-  return useQuery<Data>(query)
-}
+export default useUsers

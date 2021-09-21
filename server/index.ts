@@ -1,10 +1,14 @@
-import {GraphQLSchema} from "graphql";
-import {makeSchema} from "nexus"
+import {
+  GraphQLSchema
+} from "graphql"
+import {
+  makeSchema
+} from "nexus"
 import path from "path"
 
-import {BookableAPI} from "./bookables/datasource"
-import {BookingAPI} from "./bookings/datasource"
-import {UserAPI} from "./users/datasource"
+import BookableAPI from "./bookables/datasource"
+import BookingAPI from "./bookings/datasource"
+import UserAPI from "./users/datasource"
 import * as BookableTypes from "./bookables/types"
 import * as BookingTypes from "./bookings/types"
 import * as UserTypes from "./users/types"

@@ -1,4 +1,6 @@
-import {RESTDataSource} from "apollo-datasource-rest"
+import {
+  RESTDataSource
+} from "apollo-datasource-rest"
 
 export type User = {
   id: number
@@ -8,7 +10,7 @@ export type User = {
   notes?: string
 }
 
-export class UserAPI extends RESTDataSource {
+class UserAPI extends RESTDataSource {
   constructor(baseURL: string) {
     super()
     this.baseURL = baseURL
@@ -22,3 +24,5 @@ export class UserAPI extends RESTDataSource {
     return this.get<User>(`/users/${id.toString(10)}`)
   }
 }
+
+export default UserAPI

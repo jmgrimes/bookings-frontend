@@ -1,15 +1,39 @@
-import {Button, Card, CardActions, CardContent, CardHeader, TextField, Typography, makeStyles} from "@material-ui/core"
-import {Cancel, Delete, Save} from "@material-ui/icons"
-import {DateTime} from "luxon"
-import {FunctionComponent, useEffect, useMemo} from "react"
-import {useController, useForm} from "react-hook-form"
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  TextField,
+  Typography
+} from "@material-ui/core"
+import {
+  Cancel,
+  Delete,
+  Save
+} from "@material-ui/icons"
+import {
+  DateTime
+} from "luxon"
+import {
+  FunctionComponent,
+  useEffect,
+  useMemo
+} from "react"
+import {
+  useController,
+  useForm
+} from "react-hook-form"
 
-import {BookingModel} from "../../features/bookings"
-import {Bookable, BookableSessionEnum} from "../../features/bookables"
+import {
+  BookingModel
+} from "../../features/bookings"
+import {
+  Bookable,
+  BookableSessionEnum
+} from "../../features/bookables"
 
-type OnSave = (booking: BookingModel) => void
-type OnDelete = (booking: BookingModel) => void
-type OnCancel = () => void
+import useStyles from "./useStyles"
 
 type BookingFormValues = {
   id: number
@@ -19,29 +43,6 @@ type BookingFormValues = {
   title: string
   notes?: string
 }
-
-type BookingFormProps = {
-  bookable: Bookable
-  bookingModel: BookingModel
-  onSave: OnSave
-  onCancel: OnCancel
-  onDelete?: OnDelete
-}
-
-const useStyles = makeStyles(() => ({
-  flexSpacer: {
-    flexGrow: 1
-  },
-  field: {
-    marginBottom: 10,
-    "& label": {
-      fontWeight: "bold"
-    }
-  },
-  textField: {
-    marginBottom: 10
-  }
-}));
 
 const toBookingModel = (values: BookingFormValues) => {
   return new BookingModel(
@@ -66,20 +67,24 @@ const fromBookingModel = (bookingModel: BookingModel) => {
   return values
 }
 
-export const BookingModelForm: FunctionComponent<BookingFormProps> = (props: BookingFormProps) => {
-  const {bookable, bookingModel, onCancel, onDelete, onSave} = props;
-  const classes = useStyles();
+type BookingModelFormProps = {
+  bookable: Bookable
+  bookingModel: BookingModel
+  onSave: (bookingModel: BookingModel) => void
+  onCancel: () => void
+  onDelete?: (bookingModel: BookingModel) => void
+}
 
+export const BookingModelForm: FunctionComponent<BookingModelFormProps> = (props) => {
+  const {bookable, bookingModel, onCancel, onDelete, onSave} = props;
+
+  const classes = useStyles();
   const defaultValues = useMemo(
     () => fromBookingModel(bookingModel),
     [bookingModel]
   );
 
-  const {control, formState, handleSubmit, register, reset} = useForm({defaultValues});
-  const idField = register("id", {valueAsNumber: true});
-  const bookerIdField = register("bookerId", {valueAsNumber: true})
-  const dateField = register("date");
-  const sessionField = register("session");
+  const {control, handleSubmit, register, reset} = useForm({defaultValues});
   const {field: titleField, fieldState: titleFieldState} = useController({
     control,
     name: "title",
@@ -94,8 +99,11 @@ export const BookingModelForm: FunctionComponent<BookingFormProps> = (props: Boo
       required: false
     }
   });
-  const titleError = titleFieldState.error?.type === "required" ? "Title is required." : null;
-  const notesError = notesFieldState.invalid ? "Notes is invalid." : null;
+
+  useEffect(
+    () => reset(fromBookingModel(bookingModel)),
+    [bookingModel, reset]
+  );
 
   const _cancel = () => {
     onCancel();
@@ -110,21 +118,17 @@ export const BookingModelForm: FunctionComponent<BookingFormProps> = (props: Boo
     onSave(bookingModel);
   });
 
-  useEffect(
-    () => reset(fromBookingModel(bookingModel)),
-    [bookingModel, reset]
-  );
-
-  console.log(formState);
+  const titleError = titleFieldState.error?.type === "required" ? "Title is required." : null;
+  const notesError = notesFieldState.invalid ? "Notes is invalid." : null;
 
   return (
     <Card>
       <CardHeader title={onDelete ? "Edit Booking Details" : "New Booking Details"}/>
       <CardContent>
-        <input type="hidden" {...idField}/>
-        <input type="hidden" {...bookerIdField}/>
-        <input type="hidden" {...dateField}/>
-        <input type="hidden" {...sessionField}/>
+        <input type="hidden" {...register("id", {valueAsNumber: true})}/>
+        <input type="hidden" {...register("bookerId", {valueAsNumber: true})}/>
+        <input type="hidden" {...register("date")}/>
+        <input type="hidden" {...register("session")}/>
         <div className={classes.field}>
           <Typography variant="body1" component="label">Bookable</Typography>
           <Typography variant="body1" component="p">{bookable.title}</Typography>
@@ -154,7 +158,7 @@ export const BookingModelForm: FunctionComponent<BookingFormProps> = (props: Boo
                    {...notesField}/>
       </CardContent>
       <CardActions>
-        <div className={classes.flexSpacer}/>
+        <div className={classes.horizontalSpacer}/>
         <Button variant="contained" color="primary" startIcon={<Save/>} onClick={_save}>Save</Button>
         {
           onDelete &&
@@ -163,8 +167,10 @@ export const BookingModelForm: FunctionComponent<BookingFormProps> = (props: Boo
           </Button>
         }
         <Button variant="contained" startIcon={<Cancel/>} onClick={_cancel}>Cancel</Button>
-        <div className={classes.flexSpacer}/>
+        <div className={classes.horizontalSpacer}/>
       </CardActions>
     </Card>
   );
 }
+
+export default BookingModelForm

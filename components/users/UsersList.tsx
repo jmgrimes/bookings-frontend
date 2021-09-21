@@ -1,18 +1,28 @@
-import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core"
-import {Person} from "@material-ui/icons"
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from "@material-ui/core"
+import {
+  Person
+} from "@material-ui/icons"
 import Link from "next/link"
-import {FunctionComponent} from "react"
+import {
+  FunctionComponent
+} from "react"
 
-import {User} from "../../features/users"
+import {
+  User
+} from "../../features/users"
 
-type UsersListGetUrl = (id: number) => (string)
 type UsersListProps = {
   user: User
   users: User[]
-  getUrl: UsersListGetUrl
+  getUrl: (id: number) => (string)
 }
 
-export const UsersList: FunctionComponent<UsersListProps> = (props: UsersListProps) => {
+const UsersList: FunctionComponent<UsersListProps> = (props) => {
   const {user, users, getUrl} = props
   return (
     <List>
@@ -31,3 +41,5 @@ export const UsersList: FunctionComponent<UsersListProps> = (props: UsersListPro
     </List>
   )
 }
+
+export default UsersList

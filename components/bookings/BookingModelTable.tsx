@@ -1,10 +1,36 @@
-import {Table, TableBody, TableCell, TableHead, TableRow, makeStyles} from "@material-ui/core"
-import {DateTime} from "luxon"
-import {Dispatch, FunctionComponent, SetStateAction} from "react"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "@material-ui/core"
+import {
+  DateTime
+} from "luxon"
+import {
+  Dispatch,
+  FunctionComponent,
+  SetStateAction
+} from "react"
 
-import {Booking, BookingModel, useBookingsParams} from "../../features/bookings"
-import {Bookable, BookableDay, BookableDayModel, BookableSession, BookableSessionModel} from "../../features/bookables"
-import {useUser} from "../../features/users"
+import {
+  Booking,
+  BookingModel,
+  useBookingsParams
+} from "../../features/bookings"
+import {
+  Bookable,
+  BookableDay,
+  BookableDayModel,
+  BookableSession,
+  BookableSessionModel
+} from "../../features/bookables"
+import {
+  useUser
+} from "../../features/users"
+
+import useStyles from "./useStyles"
 
 type BookingCellProps = {
   day: BookableDayModel
@@ -18,26 +44,7 @@ type BookingModelTableProps = {
   setBookingModel: Dispatch<SetStateAction<BookingModel | undefined>>
 }
 
-const useStyles = makeStyles((theme) => ({
-  header: {
-    color: theme.palette.primary.contrastText,
-    background: theme.palette.primary.dark,
-    height: 55,
-    fontWeight: "bold"
-  },
-  booking: {
-    color: theme.palette.grey.A700,
-    "&:hover": {
-      background: theme.palette.grey.A100
-    }
-  },
-  bookingSelected: {
-    color: theme.palette.secondary.contrastText,
-    background: theme.palette.secondary.light
-  }
-}));
-
-export const BookingModelTable: FunctionComponent<BookingModelTableProps> = (props: BookingModelTableProps) => {
+const BookingModelTable: FunctionComponent<BookingModelTableProps> = (props) => {
   const classes = useStyles()
   const [user] = useUser()
   const {week} = useBookingsParams()
@@ -45,7 +52,7 @@ export const BookingModelTable: FunctionComponent<BookingModelTableProps> = (pro
   const days: BookableDayModel[] = bookable.days.map(day => BookableDay.toModel(week.start, day))
   const sessions: BookableSessionModel[] = bookable.sessions.map(BookableSession.toModel)
 
-  const BookingModelCell: FunctionComponent<BookingCellProps> = (props: BookingCellProps) => {
+  const BookingModelCell: FunctionComponent<BookingCellProps> = (props) => {
     const {day, session} = props
     const booking = bookings.find(b => b.session === session.session && b.date.toISODate() === day.date.toISODate())
     const cellBookingModel = booking ?
@@ -93,5 +100,7 @@ export const BookingModelTable: FunctionComponent<BookingModelTableProps> = (pro
           }
         </TableBody>
       </Table>
-  );
-};
+  )
+}
+
+export default BookingModelTable

@@ -1,21 +1,30 @@
-import {AppBar, Tab, Tabs, Toolbar, makeStyles} from "@material-ui/core"
-import {DevicesOther, Event, Home, People} from "@material-ui/icons"
+import {
+  AppBar,
+  Tab,
+  Tabs,
+  Toolbar
+} from "@material-ui/core"
+import {
+  DevicesOther,
+  Event,
+  Home,
+  People
+} from "@material-ui/icons"
 import Link from "next/link"
-import {useRouter} from "next/router"
-import {FunctionComponent} from "react"
+import {
+  useRouter
+} from "next/router"
+import {
+  FunctionComponent
+} from "react"
 
-import {UserPicker} from "../users"
+import {
+  UserPicker
+} from "../users"
 
-const useStyles = makeStyles(() => ({
-  appbar: {
-    marginBottom: 20
-  },
-  menuTabs: {
-    flexGrow: 1
-  }
-}))
+import useStyles from "./useStyles"
 
-export const Navigation: FunctionComponent = () => {
+const Navigation: FunctionComponent = () => {
   const classes = useStyles()
   const router = useRouter()
   const selectedTab =
@@ -46,3 +55,5 @@ export const Navigation: FunctionComponent = () => {
     </AppBar>
   )
 }
+
+export default Navigation

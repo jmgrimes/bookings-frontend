@@ -1,10 +1,26 @@
-import {Dispatch, FunctionComponent, SetStateAction, useEffect, useState} from "react"
+import {
+  Dispatch,
+  FunctionComponent,
+  SetStateAction,
+  useEffect,
+  useState
+} from "react"
 
-import {BookingModelDetails} from "./BookingModelDetails"
-import {BookingModelForm} from "./BookingModelForm"
-import {Bookable} from "../../features/bookables"
-import {BookingModel, useCreateBooking, useDeleteBooking, useUpdateBooking} from "../../features/bookings"
-import {useUser} from "../../features/users"
+import {
+  Bookable
+} from "../../features/bookables"
+import {
+  BookingModel,
+  useCreateBooking,
+  useDeleteBooking,
+  useUpdateBooking
+} from "../../features/bookings"
+import {
+  useUser
+} from "../../features/users"
+
+import BookingModelDetails from "./BookingModelDetails"
+import BookingModelForm from "./BookingModelForm"
 
 type BookingControllerProps = {
   bookable: Bookable
@@ -12,7 +28,7 @@ type BookingControllerProps = {
   setBookingModel: Dispatch<SetStateAction<BookingModel | undefined>>
 }
 
-export const BookingModelController: FunctionComponent<BookingControllerProps> = (props: BookingControllerProps) => {
+const BookingModelController: FunctionComponent<BookingControllerProps> = (props) => {
   const {bookable, bookingModel, setBookingModel} = props
   const isUpdate = bookingModel?.id !== 0
 
@@ -34,6 +50,11 @@ export const BookingModelController: FunctionComponent<BookingControllerProps> =
     setBookingModel(undefined)
   })
 
+  useEffect(
+    () => setIsEditing(false),
+    [bookable, bookingModel, user, setIsEditing]
+  );
+
   const onSave = (newBookingModel: BookingModel) => {
     const booking = newBookingModel.toBooking(bookable)
     if (isUpdate) {
@@ -49,15 +70,15 @@ export const BookingModelController: FunctionComponent<BookingControllerProps> =
     return deleteBooking(booking)
   }
 
-  useEffect(
-    () => setIsEditing(false),
-    [bookable, bookingModel, user, setIsEditing]
-  );
-
-  return bookingModel && isEditing ?
-    <BookingModelForm bookable={bookable} bookingModel={bookingModel}
-                      onSave={onSave} onDelete={isUpdate ? onDelete : undefined}
-                      onCancel={() => setIsEditing(false)}
-    /> :
-    <BookingModelDetails bookable={bookable} bookingModel={bookingModel} onEdit={() => setIsEditing(true)}/>
+  if (bookingModel && isEditing) {
+    return (
+      <BookingModelForm bookable={bookable} bookingModel={bookingModel}
+                        onSave={onSave} onDelete={isUpdate ? onDelete : undefined}
+                        onCancel={() => setIsEditing(false)}
+      />
+    )
+  }
+  return <BookingModelDetails bookable={bookable} bookingModel={bookingModel} onEdit={() => setIsEditing(true)}/>
 }
+
+export default BookingModelController

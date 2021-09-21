@@ -1,50 +1,73 @@
-import {Grid} from "@material-ui/core";
-import {Fragment, FunctionComponent, ReactNode, useEffect, useState} from "react";
+import {
+  Grid
+} from "@material-ui/core";
+import {
+  FunctionComponent,
+  ReactNode,
+  useEffect,
+  useState
+} from "react"
 
-import {BookingModelController} from "./BookingModelController"
-import {BookingModelTable} from "./BookingModelTable";
-import {WeekPicker} from "./WeekPicker";
-import {BookablesList} from "../bookables";
-import {Bookable, useBookables} from "../../features/bookables";
-import {BookingModel, useBookings, useBookingsParams} from "../../features/bookings";
-import {CardLoading, ListLoading, TableLoading, ViewError} from "../application";
+import {
+  ErrorView,
+  LoadingCard,
+  LoadingList,
+  LoadingTable
+} from "../application"
+import {
+  BookablesList
+} from "../bookables"
+import {
+  Bookable,
+  useBookables
+} from "../../features/bookables"
+import {
+  BookingModel,
+  useBookings,
+  useBookingsParams
+} from "../../features/bookings"
+
+import BookingModelController from "./BookingModelController"
+import BookingModelTable from "./BookingModelTable"
+import WeekPicker from "./WeekPicker"
 
 type BookingsViewLayoutProps = {
-  sidebarContent: ReactNode
-  tableContent: ReactNode
-  cardContent: ReactNode
+  sidebar: ReactNode
+  table: ReactNode
+  card: ReactNode
 }
 
-type BookablesListReadyProps = {
-  bookables: Bookable[]
-}
-
-const BookingsViewLayout: FunctionComponent<BookingsViewLayoutProps> = (props: BookingsViewLayoutProps) => {
-  const {sidebarContent, tableContent, cardContent} = props
+const BookingsViewLayout: FunctionComponent<BookingsViewLayoutProps> = (props) => {
+  const {sidebar, table, card} = props
   return (
     <Grid container spacing={3}>
-      <Grid item xs={2}>{sidebarContent}</Grid>
+      <Grid item xs={2}>{sidebar}</Grid>
       <Grid item xs={7}>
         <WeekPicker/>
-        {tableContent}
+        {table}
       </Grid>
-      <Grid item xs={3}>{cardContent}</Grid>
+      <Grid item xs={3}>{card}</Grid>
     </Grid>
   )
 }
 
 const BookingsViewLoading = () => {
-  const sidebarContent = <ListLoading/>
-  const tableContent = <TableLoading/>
-  const cardContent = <CardLoading/>
-  return <BookingsViewLayout sidebarContent={sidebarContent} tableContent={tableContent} cardContent={cardContent}/>
+  const sidebar = <LoadingList/>
+  const table = <LoadingTable/>
+  const card = <LoadingCard/>
+  return <BookingsViewLayout sidebar={sidebar} table={table} card={card}/>
 }
 
-const BookingsViewReady: FunctionComponent<BookablesListReadyProps> = (props: BookablesListReadyProps) => {
+type BookingsViewReadyProps = {
+  bookables: Bookable[]
+}
+
+const BookingsViewReady: FunctionComponent<BookingsViewReadyProps> = (props) => {
   const {bookables} = props
+  const bookable = bookables.find(b => b.id === bookableId) || bookables[0];
+
   const [bookingModel, setBookingModel] = useState<BookingModel>()
   const {date, week, bookableId} = useBookingsParams()
-  const bookable = bookables.find(b => b.id === bookableId) || bookables[0];
   const {data, loading, error} = useBookings(bookable, week.start, week.end)
 
   const getUrl = (id: number) => {
@@ -59,54 +82,55 @@ const BookingsViewReady: FunctionComponent<BookablesListReadyProps> = (props: Bo
     [bookable, setBookingModel]
   )
 
-  let tableContent: ReactNode
-  let cardContent: ReactNode
+  let table: ReactNode
+  let card: ReactNode
 
   if (loading) {
-    tableContent = <TableLoading/>
-    cardContent = <CardLoading/>
+    table = <LoadingTable/>
+    card = <LoadingCard/>
   }
   else if (error) {
     const title = "An error occurred while loading bookings."
-    return <ViewError title={title} message={error.message}/>
+    return <ErrorView title={title} message={error.message}/>
   }
   else if (!data) {
     const title = "An error occurred while loading bookings."
     const message = "An unexpected error occurred: bookings were not available when loading completed."
-    return <ViewError title={title} message={message}/>
+    return <ErrorView title={title} message={message}/>
   }
   else {
-    tableContent = <BookingModelTable
+    table = <BookingModelTable
       bookable={bookable}
       bookings={data.bookings}
       bookingModel={bookingModel}
       setBookingModel={setBookingModel}
     />
-    cardContent = <BookingModelController
+    card = <BookingModelController
       bookable={bookable}
       bookingModel={bookingModel}
       setBookingModel={setBookingModel}
     />
   }
 
-  const sidebarContent = <BookablesList bookables={bookables} bookable={bookable} getUrl={getUrl}/>
-  return <BookingsViewLayout sidebarContent={sidebarContent} tableContent={tableContent} cardContent={cardContent}/>
+  const sidebar = <BookablesList bookables={bookables} bookable={bookable} getUrl={getUrl}/>
+  return <BookingsViewLayout sidebar={sidebar} table={table} card={card}/>
 }
 
-
-export const BookingsView: FunctionComponent = () => {
+const BookingsView: FunctionComponent = () => {
   const {data, loading, error} = useBookables();
   if (loading) {
     return <BookingsViewLoading/>
   }
   if (error) {
     const title = "An error occurred while loading bookables."
-    return <ViewError title={title} message={error.message}/>
+    return <ErrorView title={title} message={error.message}/>
   }
   if (!data) {
     const title = "An error occurred while loading bookables."
     const message = "An unexpected error occurred: bookables were not available when loading completed."
-    return <ViewError title={title} message={message}/>
+    return <ErrorView title={title} message={message}/>
   }
   return <BookingsViewReady bookables={data.bookables}/>
-};
+}
+
+export default BookingsView

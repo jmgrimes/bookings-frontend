@@ -1,6 +1,1 @@
-export * from "./BookingModelController"
-export * from "./BookingModelDetails"
-export * from "./BookingModelForm"
-export * from "./BookingModelTable"
-export * from "./BookingsView"
-export * from "./WeekPicker"
+export {default as BookingsView} from "./BookingsView"

@@ -1,4 +1,12 @@
-import {intArg, list, nonNull, nullable, objectType, queryField, stringArg} from "nexus"
+import {
+  intArg,
+  list,
+  nonNull,
+  nullable,
+  objectType,
+  queryField,
+  stringArg
+} from "nexus"
 
 export const UserType = objectType({
   name: "User",

@@ -1,4 +1,13 @@
-import {intArg, list, mutationField, nonNull, nullable, objectType, queryField, stringArg} from "nexus"
+import {
+  intArg,
+  list,
+  mutationField,
+  nonNull,
+  nullable,
+  objectType,
+  queryField,
+  stringArg
+} from "nexus"
 
 export const BookingType = objectType({
   name: "Booking",

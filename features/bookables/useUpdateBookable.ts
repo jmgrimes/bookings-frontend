@@ -1,8 +1,20 @@
-import {FetchResult, MutationResult, gql, useApolloClient, useMutation} from "@apollo/client"
+import {
+  FetchResult,
+  MutationResult,
+  gql,
+  useApolloClient,
+  useMutation
+} from "@apollo/client"
 
-import {Bookable} from "./bookable"
-import {UseBookableQuery} from "./useBookable";
-import {UseBookablesQuery} from "./useBookables";
+import {
+  Bookable
+} from "./bookable"
+import {
+  UseBookableQuery
+} from "./useBookable"
+import {
+  UseBookablesQuery
+} from "./useBookables"
 
 type OnSuccess = (bookable: Bookable) => void
 
@@ -14,7 +26,7 @@ type UseUpdateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseUp
 
 type UseUpdateBookable = (onSuccess: OnSuccess) => [UseUpdateBookableMutate, MutationResult<UseUpdateBookableData>]
 
-export const UseUpdateBookableMutation = gql`
+const UseUpdateBookableMutation = gql`
     mutation useUpdateBookable(
         $id: Int!
         $title: String! 
@@ -41,17 +53,17 @@ export const UseUpdateBookableMutation = gql`
     }
 `
 
-export const useUpdateBookable: UseUpdateBookable = (onSuccess: OnSuccess) => {
+const useUpdateBookable: UseUpdateBookable = (onSuccess) => {
   const client = useApolloClient();
   const [mutate, result] = useMutation<UseUpdateBookableData>(UseUpdateBookableMutation, {
-    onCompleted: async (data: UseUpdateBookableData) => {
+    onCompleted: async (data) => {
       await client.refetchQueries({
         include: [UseBookableQuery, UseBookablesQuery]
       })
       onSuccess(data.updateBookable)
     }
   })
-  const updateBookable: UseUpdateBookableMutate = async (bookable: Bookable) => {
+  const updateBookable: UseUpdateBookableMutate = async (bookable) => {
     return mutate({
       variables: {
         id: bookable.id,
@@ -65,3 +77,5 @@ export const useUpdateBookable: UseUpdateBookable = (onSuccess: OnSuccess) => {
   }
   return [updateBookable, result]
 }
+
+export default useUpdateBookable
