@@ -8,7 +8,7 @@ FROM node:alpine AS builder
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
-RUN yarn build && yarn install --production --ignore-scripts --prefer-offline
+RUN yarn test:ci && yarn build && yarn install --production --ignore-scripts --prefer-offline
 
 FROM node:alpine AS runner
 ENV NODE_ENV production
