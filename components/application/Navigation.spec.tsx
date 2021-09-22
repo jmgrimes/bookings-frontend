@@ -5,11 +5,11 @@ import {
   render
 } from "@testing-library/react"
 
+import Navigation from "./Navigation"
+
 const useRouter = jest.spyOn(require("next/router"), "useRouter")
 const UserPicker = jest.spyOn(require("../users/UserPicker"), "default")
 const UserPickerText = "<UserPicker/>"
-
-import Navigation from "./Navigation"
 
 describe("<Navigation/>", () => {
   it("should render", () => {

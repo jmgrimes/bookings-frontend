@@ -5,6 +5,7 @@ import {
   render
 } from "@testing-library/react"
 
+import UserDetails from "./UserDetails"
 import {
   User
 } from "../../features/users"
@@ -15,8 +16,6 @@ const user: User = {
   title: "Test User in Test",
   notes: "John Smith is a test user in test."
 }
-
-import UserDetails from "./UserDetails"
 
 describe("<UserDetails/>", () => {
   it("should render the user details properly", () => {
