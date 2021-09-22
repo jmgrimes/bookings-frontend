@@ -1,6 +1,5 @@
 import {
   FunctionComponent,
-  ReactNode,
   useState
 } from "react"
 
@@ -10,11 +9,7 @@ import {
   UserSetContext
 } from "../../features/users"
 
-type UserProviderProps = {
-  children?: ReactNode[]
-}
-
-const UserProvider: FunctionComponent<UserProviderProps> = (props) => {
+const UserProvider: FunctionComponent = (props) => {
   const {children} = props
   const [user, setUser] = useState<User>()
   return (
