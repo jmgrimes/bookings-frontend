@@ -6,6 +6,7 @@ import {
   render
 } from "@testing-library/react"
 
+import UsersList from "./UsersList"
 import {
   User
 } from "../../features/users"
@@ -24,11 +25,9 @@ const jane: User = {
   notes: "Jane Smith is a test user in test."
 }
 
-import UsersList from "./UsersList"
-
 describe("<UsersList/>", () => {
   it("should render the user details properly", () => {
-    const {getByText, getAllByRole} = render(
+    const {getByText} = render(
       <UsersList users={[john, jane]} user={john} getUrl={id => id.toString(10)}/>
     )
     expect(getByText(john.name)).toBeInTheDocument()
