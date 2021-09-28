@@ -64,10 +64,10 @@ type BookingsViewReadyProps = {
 
 const BookingsViewReady: FunctionComponent<BookingsViewReadyProps> = (props) => {
   const {bookables} = props
+  const {date, week, bookableId} = useBookingsParams()
   const bookable = bookables.find(b => b.id === bookableId) || bookables[0];
 
   const [bookingModel, setBookingModel] = useState<BookingModel>()
-  const {date, week, bookableId} = useBookingsParams()
   const {data, loading, error} = useBookings(bookable, week.start, week.end)
 
   const getUrl = (id: number) => {
