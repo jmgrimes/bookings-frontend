@@ -1,24 +1,24 @@
 import {
-  ApolloServerPluginLandingPageDisabled
+  ApolloServerPluginLandingPageDisabled,
 } from "apollo-server-core"
 import {
-  ApolloServer
+  ApolloServer,
 } from "apollo-server-micro"
 import {
-  NextApiHandler
+  NextApiHandler,
 } from "next"
 
 import {
   dataSources,
-  schema
-} from "../../server"
+  schema,
+} from "../../features/graphql"
 
 const server: ApolloServer = new ApolloServer({
   dataSources,
   plugins: [
     ApolloServerPluginLandingPageDisabled(),
   ],
-  schema
+  schema,
 })
 
 const apolloServerHandler: Promise<NextApiHandler> =
@@ -31,8 +31,8 @@ const apiHandler: NextApiHandler = async (request, response) => {
 
 export const config = {
   api: {
-    bodyParser: false
-  }
+    bodyParser: false,
+  },
 }
 
 export default apiHandler

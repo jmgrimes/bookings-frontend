@@ -1,12 +1,10 @@
 import {
-  RESTDataSource
+  RESTDataSource,
 } from "apollo-datasource-rest"
 
-import {
-  BookableSession
-} from "../bookables/datasource"
+type BookableSession = 0 | 1 | 2 | 3 | 4
 
-export type Booking = {
+type Booking = {
   id: number
   bookerId: number
   bookableId: number
@@ -16,9 +14,9 @@ export type Booking = {
   notes?: string
 }
 
-export type BookingModel = Omit<Booking, "id">
+type BookingModel = Omit<Booking, "id">
 
-export type BookingsQuery = {
+type BookingsQuery = {
   bookerId?: number
   bookableId?: number
   startDate?: string
@@ -36,8 +34,8 @@ class BookingAPI extends RESTDataSource {
       bookerId: query.bookerId,
       bookableId: query.bookableId,
       date_gte: query.startDate,
-      date_lte: query.endDate
-    };
+      date_lte: query.endDate,
+    }
     if (!query.bookerId) delete searchParams.bookerId
     if (!query.bookableId) delete searchParams.bookableId
     if (!query.startDate) delete searchParams.date_gte

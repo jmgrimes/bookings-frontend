@@ -3,14 +3,14 @@ import {
   MutationResult,
   gql,
   useApolloClient,
-  useMutation
+  useMutation,
 } from "@apollo/client"
 
 import {
-  Booking
+  Booking,
 } from "./booking"
 import {
-  UseBookingsQuery
+  UseBookingsQuery,
 } from "./useBookings"
 
 type OnSuccess = (id: number) => void
@@ -30,11 +30,13 @@ const UseDeleteBookingMutation = gql`
 `
 
 const useDeleteBooking: UseDeleteBooking = (onSuccess) => {
-  const client = useApolloClient();
+  const client = useApolloClient()
   const [mutate, result] = useMutation<UseDeleteBookingData>(UseDeleteBookingMutation, {
     onCompleted: async (data) => {
       await client.refetchQueries({
-        include: [UseBookingsQuery]
+        include: [
+          UseBookingsQuery,
+        ],
       })
       onSuccess(data.deleteBooking)
     }
@@ -42,8 +44,8 @@ const useDeleteBooking: UseDeleteBooking = (onSuccess) => {
   const deleteBooking: UseDeleteBookingMutate = async (booking) => {
     return mutate({
       variables: {
-        id: booking.id
-      }
+        id: booking.id,
+      },
     })
   }
   return [deleteBooking, result]

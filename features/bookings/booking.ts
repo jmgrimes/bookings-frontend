@@ -1,6 +1,17 @@
-import {Bookable, BookableDayModel, BookableSessionEnum, BookableSessionModel} from "../bookables"
-import {User} from "../users"
-import {DateTime} from "luxon";
+import {
+  DateTime,
+} from "luxon"
+
+import {
+  Bookable, 
+  BookableDayModel, 
+  BookableSessionEnum, 
+  BookableSessionModel,
+} from "../bookables"
+import {
+  User,
+} from "../users"
+
 
 export type Booking = {
   id: number
@@ -28,7 +39,7 @@ export class BookingModel {
     date: DateTime,
     session: BookableSessionEnum,
     title: string = "",
-    notes?: string
+    notes?: string,
   ) {
     this.id = id
     this.bookerId = bookerId
@@ -46,7 +57,7 @@ export class BookingModel {
       date: this.date,
       session: this.session,
       title: this.title,
-      notes: this.notes
+      notes: this.notes,
     }
     return booking
   }
@@ -58,7 +69,7 @@ export class BookingModel {
       booking.date,
       booking.session,
       booking.title,
-      booking.notes
+      booking.notes,
     )
   }
   
@@ -67,7 +78,7 @@ export class BookingModel {
       0,
       booker?.id || 0,
       day.date,
-      session.session
+      session.session,
     )
   }
 }

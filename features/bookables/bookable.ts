@@ -1,9 +1,10 @@
 import {
-  Booking
-} from "../bookings"
-import {
-  DateTime
+  DateTime,
 } from "luxon"
+
+import {
+  Booking,
+} from "../bookings"
 
 export enum BookableDayEnum {
   Sunday = "Sunday",
@@ -12,7 +13,7 @@ export enum BookableDayEnum {
   Wednesday = "Wednesday",
   Thursday = "Thursday",
   Friday = "Friday",
-  Saturday = "Saturday"
+  Saturday = "Saturday",
 }
 
 export type BookableDayModel = {
@@ -21,7 +22,7 @@ export type BookableDayModel = {
   date: DateTime
 }
 
-type BookableDayType = {
+export type BookableDayType = {
   values: BookableDayEnum[]
   toModel: (weekStart: DateTime, day: BookableDayEnum) => BookableDayModel
 }
@@ -34,14 +35,14 @@ export const BookableDay: BookableDayType ={
     BookableDayEnum.Wednesday,
     BookableDayEnum.Thursday,
     BookableDayEnum.Friday,
-    BookableDayEnum.Saturday
+    BookableDayEnum.Saturday,
   ],
   toModel: (weekStart: DateTime, day: BookableDayEnum) => {
     const index = BookableDay.values.indexOf(day)
     const date = weekStart.plus({days: index})
     const model: BookableDayModel = {index, day, date}
     return model
-  }
+  },
 }
 
 export enum BookableSessionEnum {
@@ -49,7 +50,7 @@ export enum BookableSessionEnum {
   Morning = "Morning",
   Lunch = "Lunch",
   Afternoon = "Afternoon",
-  Evening = "Evening"
+  Evening = "Evening",
 }
 
 export type BookableSessionModel = {
@@ -57,7 +58,7 @@ export type BookableSessionModel = {
   session: BookableSessionEnum
 }
 
-type BookableSessionType = {
+export type BookableSessionType = {
   values: BookableSessionEnum[]
   toModel: (session: BookableSessionEnum) => BookableSessionModel
 }
@@ -68,13 +69,16 @@ export const BookableSession: BookableSessionType = {
     BookableSessionEnum.Morning,
     BookableSessionEnum.Lunch,
     BookableSessionEnum.Afternoon,
-    BookableSessionEnum.Evening
+    BookableSessionEnum.Evening,
   ],
   toModel: (session: BookableSessionEnum) => {
     const index = BookableSession.values.indexOf(session)
-    const model: BookableSessionModel = {index, session}
+    const model: BookableSessionModel = {
+      index, 
+      session,
+    }
     return model
-  }
+  },
 }
 
 export type Bookable = {

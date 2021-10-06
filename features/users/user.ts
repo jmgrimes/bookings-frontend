@@ -1,4 +1,6 @@
-import {Booking} from "../bookings"
+import {
+  Booking,
+} from "../bookings"
 
 export type User = {
   id: number

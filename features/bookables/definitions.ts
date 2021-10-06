@@ -7,7 +7,7 @@ import {
   nullable,
   objectType,
   queryField,
-  stringArg
+  stringArg,
 } from "nexus"
 
 export const BookableDayEnumType = enumType({
@@ -20,8 +20,8 @@ export const BookableDayEnumType = enumType({
     Wednesday: 3,
     Thursday: 4,
     Friday: 5,
-    Saturday: 6
-  }
+    Saturday: 6,
+  },
 })
 
 export const BookableSessionEnumType = enumType({
@@ -32,8 +32,8 @@ export const BookableSessionEnumType = enumType({
     Morning: 1,
     Lunch: 2,
     Afternoon: 3,
-    Evening: 4
-  }
+    Evening: 4,
+  },
 })
 
 export const BookableType = objectType({
@@ -41,24 +41,24 @@ export const BookableType = objectType({
   description: "a bookable resource in the bookings application",
   definition: (t) => {
     t.nonNull.int("id", {
-      description: "the id of the bookable resource"
+      description: "the id of the bookable resource",
     })
     t.nonNull.string("group", {
-      description: "the group of the bookable resource"
+      description: "the group of the bookable resource",
     })
     t.nonNull.string("title", {
-      description: "the title of the bookable resource"
+      description: "the title of the bookable resource",
     })
     t.nullable.string("notes", {
-      description: "the notes about the bookable resource"
+      description: "the notes about the bookable resource",
     })
     t.field("days", {
       description: "the list of days on which the bookable resource can be booked",
-      type: nonNull(list(nonNull("BookableDay")))
+      type: nonNull(list(nonNull("BookableDay"))),
     })
     t.field("sessions", {
       description: "the list of sessions during which the bookable resource can be booked",
-      type: nonNull(list(nonNull("BookableSession")))
+      type: nonNull(list(nonNull("BookableSession"))),
     })
     t.field("bookings", {
       description: "the bookings made for the bookable",
@@ -66,7 +66,7 @@ export const BookableType = objectType({
       args: {
         bookerId: nullable(intArg()),
         startDate: nullable(stringArg()),
-        endDate: nullable(stringArg())
+        endDate: nullable(stringArg()),
       },
       resolve: (bookable, args, context, _info) => {
         const {bookerId, startDate, endDate} = args;
@@ -74,9 +74,9 @@ export const BookableType = objectType({
           bookableId: bookable.id,
           bookerId: bookerId ? bookerId : undefined,
           startDate: startDate ? startDate : undefined,
-          endDate: endDate ? endDate : undefined
+          endDate: endDate ? endDate : undefined,
         })
-      }
+      },
     })
   }
 })
@@ -85,12 +85,12 @@ export const BookableQuery = queryField("bookable", {
   description: "get a bookable by its identifier",
   type: nullable("Bookable"),
   args: {
-    id: nonNull(intArg())
+    id: nonNull(intArg()),
   },
   resolve: (_parent, args, context, _info) => {
     const {id} = args;
     return context.dataSources.bookableAPI.getBookable(id)
-  }
+  },
 })
 
 export const BookablesQuery = queryField("bookables", {
@@ -98,7 +98,7 @@ export const BookablesQuery = queryField("bookables", {
   type: nonNull(list(nonNull("Bookable"))),
   resolve: (_parent, _args, context, _info) => {
     return context.dataSources.bookableAPI.getBookables()
-  }
+  },
 })
 
 export const CreateBookableMutation = mutationField("createBookable", {
@@ -109,25 +109,25 @@ export const CreateBookableMutation = mutationField("createBookable", {
     group: nonNull(stringArg()),
     notes: nullable(stringArg()),
     days: nonNull(list(nonNull("BookableDay"))),
-    sessions: nonNull(list(nonNull("BookableSession")))
+    sessions: nonNull(list(nonNull("BookableSession"))),
   },
   resolve: (_parent, args, context, _info) => {
     return context.dataSources.bookableAPI.createBookable({
       ...args,
       notes: args.notes ? args.notes : undefined
     })
-  }
+  },
 })
 
 export const DeleteBookableMutation = mutationField("deleteBookable", {
   description: "delete a bookable",
   type: nonNull("Int"),
   args: {
-    id: nonNull(intArg())
+    id: nonNull(intArg()),
   },
   resolve: (_parent, args, context, _info) => {
     return context.dataSources.bookableAPI.deleteBookable(args.id)
-  }
+  },
 })
 
 export const UpdateBookableMutation = mutationField("updateBookable", {
@@ -139,12 +139,12 @@ export const UpdateBookableMutation = mutationField("updateBookable", {
     group: nonNull(stringArg()),
     notes: nullable(stringArg()),
     days: nonNull(list(nonNull("BookableDay"))),
-    sessions: nonNull(list(nonNull("BookableSession")))
+    sessions: nonNull(list(nonNull("BookableSession"))),
   },
   resolve: (_parent, args, context, _info) => {
     return context.dataSources.bookableAPI.updateBookable({
       ...args,
       notes: args.notes ? args.notes : undefined
     })
-  }
+  },
 })

@@ -1,11 +1,11 @@
 import {
   QueryResult,
   gql,
-  useQuery
+  useQuery,
 } from "@apollo/client"
 
 import {
-  Bookable
+  Bookable,
 } from "./bookable"
 
 type UseBookableData = {
@@ -30,8 +30,8 @@ export const UseBookableQuery = gql`
 const useBookable: UseBookable = (id) => {
   return useQuery<UseBookableData>(UseBookableQuery, {
     variables: {
-      id
-    }
+      id,
+    },
   })
 }
 

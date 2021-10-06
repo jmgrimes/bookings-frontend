@@ -1,11 +1,11 @@
 import {
   QueryResult,
   gql,
-  useQuery
+  useQuery,
 } from "@apollo/client"
 
 import {
-  Bookable
+  Bookable,
 } from "./bookable"
 
 type UseBookablesData = {

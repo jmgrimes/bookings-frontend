@@ -1,17 +1,17 @@
 import {
   QueryResult,
   gql,
-  useQuery
+  useQuery,
 } from "@apollo/client"
 import {
-  DateTime
+  DateTime,
 } from "luxon"
 
 import {
-  Booking
+  Booking,
 } from "./booking"
 import {
-  Bookable
+  Bookable,
 } from "../bookables"
 
 type UseBookingsData = {
@@ -54,8 +54,8 @@ const useBookings: UseBookings = (bookable, startDate, endDate) => {
     variables: {
       bookableId: bookable.id,
       startDate: startDate.toISODate(),
-      endDate: endDate.toISODate()
-    }
+      endDate: endDate.toISODate(),
+    },
   })
 }
 

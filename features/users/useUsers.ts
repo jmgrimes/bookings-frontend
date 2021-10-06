@@ -1,11 +1,11 @@
 import {
   QueryResult,
   gql,
-  useQuery
+  useQuery,
 } from "@apollo/client"
 
 import {
-  User
+  User,
 } from "./user"
 
 type UseUsersData = {

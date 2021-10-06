@@ -1,8 +1,8 @@
 import {
-  RESTDataSource
+  RESTDataSource,
 } from "apollo-datasource-rest"
 
-export type User = {
+type User = {
   id: number
   name: string
   title: string

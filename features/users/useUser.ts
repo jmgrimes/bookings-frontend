@@ -2,11 +2,11 @@ import {
   Dispatch,
   SetStateAction,
   createContext,
-  useContext
+  useContext,
 } from "react"
 
 import {
-  User
+  User,
 } from "./user"
 
 type SetUser = Dispatch<SetStateAction<User | undefined>>

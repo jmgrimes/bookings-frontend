@@ -3,17 +3,17 @@ import {
   MutationResult,
   gql,
   useApolloClient,
-  useMutation
+  useMutation,
 } from "@apollo/client"
 
 import {
-  Bookable
+  Bookable,
 } from "./bookable"
 import {
-  UseBookableQuery
+  UseBookableQuery,
 } from "./useBookable"
 import {
-  UseBookablesQuery
+  UseBookablesQuery,
 } from "./useBookables"
 
 type OnSuccess = (bookable: Bookable) => void
@@ -54,14 +54,17 @@ const UseUpdateBookableMutation = gql`
 `
 
 const useUpdateBookable: UseUpdateBookable = (onSuccess) => {
-  const client = useApolloClient();
+  const client = useApolloClient()
   const [mutate, result] = useMutation<UseUpdateBookableData>(UseUpdateBookableMutation, {
     onCompleted: async (data) => {
       await client.refetchQueries({
-        include: [UseBookableQuery, UseBookablesQuery]
+        include: [
+          UseBookableQuery, 
+          UseBookablesQuery,
+        ],
       })
       onSuccess(data.updateBookable)
-    }
+    },
   })
   const updateBookable: UseUpdateBookableMutate = async (bookable) => {
     return mutate({
@@ -71,8 +74,8 @@ const useUpdateBookable: UseUpdateBookable = (onSuccess) => {
         group: bookable.group,
         notes: bookable.notes,
         days: bookable.days,
-        sessions: bookable.sessions
-      }
+        sessions: bookable.sessions,
+      },
     })
   }
   return [updateBookable, result]

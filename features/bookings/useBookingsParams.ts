@@ -1,8 +1,8 @@
 import {
-  DateTime
+  DateTime,
 } from "luxon"
 import {
-  useRouter
+  useRouter,
 } from "next/router"
 
 type Week = {
@@ -27,7 +27,7 @@ const useBookingsParams: UseBookingParams = () => {
   const date = dateParam.isValid ? dateParam : DateTime.now()
   const week: Week = {
     start: date.startOf("week"),
-    end: date.endOf("week")
+    end: date.endOf("week"),
   }
 
   const bookableIdParam = router.query.bookableId ? parseInt(router.query.bookableId as string, 10) : undefined
@@ -38,8 +38,8 @@ const useBookingsParams: UseBookingParams = () => {
       pathname: router.pathname,
       query: {
         bookableId: bookableId,
-        date: date.toISODate()
-      }
+        date: date.toISODate(),
+      },
     })
   }
 
@@ -48,8 +48,8 @@ const useBookingsParams: UseBookingParams = () => {
       pathname: router.pathname,
       query: {
         bookableId: bookableId,
-        date: date.toISODate()
-      }
+        date: date.toISODate(),
+      },
     })
   }
 
@@ -58,7 +58,7 @@ const useBookingsParams: UseBookingParams = () => {
     week,
     bookableId,
     setBookingsDate,
-    setBookableId
+    setBookableId,
   }
 }
 

@@ -1,11 +1,11 @@
 import {
-  RESTDataSource
+  RESTDataSource,
 } from "apollo-datasource-rest"
 
-export type BookableDay = 0 | 1 | 2 | 3 | 4 | 5 | 6
-export type BookableSession = 0 | 1 | 2 | 3 | 4
+type BookableDay = 0 | 1 | 2 | 3 | 4 | 5 | 6
+type BookableSession = 0 | 1 | 2 | 3 | 4
 
-export type Bookable = {
+type Bookable = {
   id: number
   group: string
   title: string
@@ -14,7 +14,7 @@ export type Bookable = {
   notes?: string
 }
 
-export type BookableModel = Omit<Bookable, "id">
+type BookableModel = Omit<Bookable, "id">
 
 class BookableAPI extends RESTDataSource {
   constructor(baseURL: string) {
