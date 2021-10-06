@@ -3,41 +3,43 @@
  */
 
 import {
-  MockedProvider
+  MockedProvider,
 } from "@apollo/client/testing"
 import {
-  act, render
+  act, 
+  render,
 } from "@testing-library/react"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
+
+import {
+  User,
+} from "../../features/users"
+import {
+  UseUsersQuery,
+} from "../../features/users/useUsers"
 
 import UserPicker from "./UserPicker"
 import UserProvider from "./UserProvider"
-import {
-  User
-} from "../../features/users"
-import {
-  UseUsersQuery
-} from "../../features/users/useUsers"
 
 const john: User = {
   id: 1,
   name: "John Smith",
   title: "Test User in Test",
-  notes: "John Smith is a test user in test."
+  notes: "John Smith is a test user in test.",
 }
 
 const jane: User = {
   id: 2,
   name: "Jane Smith",
   title: "Test User in Test",
-  notes: "Jane Smith is a test user in test."
+  notes: "Jane Smith is a test user in test.",
 }
 
 const errorMessage = "could not load users"
 
-const flushAllPromises = () => new Promise(resolve => setTimeout(resolve, 0))
+const flushAllPromises = () => new Promise<void>(resolve => setTimeout(resolve, 0))
 
 type UserPickerTestProps = {
   users?: User[]
@@ -48,14 +50,20 @@ const UserPickerTest: FunctionComponent<UserPickerTestProps> = (props) => {
   const mocks =
     users ?
     [{
-      request: { query: UseUsersQuery },
+      request: { 
+        query: UseUsersQuery,
+      },
       result: {
-        data: { users }
-      }
+        data: { 
+          users,
+        },
+      },
     }] :
     [{
-      request: { query: UseUsersQuery },
-      error: new Error(errorMessage)
+      request: { 
+        query: UseUsersQuery,
+      },
+      error: new Error(errorMessage),
     }]
 
   return (

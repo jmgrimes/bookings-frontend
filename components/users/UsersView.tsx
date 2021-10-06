@@ -1,20 +1,20 @@
 import {
-  useRouter
-} from "next/router";
+  useRouter,
+} from "next/router"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 import {
   ErrorView,
   Layout,
   LoadingCard,
-  LoadingList
+  LoadingList,
 } from "../application"
 import {
   User,
   useUser,
-  useUsers
+  useUsers,
 } from "../../features/users"
 
 import UserDetails from "./UserDetails"

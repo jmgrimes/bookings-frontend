@@ -1,12 +1,12 @@
 import {
   FunctionComponent,
-  useState
+  useState,
 } from "react"
 
 import {
   User,
   UserContext,
-  UserSetContext
+  UserSetContext,
 } from "../../features/users"
 
 const UserProvider: FunctionComponent = (props) => {

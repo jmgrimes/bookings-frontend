@@ -2,19 +2,20 @@
  * @jest-environment jsdom
  */
 import {
-  render
+  render,
 } from "@testing-library/react"
 
-import UserDetails from "./UserDetails"
 import {
-  User
+  User,
 } from "../../features/users"
+
+import UserDetails from "./UserDetails"
 
 const user: User = {
   id: 1,
   name: "John Smith",
   title: "Test User in Test",
-  notes: "John Smith is a test user in test."
+  notes: "John Smith is a test user in test.",
 }
 
 describe("<UserDetails/>", () => {

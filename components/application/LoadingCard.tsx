@@ -2,13 +2,13 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Typography
+  Typography,
 } from "@material-ui/core"
 import {
-  Skeleton
+  Skeleton,
 } from "@material-ui/lab"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 const LoadingCard: FunctionComponent = () => {

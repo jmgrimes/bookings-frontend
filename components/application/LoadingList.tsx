@@ -1,13 +1,13 @@
 import {
   List,
   ListItem,
-  ListItemText
+  ListItemText,
 } from "@material-ui/core"
 import {
-  Skeleton
+  Skeleton,
 } from "@material-ui/lab"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 type ListLoadingProps = {

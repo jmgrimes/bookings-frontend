@@ -3,13 +3,13 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core"
 import {
-  Skeleton
+  Skeleton,
 } from "@material-ui/lab"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 type LoadingTableProps = {

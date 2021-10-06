@@ -1,15 +1,17 @@
-import {makeStyles} from "@material-ui/core"
+import {
+  makeStyles,
+} from "@material-ui/core"
 
 const useStyles = makeStyles(() => ({
   appbar: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   menuTabs: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   jumbotron: {
-    marginTop: 75
-  }
+    marginTop: 75,
+  },
 }))
 
 export default useStyles

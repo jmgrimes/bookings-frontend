@@ -2,18 +2,18 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
 } from "@material-ui/core"
 import {
-  Person
+  Person,
 } from "@material-ui/icons"
 import Link from "next/link"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 import {
-  User
+  User,
 } from "../../features/users"
 
 type UsersListProps = {

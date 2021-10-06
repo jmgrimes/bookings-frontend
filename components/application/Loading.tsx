@@ -1,8 +1,8 @@
 import {
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 const Loading: FunctionComponent = () => {

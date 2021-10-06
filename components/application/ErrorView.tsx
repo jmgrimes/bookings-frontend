@@ -1,9 +1,9 @@
 import {
   Grid,
-  Typography
+  Typography,
 } from "@material-ui/core"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 import Error from "./Error"

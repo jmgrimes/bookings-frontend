@@ -2,14 +2,14 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Typography
+  Typography,
 } from "@material-ui/core"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 import {
-  User
+  User,
 } from "../../features/users"
 
 type UserDetailsProps = {

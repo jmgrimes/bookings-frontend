@@ -1,22 +1,22 @@
 import {
   FormControl,
   MenuItem,
-  Select
+  Select,
 } from "@material-ui/core"
 import {
   ChangeEvent,
   FunctionComponent,
-  useEffect
+  useEffect,
 } from "react"
 
 import {
   Error,
-  Loading
+  Loading,
 } from "../application"
 import {
   User,
   useUser,
-  useUsers
+  useUsers,
 } from "../../features/users"
 
 type UserPickerReadyProps = {
@@ -31,7 +31,7 @@ const UserPickerReady: FunctionComponent<UserPickerReadyProps> = (props) => {
     const selectedUserId = parseInt(event.target.value as string, 10)
     const selectedUser = users.find(u => u.id === selectedUserId)
     setUser(selectedUser)
-  };
+  }
 
   useEffect(
     () => {

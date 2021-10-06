@@ -1,9 +1,9 @@
 import {
-  Grid
+  Grid,
 } from "@material-ui/core"
 import {
   FunctionComponent,
-  ReactNode
+  ReactNode,
 } from "react"
 
 type LayoutSidebarMainProps = {

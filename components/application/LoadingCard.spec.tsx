@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import {
-  render
+  render,
 } from "@testing-library/react"
 
 import LoadingCard from "./LoadingCard"

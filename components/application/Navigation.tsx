@@ -2,20 +2,20 @@ import {
   AppBar,
   Tab,
   Tabs,
-  Toolbar
+  Toolbar,
 } from "@material-ui/core"
 import {
   DevicesOther,
   Event,
   Home,
-  People
+  People,
 } from "@material-ui/icons"
 import Link from "next/link"
 import {
-  useRouter
+  useRouter,
 } from "next/router"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 import {

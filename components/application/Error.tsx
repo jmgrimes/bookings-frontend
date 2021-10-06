@@ -1,8 +1,8 @@
 import {
-  Typography
+  Typography,
 } from "@material-ui/core"
 import {
-  FunctionComponent
+  FunctionComponent,
 } from "react"
 
 type ErrorProps = {
