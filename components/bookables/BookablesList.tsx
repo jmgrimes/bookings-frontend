@@ -37,7 +37,7 @@ const BookablesList: FunctionComponent<BookablesListProps> = (props: BookablesLi
   const {bookable, bookables, getUrl} = props
   const router = useRouter()
 
-  const group = bookable.group || ""
+  const group = bookable.group
   const groups = [...new Set(bookables.map(b => b.group))]
   const bookablesInGroup = bookables.filter(b => b.group === group)
 

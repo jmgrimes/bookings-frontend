@@ -6,8 +6,10 @@ import {
   MockedProvider,
 } from "@apollo/client/testing"
 import {
-  act, 
+  act,
+  fireEvent,
   render,
+  within,
 } from "@testing-library/react"
 import {
   FunctionComponent,
@@ -84,6 +86,17 @@ describe("<UserPicker/>", () => {
 
   it("should render the completed state properly and select the first user from the list", async () => {
     const {getByText} = render(<UserPickerTest users={[jane, john]}/>)
+    await act(async () => await flushAllPromises())
+    expect(getByText(jane.name)).toBeInTheDocument()
+  })
+
+  it("should render with a newly selected user", async () => {
+    const {getByRole, getByText} = render(<UserPickerTest users={[john, jane]}/>)
+    await act(async () => await flushAllPromises())
+    fireEvent.mouseDown(getByText(john.name))
+    act(() => {
+      within(getByRole("listbox")).getByText(jane.name).click()
+    })
     await act(async () => await flushAllPromises())
     expect(getByText(jane.name)).toBeInTheDocument()
   })
