@@ -93,7 +93,9 @@ describe("<UserPicker/>", () => {
   it("should render with a newly selected user", async () => {
     const {getByRole, getByText} = render(<UserPickerTest users={[john, jane]}/>)
     await act(async () => await flushAllPromises())
-    fireEvent.mouseDown(getByText(john.name))
+    act(() => {
+      fireEvent.mouseDown(getByText(john.name))
+    })
     act(() => {
       within(getByRole("listbox")).getByText(jane.name).click()
     })

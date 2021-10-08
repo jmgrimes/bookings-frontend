@@ -20,17 +20,10 @@ import {
 import {
   UseBookableQuery,
 } from "../../features/bookables/useBookable"
-import {
-  UseDeleteBookableMutation,
-} from "../../features/bookables/useDeleteBookable"
-import {
-  UseUpdateBookableMutation,
-} from "../../features/bookables/useUpdateBookable"
 
 import BookableEdit from "./BookableEdit"
 
 const useRouter = jest.spyOn(require("next/router"), "useRouter")
-const push = jest.fn()
 
 const bookable: Bookable = {
   id: 1,
@@ -64,35 +57,6 @@ const successMocks = [
         bookable,
       },
     },
-    newData: jest.fn(() => ({
-      data: {
-        bookable,
-      },
-    })),
-  },
-  {
-    request: {
-      query: UseDeleteBookableMutation,
-      variables: {
-        id: bookable.id,
-      },
-    },
-    result: {
-      data: {
-        deleteBookable: bookable.id,
-      },
-    },
-  },
-  {
-    request: {
-      query: UseUpdateBookableMutation,
-      variables: bookable,
-    },
-    result: {
-      data: {
-        updateBookable: bookable,
-      },
-    },
   }
 ]
 
@@ -123,54 +87,51 @@ const BookableEditTest: FunctionComponent<BookableEditTestProps> = (props) => {
 }
 
 describe("<BookableEdit/>", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     useRouter.mockReturnValue({
       query: {
         id: bookable.id,
       },
-      push,
     })
   })
 
   it("should render the completed state properly", async () => {
-    const {getByText} = render(<BookableEditTest/>)
-    await act(async () => await flushAllPromises())
-    expect(getByText("Edit Bookable")).toBeInTheDocument()
+    const {getByRole, getByText} = render(<BookableEditTest/>)
+    await act(() => flushAllPromises())
+
+    const title = getByText(/Edit Bookable/)
+    expect(title).toBeInTheDocument()
+
+    const groupField = getByRole("textbox", {name: /group/i})
+    expect(groupField).toHaveAttribute("value", bookable.group)
+
+    const titleField = getByRole("textbox", {name: /title/i})
+    expect(titleField).toHaveAttribute("value", bookable.title)
+
+    const notesField = getByRole("textbox", {name: /notes/i})
+    expect(notesField).toHaveTextContent(bookable.notes as string)
+
+    const daysField = getByRole("button", {name: /days/i})
+    expect(daysField).toHaveTextContent(bookable.days.join(", "))
+
+    const sessionsField = getByRole("button", {name: /sessions/i})
+    expect(sessionsField).toHaveTextContent(bookable.sessions.join(", "))
+
+    const saveButton = getByRole("button", {name: /save/i})
+    expect(saveButton).toBeInTheDocument()
+
+    const deleteButton = getByRole("button", {name: /delete/i})
+    expect(deleteButton).toBeInTheDocument()
+
+    const cancelButton = getByRole("button", {name: /cancel/i})
+    expect(cancelButton).toBeInTheDocument()
   })
 
   it("should render the error state properly", async () => {
     const {getByText} = render(<BookableEditTest error/>)
-    await act(async () => await flushAllPromises())
-    expect(getByText(errorMessage)).toBeInTheDocument()
-  })
+    await act(() => flushAllPromises())
 
-  it("should redirect to the bookable view on cancel", async () => {
-    const {getByRole} = render(<BookableEditTest/>)
-    await act(async () => await flushAllPromises())
-    act(() => {
-      getByRole("button", { name: /cancel/i, }).click()
-    })
-    await act(async () => await flushAllPromises())
-    expect(push).toBeCalledWith(`/bookables/${bookable.id}`)
-  })
-
-  it("should redirect to the bookable view on save", async () => {
-    const {getByRole} = render(<BookableEditTest/>)
-    await act(async () => await flushAllPromises())
-    act(() => {
-      getByRole("button", { name: /save/i, }).click()
-    })
-    await act(async () => await flushAllPromises())
-    expect(push).toBeCalledWith(`/bookables/${bookable.id}`)
-  })
-
-  it("should redirect to the root bookable view on delete", async () => {
-    const {getByRole} = render(<BookableEditTest/>)
-    await act(async () => await flushAllPromises())
-    act(() => {
-      getByRole("button", { name: /delete/i, }).click()
-    })
-    await act(async () => await flushAllPromises())
-    expect(push).toBeCalledWith(`/bookables`)
+    const error = getByText(errorMessage)
+    expect(error).toBeInTheDocument()
   })
 })

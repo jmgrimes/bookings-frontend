@@ -105,7 +105,9 @@ describe("<BookablesList/>", () => {
     const {getByRole, getByText} = render(
       <BookablesList bookables={bookables} bookable={room1} getUrl={getUrl}/>
     )
-    fireEvent.mouseDown(getByText(room1.group))
+    act(() => {
+      fireEvent.mouseDown(getByText(room1.group))
+    })
     act(() => {
       within(getByRole("listbox")).getByText(kit.group).click()
     })
@@ -115,9 +117,10 @@ describe("<BookablesList/>", () => {
   it("should swap to the previous item when previous is clicked", () => {
     const push = jest.fn()
     useRouter.mockReturnValueOnce({ push })
-    const {getByText} = render(<BookablesList bookables={bookables} bookable={room2} getUrl={getUrl}/>)
+    const {getByRole} = render(<BookablesList bookables={bookables} bookable={room2} getUrl={getUrl}/>)
+    const previousButton = getByRole("button", {name: /prev/i})
     act(() => {
-      getByText("Prev").click()
+      previousButton.click()
     })
     expect(push).toBeCalledWith(getUrl(room1.id))
   })
@@ -125,9 +128,10 @@ describe("<BookablesList/>", () => {
   it("should swap to the next item when next is clicked", () => {
     const push = jest.fn()
     useRouter.mockReturnValueOnce({ push })
-    const {getByText} = render(<BookablesList bookables={bookables} bookable={room1} getUrl={getUrl}/>)
+    const {getByRole} = render(<BookablesList bookables={bookables} bookable={room1} getUrl={getUrl}/>)
+    const nextButton = getByRole("button", {name: /next/i})
     act(() => {
-      getByText("Next").click()
+      nextButton.click()
     })
     expect(push).toBeCalledWith(getUrl(room2.id))
   })
