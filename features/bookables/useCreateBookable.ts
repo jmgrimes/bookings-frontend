@@ -23,7 +23,7 @@ type UseCreateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseCr
 
 type UseCreateBookable = (onSuccess: OnSuccess) => [UseCreateBookableMutate, MutationResult<UseCreateBookableData>]
 
-const UseCreateBookableMutation = gql`
+export const UseCreateBookableMutation = gql`
     mutation useCreateBookable(
         $title: String! 
         $group: String! 

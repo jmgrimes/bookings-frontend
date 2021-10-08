@@ -23,7 +23,7 @@ type UseDeleteBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseDe
 
 type UseDeleteBookable = (onSuccess: OnSuccess) => [UseDeleteBookableMutate, MutationResult<UseDeleteBookableData>]
 
-const UseDeleteBookableMutation = gql`
+export const UseDeleteBookableMutation = gql`
     mutation useDeleteBookable($id: Int!) {
         deleteBookable(id: $id)
     }

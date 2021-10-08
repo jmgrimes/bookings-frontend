@@ -26,7 +26,7 @@ type UseUpdateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseUp
 
 type UseUpdateBookable = (onSuccess: OnSuccess) => [UseUpdateBookableMutate, MutationResult<UseUpdateBookableData>]
 
-const UseUpdateBookableMutation = gql`
+export const UseUpdateBookableMutation = gql`
     mutation useUpdateBookable(
         $id: Int!
         $title: String! 
