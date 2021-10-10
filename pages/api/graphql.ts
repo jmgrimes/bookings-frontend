@@ -11,7 +11,7 @@ import {
 import {
   dataSources,
   schema,
-} from "../../features/graphql"
+} from "../../features"
 
 const server: ApolloServer = new ApolloServer({
   dataSources,

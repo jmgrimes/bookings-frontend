@@ -2,20 +2,20 @@
   "bookables": [
     {
       "id": 1,
-      "group": "Rooms",
       "title": "Meeting Room",
+      "group": "Rooms",
       "notes": "The one with the big table and interactive screen. Seats 12. See Colin if you need the tea and coffee trolley.",
-      "sessions": [
-        1,
-        2,
-        3
-      ],
       "days": [
         1,
         2,
         3,
         4,
         5
+      ],
+      "sessions": [
+        1,
+        2,
+        3
       ]
     },
     {

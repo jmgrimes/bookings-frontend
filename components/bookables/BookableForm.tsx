@@ -122,7 +122,7 @@ const TextField: FunctionComponent<TextFieldProps> = (props) => {
   const helperText = fieldState.error ? `${label} is required.` : null
   return (
     <MuiTextField fullWidth={true} multiline={multiline} className={classes.textField}
-                  label={label} error={fieldState.invalid} helperText={helperText} {...field}/>
+                  label={label} id={name} error={fieldState.invalid} helperText={helperText} {...field}/>
   )
 }
 

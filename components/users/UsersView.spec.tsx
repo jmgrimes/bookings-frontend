@@ -102,7 +102,7 @@ describe("<UsersView/>", () => {
       query: {},
     })
     const {getByText, getAllByText} = render(<UsersViewTest users={[john, jane]}/>)
-    await act(async () => await flushAllPromises())
+    await act(() => flushAllPromises())
     expect(getByText(jane.name)).toBeInTheDocument()
     expect(getAllByText(john.name)).toHaveLength(2)
     expect(getByText(john.title)).toBeInTheDocument()
@@ -115,7 +115,7 @@ describe("<UsersView/>", () => {
       query: {},
     })
     const {getByText, getAllByText} = render(<UsersViewTest user={jane} users={[john, jane]}/>)
-    await act(async () => await flushAllPromises())
+    await act(() => flushAllPromises())
     expect(getAllByText(jane.name)).toHaveLength(2)
     expect(getByText(jane.title)).toBeInTheDocument()
     expect(getByText(jane.notes as string)).toBeInTheDocument()
@@ -130,7 +130,7 @@ describe("<UsersView/>", () => {
       },
     })
     const {getByText, getAllByText} = render(<UsersViewTest user={john} users={[john, jane]}/>)
-    await act(async () => await flushAllPromises())
+    await act(() => flushAllPromises())
     expect(getAllByText(jane.name)).toHaveLength(2)
     expect(getByText(jane.title)).toBeInTheDocument()
     expect(getByText(jane.notes as string)).toBeInTheDocument()
@@ -139,7 +139,7 @@ describe("<UsersView/>", () => {
 
   it("should render the error state properly", async () => {
     const {getByText} = render(<UsersViewTest/>)
-    await act(async () => await flushAllPromises())
+    await act(() => flushAllPromises())
     expect(getByText("An error occurred while loading users.")).toBeInTheDocument()
     expect(getByText(errorMessage)).toBeInTheDocument()
   })
