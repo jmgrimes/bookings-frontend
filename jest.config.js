@@ -1,32 +1,14 @@
-module.exports = {
-  collectCoverageFrom: [
-    "**/*.{js,jsx,ts,tsx}",
-    "!**/*.d.ts",
-    "!**/node_modules/**"
-  ],
-  moduleNameMapper: {
-    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-    "^@/components/(.*)$": "<rootDir>/components/$1"
-  },
-  setupFilesAfterEnv: [
-    "<rootDir>/jest.setup.js"
-  ],
-  testPathIgnorePatterns: [
-    "<rootDir>/node_modules/",
-    "<rootDir>/.next/"
-  ],
-  transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": [
-      "babel-jest",
-      {
-        presets: [
-          "next/babel"
-        ]
-      }
-    ]
-  },
-  transformIgnorePatterns: [
-    "/node_modules/",
-    "^.+\\.module\\.(css|sass|scss)$"
-  ]
+const nextJest = require("next/jest")
+
+const createJestConfig = nextJest({
+    dir: "./",
+})
+
+/** @type {import('jest').Config} */
+const jestConfig = {
+    // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+    moduleDirectories: ["node_modules", "<rootDir>/"],
+    testEnvironment: "jest-environment-jsdom",
 }
+
+module.exports = createJestConfig(jestConfig)
