@@ -1,9 +1,8 @@
-import { Bookable, BookableDay, BookableSession } from "~/features/bookables"
-
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 import { useState } from "react"
 
 import BookablesList from "./BookablesList"
+import { Bookable, BookableDay, BookableSession } from "./types"
 
 const bookables: Bookable[] = [
     {

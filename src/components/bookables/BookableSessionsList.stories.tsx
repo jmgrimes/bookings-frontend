@@ -1,8 +1,7 @@
-import { BookableSession } from "~/features/bookables"
-
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 
 import BookableSessionsList from "./BookableSessionsList"
+import { BookableSession } from "./types"
 
 const Template: ComponentStory<typeof BookableSessionsList> = args => {
     return <BookableSessionsList {...args} />

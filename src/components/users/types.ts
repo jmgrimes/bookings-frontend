@@ -8,5 +8,3 @@ export type User = {
     notes?: string
     bookings?: Booking[]
 }
-
-export type UserAction = (user: User) => Promise<void> | void

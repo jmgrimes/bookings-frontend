@@ -1,7 +1,7 @@
 import { DateTime } from "luxon"
 
 import { Bookable, BookableDayModel, BookableSessionEnum, BookableSessionModel } from "../bookables"
-import { User } from "../users"
+import { User } from "~/components/users"
 
 export type Booking = {
     id: number
@@ -14,8 +14,6 @@ export type Booking = {
     title: string
     notes?: string
 }
-
-export type BookingAction = (booking: Booking) => Promise<void> | void
 
 export class BookingModel {
     id: number

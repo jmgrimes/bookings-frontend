@@ -11,8 +11,8 @@ module.exports = {
     },
     "framework": "@storybook/react",
     "stories": [
-        "../src/**/*.stories.mdx",
-        "../src/**/*.stories.@(js|jsx|ts|tsx)",
+        "../src/components/**/*.stories.mdx",
+        "../src/components/**/*.stories.@(js|jsx|ts|tsx)",
     ],
     "webpackFinal": async (config) => {
         config.resolve.plugins = [new TsconfigPathsPlugin()]

@@ -1,8 +1,8 @@
-import { BookableDayEnum } from "~/features/bookables"
-
 import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { Calendar } from "react-bootstrap-icons"
+
+import { BookableDayEnum } from "./types"
 
 type BookableDaysListProps = {
     days: BookableDayEnum[]

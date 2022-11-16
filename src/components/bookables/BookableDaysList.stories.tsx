@@ -1,8 +1,7 @@
-import { BookableDay } from "~/features/bookables"
-
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 
 import BookableDaysList from "./BookableDaysList"
+import { BookableDay } from "./types"
 
 const Template: ComponentStory<typeof BookableDaysList> = args => {
     return <BookableDaysList {...args} />

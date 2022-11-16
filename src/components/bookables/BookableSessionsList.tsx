@@ -1,8 +1,8 @@
-import { BookableSessionEnum } from "~/features/bookables"
-
 import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { Clock } from "react-bootstrap-icons"
+
+import { BookableSessionEnum } from "./types"
 
 type BookableSessionsListProps = {
     sessions: BookableSessionEnum[]

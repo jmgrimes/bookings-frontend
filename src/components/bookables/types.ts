@@ -18,7 +18,7 @@ export type BookableDayModel = {
     date: DateTime
 }
 
-export type BookableDayType = {
+type BookableDayType = {
     values: BookableDayEnum[]
     toModel: (weekStart: DateTime, day: BookableDayEnum) => BookableDayModel
 }
@@ -54,7 +54,7 @@ export type BookableSessionModel = {
     session: BookableSessionEnum
 }
 
-export type BookableSessionType = {
+type BookableSessionType = {
     values: BookableSessionEnum[]
     toModel: (session: BookableSessionEnum) => BookableSessionModel
 }
@@ -86,5 +86,3 @@ export type Bookable = {
     sessions: BookableSessionEnum[]
     bookings?: Booking[]
 }
-
-export type BookableAction = (bookable: Bookable) => Promise<void> | void
