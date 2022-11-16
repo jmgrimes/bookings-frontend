@@ -16,12 +16,11 @@ const Template: ComponentStory<typeof BookableCard> = args => {
     return <BookableCard {...args} />
 }
 
-export const DefaultNoActions: ComponentStory<typeof BookableCard> = Template.bind({})
-DefaultNoActions.args = { bookable }
+export const Default: ComponentStory<typeof BookableCard> = Template.bind({})
+Default.args = {}
 
-export const DefaultWithActions: ComponentStory<typeof BookableCard> = Template.bind({})
-DefaultWithActions.args = {
-    bookable,
+export const Actions: ComponentStory<typeof BookableCard> = Template.bind({})
+Actions.args = {
     onEdit: () => {},
     onView: () => {},
     onDelete: () => {},
@@ -30,6 +29,9 @@ DefaultWithActions.args = {
 export default {
     component: BookableCard,
     title: "Bookables/Public/BookableCard",
+    args: {
+        bookable,
+    },
     parameters: {
         controls: {
             exclude: ["onEdit", "onView", "onDelete"],

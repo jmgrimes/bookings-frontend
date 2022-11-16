@@ -9,9 +9,7 @@ const UserProvider: FunctionComponent<UserProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User>()
     return (
         <UserContext.Provider value={user}>
-            <UserSetContext.Provider value={setUser}>
-                {children}
-            </UserSetContext.Provider>
+            <UserSetContext.Provider value={setUser}>{children}</UserSetContext.Provider>
         </UserContext.Provider>
     )
 }

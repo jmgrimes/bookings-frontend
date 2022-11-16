@@ -41,11 +41,11 @@ export const Default: ComponentStory<typeof BookablesList> = args => {
 }
 Default.args = {}
 
-export const Selector: ComponentStory<typeof BookablesList> = SelectedTemplate.bind({})
-Selector.args = { bookable: bookables.find(bookable => bookable.id === 1) }
+export const Selected: ComponentStory<typeof BookablesList> = SelectedTemplate.bind({})
+Selected.args = { bookable: bookables.find(bookable => bookable.id === 1) }
 
-export const SelectorNone: ComponentStory<typeof BookablesList> = SelectedTemplate.bind({})
-SelectorNone.args = {}
+export const Unselected: ComponentStory<typeof BookablesList> = SelectedTemplate.bind({})
+Unselected.args = {}
 
 export default {
     component: BookablesList,
