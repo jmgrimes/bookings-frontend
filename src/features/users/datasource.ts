@@ -1,4 +1,4 @@
-import { RESTDataSource } from "apollo-datasource-rest"
+import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
 
 type User = {
     id: number
@@ -9,8 +9,8 @@ type User = {
 }
 
 class UserAPI extends RESTDataSource {
-    constructor(baseURL: string) {
-        super()
+    constructor(baseURL: string, config?: DataSourceConfig) {
+        super(config)
         this.baseURL = baseURL
     }
 

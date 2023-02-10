@@ -1,6 +1,6 @@
 "use server"
 
-import { RESTDataSource } from "apollo-datasource-rest"
+import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
 
 type BookableDay = 0 | 1 | 2 | 3 | 4 | 5 | 6
 type BookableSession = 0 | 1 | 2 | 3 | 4
@@ -17,8 +17,8 @@ type Bookable = {
 type BookableModel = Omit<Bookable, "id">
 
 class BookableAPI extends RESTDataSource {
-    constructor(baseURL: string) {
-        super()
+    constructor(baseURL: string, config?: DataSourceConfig) {
+        super(config)
         this.baseURL = baseURL
     }
 
@@ -31,11 +31,11 @@ class BookableAPI extends RESTDataSource {
     }
 
     createBookable(model: BookableModel): Promise<Bookable> {
-        return this.post<Bookable>(`/bookables`, model)
+        return this.post<Bookable>(`/bookables`, { body: model })
     }
 
     updateBookable(bookable: Bookable): Promise<Bookable> {
-        return this.put<Bookable>(`/bookables/${bookable.id.toString(10)}`, bookable)
+        return this.put<Bookable>(`/bookables/${bookable.id.toString(10)}`, { body: bookable })
     }
 
     async deleteBookable(id: number): Promise<number> {

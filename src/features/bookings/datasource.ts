@@ -1,6 +1,6 @@
 "use server"
 
-import { RESTDataSource } from "apollo-datasource-rest"
+import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
 
 type BookableSession = 0 | 1 | 2 | 3 | 4
 
@@ -24,15 +24,15 @@ type BookingsQuery = {
 }
 
 class BookingAPI extends RESTDataSource {
-    constructor(baseURL: string) {
-        super()
+    constructor(baseURL: string, config?: DataSourceConfig) {
+        super(config)
         this.baseURL = baseURL
     }
 
     getBookings(query: BookingsQuery): Promise<Booking[]> {
         const searchParams = {
-            bookerId: query.bookerId,
-            bookableId: query.bookableId,
+            bookerId: query.bookerId?.toString(),
+            bookableId: query.bookableId?.toString(),
             date_gte: query.startDate,
             date_lte: query.endDate,
         }
@@ -40,7 +40,7 @@ class BookingAPI extends RESTDataSource {
         if (!query.bookableId) delete searchParams.bookableId
         if (!query.startDate) delete searchParams.date_gte
         if (!query.endDate) delete searchParams.date_lte
-        return this.get<Booking[]>(`/bookings`, searchParams)
+        return this.get<Booking[]>(`/bookings`, { params: searchParams })
     }
 
     getBooking(id: number): Promise<Booking> {
@@ -48,11 +48,11 @@ class BookingAPI extends RESTDataSource {
     }
 
     createBooking(model: BookingModel): Promise<Booking> {
-        return this.post<Booking>(`/bookings`, model)
+        return this.post<Booking>(`/bookings`, { body: model })
     }
 
     updateBooking(booking: Booking): Promise<Booking> {
-        return this.put<Booking>(`/bookings/${booking.id.toString(10)}`, booking)
+        return this.put<Booking>(`/bookings/${booking.id.toString(10)}`, { body: booking })
     }
 
     async deleteBooking(id: number): Promise<number> {
