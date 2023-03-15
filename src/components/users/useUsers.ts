@@ -2,7 +2,7 @@ import { QueryResult, gql, useQuery } from "@apollo/client"
 
 import { User } from "./types"
 
-type UseUsersData = {
+interface UseUsersData {
     users: User[]
 }
 

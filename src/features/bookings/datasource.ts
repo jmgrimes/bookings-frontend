@@ -4,7 +4,7 @@ import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
 
 type BookableSession = 0 | 1 | 2 | 3 | 4
 
-type Booking = {
+interface Booking {
     id: number
     bookerId: number
     bookableId: number
@@ -14,14 +14,14 @@ type Booking = {
     notes?: string
 }
 
-type BookingModel = Omit<Booking, "id">
-
-type BookingsQuery = {
+interface BookingsQuery {
     bookerId?: number
     bookableId?: number
     startDate?: string
     endDate?: string
 }
+
+type BookingModel = Omit<Booking, "id">
 
 class BookingAPI extends RESTDataSource {
     constructor(baseURL: string, config?: DataSourceConfig) {

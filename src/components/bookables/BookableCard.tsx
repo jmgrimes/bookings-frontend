@@ -8,7 +8,7 @@ import BookableDaysList from "./BookableDaysList"
 import BookableSessionsList from "./BookableSessionsList"
 import { Bookable } from "./types"
 
-type BookableCardProps = {
+interface BookableCardProps {
     bookable: Bookable
     onEdit?: AsyncConsumer<Bookable> | Consumer<Bookable>
     onView?: AsyncConsumer<Bookable> | Consumer<Bookable>

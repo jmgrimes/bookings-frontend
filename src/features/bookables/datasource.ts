@@ -5,7 +5,7 @@ import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
 type BookableDay = 0 | 1 | 2 | 3 | 4 | 5 | 6
 type BookableSession = 0 | 1 | 2 | 3 | 4
 
-type Bookable = {
+interface Bookable {
     id: number
     group: string
     title: string

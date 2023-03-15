@@ -6,7 +6,7 @@ import { AsyncConsumer, Consumer } from "~components/application/functions"
 
 import { User } from "./types"
 
-type UserDetailsProps = {
+interface UserDetailsProps {
     user: User
     onView?: AsyncConsumer<User> | Consumer<User>
     onEdit?: AsyncConsumer<User> | Consumer<User>

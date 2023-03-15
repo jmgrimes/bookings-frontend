@@ -1,17 +1,18 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 
+import { Consumer } from "~components/application/functions"
 import { Bookable } from "./types"
 import { UseBookablesQuery } from "./useBookables"
 
-type OnSuccess = (bookable: Bookable) => void
-
-type UseCreateBookableData = {
+interface UseCreateBookableData {
     createBookable: Bookable
 }
 
 type UseCreateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseCreateBookableData>>
 
-type UseCreateBookable = (onSuccess: OnSuccess) => [UseCreateBookableMutate, MutationResult<UseCreateBookableData>]
+type UseCreateBookableResult = [UseCreateBookableMutate, MutationResult<UseCreateBookableData>]
+
+type UseCreateBookable = (onSuccess: Consumer<Bookable>) => UseCreateBookableResult
 
 export const UseCreateBookableMutation = gql`
     mutation useCreateBookable(

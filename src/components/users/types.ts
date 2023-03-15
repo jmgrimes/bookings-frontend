@@ -1,6 +1,6 @@
 import { Booking } from "../bookings"
 
-export type User = {
+export interface User {
     id: number
     name: string
     title: string

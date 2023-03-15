@@ -8,7 +8,7 @@ import { AsyncConsumer, Consumer } from "~components/application/functions"
 import BookablesList from "./BookablesList"
 import { Bookable } from "./types"
 
-type BookablesListCardProps = {
+interface BookablesListCardProps {
     bookable: Bookable
     bookables: Bookable[]
     onSelect: AsyncConsumer<Bookable> | Consumer<Bookable>

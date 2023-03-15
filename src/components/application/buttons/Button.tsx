@@ -3,7 +3,7 @@ import { Button as BootstrapButton } from "react-bootstrap"
 import { ArrowLeft, ArrowRight, Icon, Pencil, Save, Search, Trash, X } from "react-bootstrap-icons"
 
 type Variant = "cancel" | "delete" | "edit" | "next" | "previous" | "save" | "view"
-type VariantProps = {
+interface VariantProps {
     title: string
     reverseIcon: boolean
     IconComponent: Icon
@@ -19,7 +19,7 @@ const variants = new Map<Variant, VariantProps>([
     ["view", { title: "View", reverseIcon: false, IconComponent: Search }],
 ])
 
-type ButtonProps = {
+interface ButtonProps {
     title?: string
     variant: Variant
     onClick: MouseEventHandler<HTMLButtonElement>

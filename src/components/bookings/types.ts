@@ -3,7 +3,7 @@ import { DateTime } from "luxon"
 import { Bookable, BookableDayModel, BookableSessionEnum, BookableSessionModel } from "../bookables"
 import { User } from "~/components/users"
 
-export type Booking = {
+export interface Booking {
     id: number
     booker?: User
     bookerId: number

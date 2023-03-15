@@ -5,9 +5,9 @@ import { AsyncConsumer, Consumer } from "~components/application/functions"
 
 import { User } from "./types"
 
-type UserPickerProps = {
+interface UserPickerProps {
     users: User[]
-    user: User
+    user?: User
     setUser: AsyncConsumer<User> | Consumer<User>
 }
 
@@ -19,7 +19,7 @@ const UserPicker: FunctionComponent<UserPickerProps> = ({ users, user, setUser }
     }
 
     return (
-        <FormSelect value={user.id} onChange={changeUser}>
+        <FormSelect value={user?.id} onChange={changeUser}>
             {users.map(u => (
                 <option key={u.id} value={u.id}>
                     {u.name}

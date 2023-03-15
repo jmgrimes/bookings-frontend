@@ -4,7 +4,7 @@ import { Calendar } from "react-bootstrap-icons"
 
 import { BookableDayEnum } from "./types"
 
-type BookableDaysListProps = {
+interface BookableDaysListProps {
     days: BookableDayEnum[]
 }
 

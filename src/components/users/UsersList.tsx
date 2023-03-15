@@ -6,7 +6,7 @@ import { AsyncConsumer, Consumer } from "~components/application/functions"
 
 import { User } from "./types"
 
-type UsersListProps = {
+interface UsersListProps {
     user?: User
     users: User[]
     onSelect?: AsyncConsumer<User> | Consumer<User>

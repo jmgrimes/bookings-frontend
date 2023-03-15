@@ -2,7 +2,7 @@ import { QueryResult, gql, useQuery } from "@apollo/client"
 
 import { Bookable } from "./types"
 
-type UseBookablesData = {
+interface UseBookablesData {
     bookables: Bookable[]
 }
 

@@ -33,7 +33,7 @@ export const schema: GraphQLSchema = makeSchema({
     types: [BookableDefinitions, BookingDefinitions, UserDefinitions],
     shouldGenerateArtifacts: process.env.NODE_ENV === "development",
     contextType: {
-        module: path.join(process.cwd(), "features"),
+        module: path.join(process.cwd(), "src", "features"),
         export: "Context",
     },
     outputs: {

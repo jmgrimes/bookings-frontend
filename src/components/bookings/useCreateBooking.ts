@@ -1,10 +1,9 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import { DateTime } from "luxon"
 
+import { Consumer } from "~components/application/functions"
 import { Booking } from "./types"
 import { UseBookingsQuery } from "./useBookings"
-
-type OnSuccess = (booking: Booking) => void
 
 type UseCreateBookingData = {
     createBooking: Omit<Booking, "date"> & { date: string }
@@ -12,7 +11,9 @@ type UseCreateBookingData = {
 
 type UseCreateBookingMutate = (booking: Booking) => Promise<FetchResult<UseCreateBookingData>>
 
-type UseCreateBooking = (onSuccess: OnSuccess) => [UseCreateBookingMutate, MutationResult<UseCreateBookingData>]
+type UseCreateBookingResult = [UseCreateBookingMutate, MutationResult<UseCreateBookingData>]
+
+type UseCreateBooking = (onSuccess: Consumer<Booking>) => UseCreateBookingResult
 
 const UseCreateBookingMutation = gql`
     mutation useCreateBooking(

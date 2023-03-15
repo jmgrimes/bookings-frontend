@@ -12,13 +12,13 @@ export enum BookableDayEnum {
     Saturday = "Saturday",
 }
 
-export type BookableDayModel = {
+export interface BookableDayModel {
     index: number
     day: BookableDayEnum
     date: DateTime
 }
 
-type BookableDayType = {
+interface BookableDayType {
     values: BookableDayEnum[]
     toModel: (weekStart: DateTime, day: BookableDayEnum) => BookableDayModel
 }
@@ -49,12 +49,12 @@ export enum BookableSessionEnum {
     Evening = "Evening",
 }
 
-export type BookableSessionModel = {
+export interface BookableSessionModel {
     index: number
     session: BookableSessionEnum
 }
 
-type BookableSessionType = {
+interface BookableSessionType {
     values: BookableSessionEnum[]
     toModel: (session: BookableSessionEnum) => BookableSessionModel
 }
@@ -77,7 +77,7 @@ export const BookableSession: BookableSessionType = {
     },
 }
 
-export type Bookable = {
+export interface Bookable {
     id: number
     group: string
     title: string

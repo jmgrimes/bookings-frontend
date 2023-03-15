@@ -1,6 +1,6 @@
 import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
 
-type User = {
+interface User {
     id: number
     name: string
     title: string

@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FunctionComponent } from "react"
 import { FormSelect } from "react-bootstrap"
 
-type SelectProps = {
+interface SelectProps {
     value?: string
     values: string[]
     onChange: ChangeEventHandler<HTMLSelectElement>

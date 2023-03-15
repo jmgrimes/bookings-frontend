@@ -4,7 +4,7 @@ import { Clock } from "react-bootstrap-icons"
 
 import { BookableSessionEnum } from "./types"
 
-type BookableSessionsListProps = {
+interface BookableSessionsListProps {
     sessions: BookableSessionEnum[]
 }
 const BookableSessionsList: FunctionComponent<BookableSessionsListProps> = ({ sessions }) => {

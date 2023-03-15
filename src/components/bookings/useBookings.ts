@@ -5,7 +5,7 @@ import { Bookable } from "~components/bookables"
 
 import { Booking } from "./types"
 
-type UseBookingsData = {
+interface UseBookingsData {
     bookings: Booking[]
 }
 
