@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
+import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
 import BookableCard from "./BookableCard"
 import { Bookable, BookableDay, BookableSession } from "./types"
@@ -12,21 +12,7 @@ const bookable: Bookable = {
     sessions: BookableSession.values,
 }
 
-const Template: ComponentStory<typeof BookableCard> = args => {
-    return <BookableCard {...args} />
-}
-
-export const Default: ComponentStory<typeof BookableCard> = Template.bind({})
-Default.args = {}
-
-export const Actions: ComponentStory<typeof BookableCard> = Template.bind({})
-Actions.args = {
-    onEdit: () => {},
-    onView: () => {},
-    onDelete: () => {},
-}
-
-export default {
+const meta: Meta<typeof BookableCard> = {
     component: BookableCard,
     title: "Bookables/Public/BookableCard",
     args: {
@@ -37,4 +23,20 @@ export default {
             exclude: ["onEdit", "onView", "onDelete"],
         },
     },
-} as ComponentMeta<typeof BookableCard>
+}
+
+const Template: StoryFn<typeof BookableCard> = args => {
+    return <BookableCard {...args} />
+}
+
+export const Default: StoryObj<typeof BookableCard> = Template.bind({})
+Default.args = {}
+
+export const Actions: StoryObj<typeof BookableCard> = Template.bind({})
+Actions.args = {
+    onEdit: () => {},
+    onView: () => {},
+    onDelete: () => {},
+}
+
+export default meta

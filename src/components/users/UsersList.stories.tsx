@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
+import { Meta, StoryFn, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
 import UsersList from "./UsersList"
@@ -25,23 +25,7 @@ const users: User[] = [
     },
 ]
 
-const SelectedTemplate: ComponentStory<typeof UsersList> = args => {
-    const [user, setUser] = useState(args.user)
-    return <UsersList users={args.users} user={user} onSelect={setUser} />
-}
-
-export const Default: ComponentStory<typeof UsersList> = args => {
-    return <UsersList {...args} />
-}
-Default.args = {}
-
-export const Selected: ComponentStory<typeof UsersList> = SelectedTemplate.bind({})
-Selected.args = { user: users.find(user => user.id === 1) }
-
-export const Unselected: ComponentStory<typeof UsersList> = SelectedTemplate.bind({})
-Unselected.args = {}
-
-export default {
+const meta: Meta<typeof UsersList> = {
     component: UsersList,
     title: "Users/Private/UsersList",
     args: {
@@ -52,4 +36,22 @@ export default {
             exclude: ["user", "onSelect"],
         },
     },
-} as ComponentMeta<typeof UsersList>
+} 
+
+const SelectedTemplate: StoryFn<typeof UsersList> = args => {
+    const [user, setUser] = useState(args.user)
+    return <UsersList users={args.users} user={user} onSelect={setUser} />
+}
+
+export const Default: StoryFn<typeof UsersList> = args => {
+    return <UsersList {...args} />
+}
+Default.args = {}
+
+export const Selected: StoryObj<typeof UsersList> = SelectedTemplate.bind({})
+Selected.args = { user: users.find(user => user.id === 1) }
+
+export const Unselected: StoryObj<typeof UsersList> = SelectedTemplate.bind({})
+Unselected.args = {}
+
+export default meta

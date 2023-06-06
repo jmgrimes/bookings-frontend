@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
+import { Meta, StoryFn } from "@storybook/react"
 import { useState } from "react"
 
 import UsersCard from "./UsersCard"
@@ -25,13 +25,7 @@ const users: User[] = [
     },
 ]
 
-export const Default: ComponentStory<typeof UsersCard> = args => {
-    const [user, setUser] = useState(args.user)
-    return <UsersCard users={args.users} user={user} onSelect={setUser} />
-}
-Default.args = {}
-
-export default {
+const meta: Meta<typeof UsersCard> = {
     component: UsersCard,
     title: "Users/Public/UsersCard",
     args: {
@@ -43,4 +37,12 @@ export default {
             exclude: ["user", "onSelect"],
         },
     },
-} as ComponentMeta<typeof UsersCard>
+}
+
+export const Default: StoryFn<typeof UsersCard> = args => {
+    const [user, setUser] = useState(args.user)
+    return <UsersCard users={args.users} user={user} onSelect={setUser} />
+}
+Default.args = {}
+
+export default meta

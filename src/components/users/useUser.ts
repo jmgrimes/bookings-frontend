@@ -1,20 +1,30 @@
-import { Dispatch, SetStateAction, createContext, useContext } from "react"
+import { QueryResult, gql, useQuery } from "@apollo/client"
 
 import { User } from "./types"
 
-type SetUser = Dispatch<SetStateAction<User | undefined>>
-type UseUser = () => [User | undefined, SetUser]
+interface UseUserData {
+    users: User | undefined
+}
 
-export const UserContext = createContext<User | undefined>(undefined)
-export const UserSetContext = createContext<SetUser | undefined>(undefined)
+type UseUser = (id: number) => QueryResult<UseUserData>
 
-const useUser: UseUser = () => {
-    const user = useContext(UserContext)
-    const setUser = useContext(UserSetContext)
-    if (!setUser) {
-        throw new Error("user and setUser are missing from context, did you forget to set up a provider?")
+export const UseUserQuery = gql`
+    query useUser($id: Int!) {
+        users(id: $id) {
+            id
+            name
+            title
+            notes
+        }
     }
-    return [user, setUser]
+`
+
+const useUser: UseUser = id => {
+    return useQuery<UseUserData>(UseUserQuery, {
+        variables: {
+            id,
+        },
+    })
 }
 
 export default useUser

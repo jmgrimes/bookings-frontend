@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
+import { Meta, StoryFn, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
 import BookablesList from "./BookablesList"
@@ -31,23 +31,7 @@ const bookables: Bookable[] = [
     },
 ]
 
-const SelectedTemplate: ComponentStory<typeof BookablesList> = args => {
-    const [bookable, setBookable] = useState(args.bookable)
-    return <BookablesList bookables={args.bookables} bookable={bookable} onSelect={setBookable} />
-}
-
-export const Default: ComponentStory<typeof BookablesList> = args => {
-    return <BookablesList {...args} />
-}
-Default.args = {}
-
-export const Selected: ComponentStory<typeof BookablesList> = SelectedTemplate.bind({})
-Selected.args = { bookable: bookables.find(bookable => bookable.id === 1) }
-
-export const Unselected: ComponentStory<typeof BookablesList> = SelectedTemplate.bind({})
-Unselected.args = {}
-
-export default {
+const meta: Meta<typeof BookablesList> = {
     component: BookablesList,
     title: "Bookables/Private/BookablesList",
     args: {
@@ -58,4 +42,22 @@ export default {
             exclude: ["bookable", "onSelect"],
         },
     },
-} as ComponentMeta<typeof BookablesList>
+}
+
+const SelectedTemplate: StoryFn<typeof BookablesList> = args => {
+    const [bookable, setBookable] = useState(args.bookable)
+    return <BookablesList bookables={args.bookables} bookable={bookable} onSelect={setBookable} />
+}
+
+export const Default: StoryFn<typeof BookablesList> = args => {
+    return <BookablesList {...args} />
+}
+Default.args = {}
+
+export const Selected: StoryObj<typeof BookablesList> = SelectedTemplate.bind({})
+Selected.args = { bookable: bookables.find(bookable => bookable.id === 1) }
+
+export const Unselected: StoryObj<typeof BookablesList> = SelectedTemplate.bind({})
+Unselected.args = {}
+
+export default meta

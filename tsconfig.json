@@ -11,31 +11,33 @@
         "lib": [
             "dom",
             "dom.iterable",
-            "esnext"
+            "esnext",
         ],
         "module": "esnext",
         "moduleResolution": "node",
         "noEmit": true,
         "paths": {
-            "~*": ["./src/*"]
+            "~*": [
+                "./src/*",
+            ],
         },
+        "plugins": [
+            {
+                "name": "next",
+            },
+        ],
         "resolveJsonModule": true,
         "skipLibCheck": true,
         "strict": true,
         "target": "es5",
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ]
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
     ],
     "include": [
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        ".next/types/**/*.ts"
-    ]
+        ".next/types/**/*.ts",
+    ],
 }

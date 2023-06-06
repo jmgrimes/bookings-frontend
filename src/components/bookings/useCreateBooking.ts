@@ -1,7 +1,8 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import { DateTime } from "luxon"
 
-import { Consumer } from "~components/application/functions"
+import { Consumer } from "~support"
+
 import { Booking } from "./types"
 import { UseBookingsQuery } from "./useBookings"
 
@@ -69,7 +70,7 @@ const useCreateBooking: UseCreateBooking = onSuccess => {
             await client.refetchQueries({
                 include: [UseBookingsQuery],
             })
-            onSuccess(booking)
+            await onSuccess(booking)
         },
     })
     const createBooking: UseCreateBookingMutate = async booking => {

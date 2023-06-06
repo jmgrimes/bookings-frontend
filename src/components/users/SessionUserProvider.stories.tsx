@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
+import { Meta, StoryFn } from "@storybook/react"
 import { Fragment, FunctionComponent, useEffect } from "react"
 import { Container } from "react-bootstrap"
 
+import SessionUserProvider from "./SessionUserProvider"
 import UserCard from "./UserCard"
 import UserPicker from "./UserPicker"
-import UserProvider from "./UserProvider"
 import UsersCard from "./UsersCard"
 import { User } from "./types"
-import useUser from "./useUser"
+import useUser from "./useSessionUser"
 
 const users: User[] = [
     {
@@ -77,10 +77,10 @@ const UsersCardContainer: FunctionComponent<UsersCardContainerProps> = ({ users 
     if (user) {
         return (
             <Container className="p-2">
-                <h4>UsersList Component Tree</h4>
+                <h4>UsersCard Component Tree</h4>
                 <p>
                     This component tree uses the UserProvider companion hook to get the contextual user and set it based
-                    on changes from the UsersList below. If another component changes the user, this component will
+                    on changes from the UsersCard below. If another component changes the user, this component will
                     reflect this as well.
                 </p>
                 <UsersCard users={users} user={user} onSelect={setUser} />
@@ -108,18 +108,20 @@ const UserCardContainer: FunctionComponent = () => {
     return <Fragment />
 }
 
-export const Default: ComponentStory<typeof UserPicker> = () => {
+const meta: Meta<typeof SessionUserProvider> = {
+    component: SessionUserProvider,
+    title: "Users/Public/SessionUserProvider",
+}
+
+export const Default: StoryFn<typeof UserPicker> = () => {
     return (
-        <UserProvider>
+        <SessionUserProvider>
             <SetupContainer users={users} />
             <UserPickerContainer users={users} />
             <UsersCardContainer users={users} />
             <UserCardContainer />
-        </UserProvider>
+        </SessionUserProvider>
     )
 }
 
-export default {
-    component: UserProvider,
-    title: "Users/Public/UserProvider",
-} as ComponentMeta<typeof UserProvider>
+export default meta

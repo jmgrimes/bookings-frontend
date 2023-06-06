@@ -1,6 +1,7 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 
-import { Consumer } from "~components/application/functions"
+import { Consumer } from "~support"
+
 import { Bookable } from "./types"
 import { UseBookableQuery } from "./useBookable"
 import { UseBookablesQuery } from "./useBookables"
@@ -42,7 +43,7 @@ const useUpdateBookable: UseUpdateBookable = onSuccess => {
             await client.refetchQueries({
                 include: [UseBookableQuery, UseBookablesQuery],
             })
-            onSuccess(data.updateBookable)
+            await onSuccess(data.updateBookable)
         },
     })
     const updateBookable: UseUpdateBookableMutate = async bookable => {

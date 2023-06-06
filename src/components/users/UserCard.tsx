@@ -1,16 +1,16 @@
 import { FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
-import { Button } from "~components/application/buttons"
-import { AsyncConsumer, Consumer } from "~components/application/functions"
+import { Button } from "~components/controls"
+import { Consumer } from "~support"
 
 import { User } from "./types"
 
 interface UserDetailsProps {
     user: User
-    onView?: AsyncConsumer<User> | Consumer<User>
-    onEdit?: AsyncConsumer<User> | Consumer<User>
-    onDelete?: AsyncConsumer<User> | Consumer<User>
+    onView?: Consumer<User>
+    onEdit?: Consumer<User>
+    onDelete?: Consumer<User>
 }
 
 const UserCard: FunctionComponent<UserDetailsProps> = ({ user, onView, onEdit, onDelete }) => {

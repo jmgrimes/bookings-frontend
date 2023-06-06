@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react"
 import { ButtonGroup, Card, Col, Row } from "react-bootstrap"
 
-import { Button } from "~components/application/buttons"
-import { AsyncConsumer, Consumer } from "~components/application/functions"
+import { Button } from "~components/controls"
+import { Consumer } from "~support"
 
 import BookableDaysList from "./BookableDaysList"
 import BookableSessionsList from "./BookableSessionsList"
@@ -10,9 +10,9 @@ import { Bookable } from "./types"
 
 interface BookableCardProps {
     bookable: Bookable
-    onEdit?: AsyncConsumer<Bookable> | Consumer<Bookable>
-    onView?: AsyncConsumer<Bookable> | Consumer<Bookable>
-    onDelete?: AsyncConsumer<Bookable> | Consumer<Bookable>
+    onEdit?: Consumer<Bookable>
+    onView?: Consumer<Bookable>
+    onDelete?: Consumer<Bookable>
 }
 
 const BookableCard: FunctionComponent<BookableCardProps> = ({ bookable, onView, onEdit, onDelete }) => {

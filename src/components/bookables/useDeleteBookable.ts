@@ -1,6 +1,7 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 
-import { Consumer } from "~components/application/functions"
+import { Consumer } from "~support"
+
 import { Bookable } from "./types"
 import { UseBookablesQuery } from "./useBookables"
 
@@ -26,7 +27,7 @@ const useDeleteBookable: UseDeleteBookable = onSuccess => {
             await client.refetchQueries({
                 include: [UseBookablesQuery],
             })
-            onSuccess(data.deleteBookable)
+            await onSuccess(data.deleteBookable)
         },
     })
     const deleteBookable: UseDeleteBookableMutate = async bookable => {

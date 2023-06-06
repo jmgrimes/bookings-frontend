@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
+import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
 import UserCard from "./UserCard"
 import { User } from "./types"
@@ -10,21 +10,7 @@ const user: User = {
     notes: "A sample user object, John Doe is the perfect demonstration persona.",
 }
 
-const Template: ComponentStory<typeof UserCard> = args => {
-    return <UserCard {...args} />
-}
-
-export const Default: ComponentStory<typeof UserCard> = Template.bind({})
-Default.args = {}
-
-export const Actions: ComponentStory<typeof UserCard> = Template.bind({})
-Actions.args = {
-    onEdit: () => {},
-    onView: () => {},
-    onDelete: () => {},
-}
-
-export default {
+const meta: Meta<typeof UserCard> = {
     component: UserCard,
     title: "Users/Public/UserCard",
     args: {
@@ -35,4 +21,20 @@ export default {
             exclude: ["onEdit", "onView", "onDelete"],
         },
     },
-} as ComponentMeta<typeof UserCard>
+}
+
+const Template: StoryFn<typeof UserCard> = args => {
+    return <UserCard {...args} />
+}
+
+export const Default: StoryObj<typeof UserCard> = Template.bind({})
+Default.args = {}
+
+export const Actions: StoryObj<typeof UserCard> = Template.bind({})
+Actions.args = {
+    onEdit: () => {},
+    onView: () => {},
+    onDelete: () => {},
+}
+
+export default meta
