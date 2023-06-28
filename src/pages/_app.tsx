@@ -5,8 +5,8 @@ import Head from "next/head"
 import { FunctionComponent } from "react"
 import { ThemeProvider } from "react-bootstrap"
 
-import { Navigation } from "~components/application"
-import { SessionUserProvider, useSessionUser, useUsers } from "~components/users"
+import { Navigation } from "~/components/application"
+import { SessionUserProvider, useSessionUser, useUsers } from "~/components/users"
 
 import "bootstrap/dist/css/bootstrap.css"
 

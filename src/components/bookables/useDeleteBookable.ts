@@ -1,6 +1,6 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 
-import { Consumer } from "~support"
+import { Consumer } from "~/features/support"
 
 import { Bookable } from "./types"
 import { UseBookablesQuery } from "./useBookables"

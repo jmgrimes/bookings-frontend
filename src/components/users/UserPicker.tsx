@@ -1,7 +1,7 @@
 import { ChangeEvent, FunctionComponent } from "react"
 import { FormSelect } from "react-bootstrap"
 
-import { Consumer } from "~support"
+import { Consumer } from "~/features/support"
 
 import { User } from "./types"
 

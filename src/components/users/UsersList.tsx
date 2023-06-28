@@ -2,7 +2,7 @@ import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { Person } from "react-bootstrap-icons"
 
-import { Consumer } from "~support"
+import { Consumer } from "~/features/support"
 
 import { User } from "./types"
 

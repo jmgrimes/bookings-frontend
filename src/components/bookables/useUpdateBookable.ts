@@ -1,6 +1,6 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 
-import { Consumer } from "~support"
+import { Consumer } from "~/features/support"
 
 import { Bookable } from "./types"
 import { UseBookableQuery } from "./useBookable"
@@ -25,7 +25,10 @@ export const UseUpdateBookableMutation = gql`
         $days: [BookableDay!]!
         $sessions: [BookableSession!]!
     ) {
-        updateBookable(id: $id, title: $title, group: $group, notes: $notes, days: $days, sessions: $sessions) {
+        updateBookable(
+            id: $id
+            props: { title: $title, group: $group, notes: $notes, days: $days, sessions: $sessions }
+        ) {
             id
             title
             group

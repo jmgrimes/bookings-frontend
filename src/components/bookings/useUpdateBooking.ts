@@ -1,7 +1,7 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 import { DateTime } from "luxon"
 
-import { Consumer } from "~support"
+import { Consumer } from "~/features/support"
 
 import { Booking } from "./types"
 import { UseBookingsQuery } from "./useBookings"
@@ -28,12 +28,14 @@ const UseUpdateBookingMutation = gql`
     ) {
         updateBooking(
             id: $id
-            bookerId: $bookerId
-            bookableId: $bookableId
-            date: $date
-            session: $session
-            title: $title
-            notes: $notes
+            props: {
+                bookerId: $bookerId
+                bookableId: $bookableId
+                date: $date
+                session: $session
+                title: $title
+                notes: $notes
+            }
         ) {
             id
             booker {

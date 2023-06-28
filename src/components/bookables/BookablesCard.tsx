@@ -1,8 +1,8 @@
 import { ChangeEvent, FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
-import { Button, Select } from "~components/controls"
-import { Consumer } from "~support"
+import { Button, Select } from "~/components/controls"
+import { Consumer } from "~/features/support"
 
 import BookablesList from "./BookablesList"
 import { Bookable } from "./types"

@@ -2,9 +2,9 @@ import { FunctionComponent } from "react"
 import { Container, Nav, Navbar } from "react-bootstrap"
 import { Calendar, Collection, People } from "react-bootstrap-icons"
 
-import { ErrorMessage, LoadingMessage } from "~components/controls"
-import { User, UserPicker } from "~components/users"
-import { Consumer } from "~support"
+import { ErrorMessage, LoadingMessage } from "~/components/controls"
+import { User, UserPicker } from "~/components/users"
+import { Consumer } from "~/features/support"
 
 const Loading: FunctionComponent = () => {
     return (

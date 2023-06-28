@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
-import { Button } from "~components/controls"
-import { Consumer } from "~support"
+import { Button } from "~/components/controls"
+import { Consumer } from "~/features/support"
 
 import UsersList from "./UsersList"
 import { User } from "./types"

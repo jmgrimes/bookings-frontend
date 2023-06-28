@@ -1,6 +1,6 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
-import LoadingMessage from "~components/controls/LoadingMessage"
+import LoadingMessage from "./LoadingMessage"
 
 const meta: Meta<typeof LoadingMessage> = {
     component: LoadingMessage,

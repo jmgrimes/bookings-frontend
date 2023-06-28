@@ -36,7 +36,7 @@ const meta: Meta<typeof UsersList> = {
             exclude: ["user", "onSelect"],
         },
     },
-} 
+}
 
 const SelectedTemplate: StoryFn<typeof UsersList> = args => {
     const [user, setUser] = useState(args.user)

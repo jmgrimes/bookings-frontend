@@ -1,7 +1,7 @@
 import { QueryResult, gql, useQuery } from "@apollo/client"
 import { DateTime } from "luxon"
 
-import { Bookable } from "~components/bookables"
+import { Bookable } from "~/components/bookables"
 
 import { Booking } from "./types"
 
