@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, createContext, useContext } from "react"
 
-import { User } from "./types"
+import { IUserView } from "~/features/models/users"
 
-type SetSessionUser = Dispatch<SetStateAction<User | undefined>>
-type UseSessionUser = () => [User | undefined, SetSessionUser]
+type SetSessionUser = Dispatch<SetStateAction<IUserView | undefined>>
+type UseSessionUser = () => [IUserView | undefined, SetSessionUser]
 
-export const SessionUserContext = createContext<User | undefined>(undefined)
+export const SessionUserContext = createContext<IUserView | undefined>(undefined)
 export const SessionUserSetContext = createContext<SetSessionUser | undefined>(undefined)
 
 const useSessionUser: UseSessionUser = () => {

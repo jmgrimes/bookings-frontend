@@ -1,11 +1,6 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
-import ErrorMessage from "./ErrorMessage"
-
-const meta: Meta<typeof ErrorMessage> = {
-    component: ErrorMessage,
-    title: "Controls/Public/ErrorMessage",
-}
+import ErrorMessage from "~/components/controls/ErrorMessage"
 
 const Template: StoryFn<typeof ErrorMessage> = args => {
     const { message, error } = args
@@ -18,4 +13,7 @@ Default.args = {
     error: new Error("This is an error that occurred."),
 }
 
-export default meta
+export default {
+    component: ErrorMessage,
+    title: "Controls/Public/ErrorMessage",
+} as Meta<typeof ErrorMessage>

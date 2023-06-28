@@ -1,5 +1,3 @@
-export * from "./types"
-
 export { default as useBooking } from "./useBooking"
 export { default as useBookings } from "./useBookings"
 export { default as useCreateBooking } from "./useCreateBooking"

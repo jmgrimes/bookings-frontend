@@ -2,15 +2,14 @@ import { FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
 import { Button } from "~/components/controls"
+import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-import { User } from "./types"
-
 interface UserDetailsProps {
-    user: User
-    onView?: Consumer<User>
-    onEdit?: Consumer<User>
-    onDelete?: Consumer<User>
+    user: IUserView
+    onView?: Consumer<IUserView>
+    onEdit?: Consumer<IUserView>
+    onDelete?: Consumer<IUserView>
 }
 
 const UserCard: FunctionComponent<UserDetailsProps> = ({ user, onView, onEdit, onDelete }) => {

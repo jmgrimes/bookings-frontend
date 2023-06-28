@@ -1,19 +1,16 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 
+import { UseBookablesQuery } from "~/features/api/bookables/useBookables"
+import { IBookableProps, IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-import { Bookable } from "./types"
-import { UseBookablesQuery } from "./useBookables"
-
 interface UseCreateBookableData {
-    createBookable: Bookable
+    createBookable: IBookableView
 }
 
-type UseCreateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseCreateBookableData>>
-
+type UseCreateBookableMutate = (props: IBookableProps) => Promise<FetchResult<UseCreateBookableData>>
 type UseCreateBookableResult = [UseCreateBookableMutate, MutationResult<UseCreateBookableData>]
-
-type UseCreateBookable = (onSuccess: Consumer<Bookable>) => UseCreateBookableResult
+type UseCreateBookable = (onSuccess: Consumer<IBookableView>) => UseCreateBookableResult
 
 export const UseCreateBookableMutation = gql`
     mutation useCreateBookable(
@@ -44,15 +41,9 @@ const useCreateBookable: UseCreateBookable = onSuccess => {
             await onSuccess(data.createBookable)
         },
     })
-    const createBookable: UseCreateBookableMutate = async bookable => {
+    const createBookable: UseCreateBookableMutate = async props => {
         return mutate({
-            variables: {
-                title: bookable.title,
-                group: bookable.group,
-                notes: bookable.notes,
-                days: bookable.days,
-                sessions: bookable.sessions,
-            },
+            variables: props,
         })
     }
     return [createBookable, result]

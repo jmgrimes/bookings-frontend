@@ -1,9 +1,9 @@
 import { QueryResult, gql, useQuery } from "@apollo/client"
 
-import { User } from "./types"
+import { IUserView } from "~/features/models/users"
 
 interface UseUsersData {
-    users: User[]
+    users: IUserView[]
 }
 
 type UseUsers = () => QueryResult<UseUsersData>

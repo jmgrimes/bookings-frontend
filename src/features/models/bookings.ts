@@ -1,4 +1,5 @@
-import { BookableSession } from "~/features/models/bookables"
+import { BookableSessionEnum, IBookableView } from "~/features/models/bookables"
+import { IUserView } from "~/features/models/users"
 
 export interface IBookingQuery {
     bookerId?: number
@@ -13,9 +14,14 @@ export interface IBookingProps {
     title: string
     date: string
     notes?: string
-    session: BookableSession
+    session: BookableSessionEnum
 }
 
 export interface IBooking extends IBookingProps {
     id: number
+}
+
+export interface IBookingView extends IBooking {
+    booker?: IUserView
+    bookable?: IBookableView
 }

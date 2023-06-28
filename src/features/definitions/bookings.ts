@@ -1,10 +1,10 @@
 import "reflect-metadata"
 import { Arg, Ctx, Field, FieldResolver, InputType, Mutation, ObjectType, Query, Resolver, Root } from "type-graphql"
 
-import { Bookable } from "~/features/graphql/bookables"
-import type { Context } from "~/features/graphql/context"
-import { User } from "~/features/graphql/users"
-import { BookableSession } from "~/features/models/bookables"
+import { Bookable } from "~/features/definitions/bookables"
+import type { Context } from "~/features/definitions/context"
+import { User } from "~/features/definitions/users"
+import { BookableSessionEnum } from "~/features/models/bookables"
 import type { IBooking, IBookingProps, IBookingQuery } from "~/features/models/bookings"
 
 @ObjectType({
@@ -34,11 +34,11 @@ class BookingPropsBase implements IBookingProps {
         nullable: false,
     })
     date: string
-    @Field(() => BookableSession, {
+    @Field(() => BookableSessionEnum, {
         description: "the session during which the booking, reservation, or appointment occurs",
         nullable: false,
     })
-    session: BookableSession
+    session: BookableSessionEnum
     @Field({
         description: "the notes for the booking, reservation, or appointment",
         nullable: false,
@@ -50,7 +50,7 @@ class BookingPropsBase implements IBookingProps {
         bookableId: number,
         title: string,
         date: string,
-        session: BookableSession,
+        session: BookableSessionEnum,
         notes?: string,
     ) {
         this.bookerId = bookerId
@@ -78,7 +78,7 @@ export class Booking extends BookingPropsBase implements IBooking {
         bookableId: number,
         title: string,
         date: string,
-        session: BookableSession,
+        session: BookableSessionEnum,
         notes?: string,
     ) {
         super(bookerId, bookableId, title, date, session, notes)
@@ -107,7 +107,7 @@ export class BookingProps extends BookingPropsBase implements IBookingProps {
         bookableId: number,
         title: string,
         date: string,
-        session: BookableSession,
+        session: BookableSessionEnum,
         notes?: string,
     ) {
         super(bookerId, bookableId, title, date, session, notes)

@@ -1,8 +1,8 @@
 import "reflect-metadata"
 import { Arg, Ctx, Field, FieldResolver, InputType, Mutation, ObjectType, Query, Resolver, Root } from "type-graphql"
 
-import { Booking } from "~/features/graphql/bookings"
-import type { Context } from "~/features/graphql/context"
+import { Booking } from "~/features/definitions/bookings"
+import type { Context } from "~/features/definitions/context"
 import type { IUser, IUserProps } from "~/features/models/users"
 
 @ObjectType({
@@ -24,16 +24,16 @@ class UserPropsBase implements IUserProps {
     title: string
     @Field({
         description: "the avatar image of the user",
-        nullable: false,
+        nullable: true,
     })
-    img: string
+    img?: string
     @Field({
         description: "the notes about the user",
         nullable: true,
     })
     notes?: string
 
-    constructor(name: string, title: string, img: string, notes?: string) {
+    constructor(name: string, title: string, img?: string, notes?: string) {
         this.name = name
         this.title = title
         this.img = img
@@ -51,7 +51,7 @@ export class User extends UserPropsBase implements IUser {
     })
     id: number
 
-    constructor(id: number, name: string, title: string, img: string, notes?: string) {
+    constructor(id: number, name: string, title: string, img?: string, notes?: string) {
         super(name, title, img, notes)
         this.id = id
     }
@@ -65,7 +65,7 @@ export class User extends UserPropsBase implements IUser {
     description: "data for new users and user updates",
 })
 export class UserProps extends UserPropsBase implements IUserProps, Partial<User> {
-    constructor(name: string, title: string, img: string, notes?: string) {
+    constructor(name: string, title: string, img?: string, notes?: string) {
         super(name, title, img, notes)
     }
 

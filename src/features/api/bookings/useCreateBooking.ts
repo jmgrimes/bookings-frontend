@@ -1,20 +1,16 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
-import { DateTime } from "luxon"
 
+import { UseBookingsQuery } from "~/features/api/bookings/useBookings"
+import { IBookingProps, IBookingView } from "~/features/models/bookings"
 import { Consumer } from "~/features/support"
 
-import { Booking } from "./types"
-import { UseBookingsQuery } from "./useBookings"
-
 type UseCreateBookingData = {
-    createBooking: Omit<Booking, "date"> & { date: string }
+    createBooking: IBookingView
 }
 
-type UseCreateBookingMutate = (booking: Booking) => Promise<FetchResult<UseCreateBookingData>>
-
+type UseCreateBookingMutate = (props: IBookingProps) => Promise<FetchResult<UseCreateBookingData>>
 type UseCreateBookingResult = [UseCreateBookingMutate, MutationResult<UseCreateBookingData>]
-
-type UseCreateBooking = (onSuccess: Consumer<Booking>) => UseCreateBookingResult
+type UseCreateBooking = (onSuccess: Consumer<IBookingView>) => UseCreateBookingResult
 
 const UseCreateBookingMutation = gql`
     mutation useCreateBooking(
@@ -65,26 +61,15 @@ const useCreateBooking: UseCreateBooking = onSuccess => {
     const client = useApolloClient()
     const [mutate, result] = useMutation<UseCreateBookingData>(UseCreateBookingMutation, {
         onCompleted: async data => {
-            const booking: Booking = {
-                ...data.createBooking,
-                date: DateTime.fromISO(data.createBooking.date),
-            }
             await client.refetchQueries({
                 include: [UseBookingsQuery],
             })
-            await onSuccess(booking)
+            await onSuccess(data.createBooking)
         },
     })
-    const createBooking: UseCreateBookingMutate = async booking => {
+    const createBooking: UseCreateBookingMutate = async props => {
         return mutate({
-            variables: {
-                bookerId: booking.bookerId,
-                bookableId: booking.bookableId,
-                date: booking.date.toISODate(),
-                session: booking.session,
-                title: booking.title,
-                notes: booking.notes,
-            },
+            variables: props,
         })
     }
     return [createBooking, result]

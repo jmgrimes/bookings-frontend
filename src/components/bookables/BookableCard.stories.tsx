@@ -1,28 +1,15 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
-import BookableCard from "./BookableCard"
-import { Bookable, BookableDay, BookableSession } from "./types"
+import BookableCard from "~/components/bookables/BookableCard"
+import { IBookableView, BookableDay, BookableSession } from "~/features/models/bookables"
 
-const bookable: Bookable = {
+const bookable: IBookableView = {
     id: 1,
     title: "My Bookable",
     notes: "A sample bookable object, with default availability in the 'Bookables' group.",
     group: "Bookables",
     days: BookableDay.values,
     sessions: BookableSession.values,
-}
-
-const meta: Meta<typeof BookableCard> = {
-    component: BookableCard,
-    title: "Bookables/Public/BookableCard",
-    args: {
-        bookable,
-    },
-    parameters: {
-        controls: {
-            exclude: ["onEdit", "onView", "onDelete"],
-        },
-    },
 }
 
 const Template: StoryFn<typeof BookableCard> = args => {
@@ -39,4 +26,15 @@ Actions.args = {
     onDelete: () => {},
 }
 
-export default meta
+export default {
+    component: BookableCard,
+    title: "Bookables/Public/BookableCard",
+    args: {
+        bookable,
+    },
+    parameters: {
+        controls: {
+            exclude: ["onEdit", "onView", "onDelete"],
+        },
+    },
+} as Meta<typeof BookableCard>

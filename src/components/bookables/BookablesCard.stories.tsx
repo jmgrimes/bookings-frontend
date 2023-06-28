@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from "@storybook/react"
 import { useState } from "react"
 
-import BookablesCard from "./BookablesCard"
-import { Bookable, BookableDay, BookableSession } from "./types"
+import BookablesCard from "~/components/bookables/BookablesCard"
+import { IBookableView, BookableDay, BookableSession } from "~/features/models/bookables"
 
-const bookables: Bookable[] = [
+const bookables: IBookableView[] = [
     {
         id: 1,
         title: "My Room 1",
@@ -55,7 +55,13 @@ const bookables: Bookable[] = [
     },
 ]
 
-const meta: Meta<typeof BookablesCard> = {
+export const Default: StoryFn<typeof BookablesCard> = args => {
+    const [bookable, setBookable] = useState(args.bookable)
+    return <BookablesCard bookables={args.bookables} bookable={bookable} onSelect={setBookable} />
+}
+Default.args = {}
+
+export default {
     component: BookablesCard,
     title: "Bookables/Public/BookablesCard",
     args: {
@@ -67,12 +73,4 @@ const meta: Meta<typeof BookablesCard> = {
             exclude: ["bookable", "onSelect"],
         },
     },
-}
-
-export const Default: StoryFn<typeof BookablesCard> = args => {
-    const [bookable, setBookable] = useState(args.bookable)
-    return <BookablesCard bookables={args.bookables} bookable={bookable} onSelect={setBookable} />
-}
-Default.args = {}
-
-export default meta
+} as Meta<typeof BookablesCard>

@@ -2,14 +2,13 @@ import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { Person } from "react-bootstrap-icons"
 
+import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-import { User } from "./types"
-
 interface UsersListProps {
-    user?: User
-    users: User[]
-    onSelect?: Consumer<User>
+    user?: IUserView
+    users: IUserView[]
+    onSelect?: Consumer<IUserView>
 }
 
 const UsersList: FunctionComponent<UsersListProps> = ({ user, users, onSelect }) => {

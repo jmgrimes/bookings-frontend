@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from "@storybook/react"
 import { useState } from "react"
 
-import UserPicker from "./UserPicker"
-import { User } from "./types"
+import UserPicker from "~/components/users/UserPicker"
+import { IUserView } from "~/features/models/users"
 
-const users: User[] = [
+const users: IUserView[] = [
     {
         id: 1,
         name: "John Doe",
@@ -25,7 +25,13 @@ const users: User[] = [
     },
 ]
 
-const meta: Meta<typeof UserPicker> = {
+export const Default: StoryFn<typeof UserPicker> = args => {
+    const [user, setUser] = useState(args.users[0])
+    return <UserPicker users={args.users} user={user} setUser={setUser} />
+}
+Default.args = {}
+
+export default {
     component: UserPicker,
     title: "Users/Public/UserPicker",
     args: {
@@ -36,12 +42,4 @@ const meta: Meta<typeof UserPicker> = {
             exclude: ["user", "setUser"],
         },
     },
-}
-
-export const Default: StoryFn<typeof UserPicker> = args => {
-    const [user, setUser] = useState(args.users[0])
-    return <UserPicker users={args.users} user={user} setUser={setUser} />
-}
-Default.args = {}
-
-export default meta
+} as Meta<typeof UserPicker>

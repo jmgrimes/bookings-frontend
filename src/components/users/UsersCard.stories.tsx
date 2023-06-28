@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from "@storybook/react"
 import { useState } from "react"
 
-import UsersCard from "./UsersCard"
-import { User } from "./types"
+import UsersCard from "~/components/users/UsersCard"
+import { IUserView } from "~/features/models/users"
 
-const users: User[] = [
+const users: IUserView[] = [
     {
         id: 1,
         name: "John Doe",
@@ -25,7 +25,13 @@ const users: User[] = [
     },
 ]
 
-const meta: Meta<typeof UsersCard> = {
+export const Default: StoryFn<typeof UsersCard> = args => {
+    const [user, setUser] = useState(args.user)
+    return <UsersCard users={args.users} user={user} onSelect={setUser} />
+}
+Default.args = {}
+
+export default {
     component: UsersCard,
     title: "Users/Public/UsersCard",
     args: {
@@ -37,12 +43,4 @@ const meta: Meta<typeof UsersCard> = {
             exclude: ["user", "onSelect"],
         },
     },
-}
-
-export const Default: StoryFn<typeof UsersCard> = args => {
-    const [user, setUser] = useState(args.user)
-    return <UsersCard users={args.users} user={user} onSelect={setUser} />
-}
-Default.args = {}
-
-export default meta
+} as Meta<typeof UsersCard>

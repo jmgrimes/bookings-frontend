@@ -1,19 +1,20 @@
 import { QueryResult, gql, useQuery } from "@apollo/client"
 
-import { User } from "./types"
+import { IUserView } from "~/features/models/users"
 
 interface UseUserData {
-    users: User | undefined
+    user?: IUserView
 }
 
 type UseUser = (id: number) => QueryResult<UseUserData>
 
 export const UseUserQuery = gql`
     query useUser($id: Int!) {
-        users(id: $id) {
+        user(id: $id) {
             id
             name
             title
+            img
             notes
         }
     }

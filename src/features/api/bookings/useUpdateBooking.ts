@@ -1,20 +1,16 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
-import { DateTime } from "luxon"
 
+import { UseBookingsQuery } from "~/features/api/bookings/useBookings"
+import { IBookingProps, IBookingView } from "~/features/models/bookings"
 import { Consumer } from "~/features/support"
 
-import { Booking } from "./types"
-import { UseBookingsQuery } from "./useBookings"
-
 interface UseUpdateBookingData {
-    updateBooking: Omit<Booking, "date"> & { date: string }
+    updateBooking: IBookingView
 }
 
-type UseUpdateBookingMutate = (booking: Booking) => Promise<FetchResult<UseUpdateBookingData>>
-
+type UseUpdateBookingMutate = (id: number, props: IBookingProps) => Promise<FetchResult<UseUpdateBookingData>>
 type UseUpdateBookingResult = [UseUpdateBookingMutate, MutationResult<UseUpdateBookingData>]
-
-type UseUpdateBooking = (onSuccess: Consumer<Booking>) => UseUpdateBookingResult
+type UseUpdateBooking = (onSuccess: Consumer<IBookingView>) => UseUpdateBookingResult
 
 const UseUpdateBookingMutation = gql`
     mutation useUpdateBooking(
@@ -67,26 +63,17 @@ const useUpdateBooking: UseUpdateBooking = onSuccess => {
     const client = useApolloClient()
     const [mutate, result] = useMutation<UseUpdateBookingData>(UseUpdateBookingMutation, {
         onCompleted: async data => {
-            const booking: Booking = {
-                ...data.updateBooking,
-                date: DateTime.fromISO(data.updateBooking.date),
-            }
             await client.refetchQueries({
                 include: [UseBookingsQuery],
             })
-            await onSuccess(booking)
+            await onSuccess(data.updateBooking)
         },
     })
-    const updateBooking: UseUpdateBookingMutate = async booking => {
+    const updateBooking: UseUpdateBookingMutate = async (id, props) => {
         return mutate({
             variables: {
-                id: booking.id,
-                bookerId: booking.bookerId,
-                bookableId: booking.bookableId,
-                date: booking.date.toISODate(),
-                session: booking.session,
-                title: booking.title,
-                notes: booking.notes,
+                id,
+                ...props,
             },
         })
     }

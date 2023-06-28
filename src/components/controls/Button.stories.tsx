@@ -1,19 +1,6 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
-import Button from "./Button"
-
-const meta: Meta<typeof Button> = {
-    component: Button,
-    title: "Controls/Public/Button",
-    args: {
-        onClick: () => {},
-    },
-    parameters: {
-        controls: {
-            exclude: ["variant", "onClick"],
-        },
-    },
-}
+import Button from "~/components/controls/Button"
 
 const Template: StoryFn<typeof Button> = args => {
     return <Button {...args} />
@@ -40,4 +27,15 @@ Save.args = { variant: "save" }
 export const View: StoryObj<typeof Button> = Template.bind({})
 View.args = { variant: "view" }
 
-export default meta
+export default {
+    component: Button,
+    title: "Controls/Public/Button",
+    args: {
+        onClick: () => {},
+    },
+    parameters: {
+        controls: {
+            exclude: ["variant", "onClick"],
+        },
+    },
+} as Meta<typeof Button>

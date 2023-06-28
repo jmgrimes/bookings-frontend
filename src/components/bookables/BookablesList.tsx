@@ -2,14 +2,13 @@ import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { BoxSeam } from "react-bootstrap-icons"
 
+import { IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-import { Bookable } from "./types"
-
 interface BookablesListProps {
-    bookable?: Bookable
-    bookables: Bookable[]
-    onSelect?: Consumer<Bookable>
+    bookable?: IBookableView
+    bookables: IBookableView[]
+    onSelect?: Consumer<IBookableView>
 }
 
 const BookablesList: FunctionComponent<BookablesListProps> = ({ bookable, bookables, onSelect }) => {

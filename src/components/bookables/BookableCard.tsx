@@ -1,18 +1,17 @@
 import { FunctionComponent } from "react"
 import { ButtonGroup, Card, Col, Row } from "react-bootstrap"
 
+import BookableDaysList from "~/components/bookables/BookableDaysList"
+import BookableSessionsList from "~/components/bookables/BookableSessionsList"
 import { Button } from "~/components/controls"
+import { IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-import BookableDaysList from "./BookableDaysList"
-import BookableSessionsList from "./BookableSessionsList"
-import { Bookable } from "./types"
-
 interface BookableCardProps {
-    bookable: Bookable
-    onEdit?: Consumer<Bookable>
-    onView?: Consumer<Bookable>
-    onDelete?: Consumer<Bookable>
+    bookable: IBookableView
+    onEdit?: Consumer<IBookableView>
+    onView?: Consumer<IBookableView>
+    onDelete?: Consumer<IBookableView>
 }
 
 const BookableCard: FunctionComponent<BookableCardProps> = ({ bookable, onView, onEdit, onDelete }) => {

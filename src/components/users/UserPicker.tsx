@@ -1,21 +1,20 @@
 import { ChangeEvent, FunctionComponent } from "react"
 import { FormSelect } from "react-bootstrap"
 
+import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-import { User } from "./types"
-
 interface UserPickerProps {
-    users: User[]
-    user?: User
-    setUser: Consumer<User>
+    user?: IUserView
+    users: IUserView[]
+    setUser: Consumer<IUserView>
 }
 
 const UserPicker: FunctionComponent<UserPickerProps> = ({ users, user, setUser }) => {
     const changeUser = async (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedUserId = parseInt(event.target.value, 10)
-        const selectedUser = users.find(u => u.id === selectedUserId) as User
-        await setUser(selectedUser)
+        const selectedUser = users.find(u => u.id === selectedUserId)
+        if (selectedUser) await setUser(selectedUser)
     }
 
     return (

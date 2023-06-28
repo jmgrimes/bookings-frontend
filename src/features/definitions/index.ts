@@ -1,9 +1,9 @@
 import "reflect-metadata"
 import { buildSchema } from "type-graphql"
 
-import BookableResolver from "~/features/graphql/bookables"
-import BookingResolver from "~/features/graphql/bookings"
-import UserResolver from "~/features/graphql/users"
+import BookableResolver from "~/features/definitions/bookables"
+import BookingResolver from "~/features/definitions/bookings"
+import UserResolver from "~/features/definitions/users"
 
 export * from "./context"
 

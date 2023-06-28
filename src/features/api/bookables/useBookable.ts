@@ -1,9 +1,9 @@
 import { QueryResult, gql, useQuery } from "@apollo/client"
 
-import { Bookable } from "./types"
+import { IBookableView } from "~/features/models/bookables"
 
 interface UseBookableData {
-    bookable: Bookable
+    bookable: IBookableView
 }
 
 type UseBookable = (id: number) => QueryResult<UseBookableData>

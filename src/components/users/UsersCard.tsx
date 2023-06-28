@@ -2,15 +2,14 @@ import { FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
 import { Button } from "~/components/controls"
+import UsersList from "~/components/users/UsersList"
+import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-import UsersList from "./UsersList"
-import { User } from "./types"
-
 interface UsersListCardProps {
-    user: User
-    users: User[]
-    onSelect: Consumer<User>
+    user: IUserView
+    users: IUserView[]
+    onSelect: Consumer<IUserView>
 }
 
 const UsersCard: FunctionComponent<UsersListCardProps> = ({ user, users, onSelect }) => {
@@ -18,14 +17,14 @@ const UsersCard: FunctionComponent<UsersListCardProps> = ({ user, users, onSelec
         const currentIndex = users.indexOf(user)
         const nextIndex = (currentIndex + 1) % users.length
         const nextUser = users[nextIndex]
-        return await onSelect(nextUser)
+        await onSelect(nextUser)
     }
 
     const previousUser = async () => {
         const currentIndex = users.indexOf(user)
         const previousIndex = (users.length + currentIndex - 1) % users.length
         const previousUser = users[previousIndex]
-        return await onSelect(previousUser)
+        await onSelect(previousUser)
     }
 
     return (

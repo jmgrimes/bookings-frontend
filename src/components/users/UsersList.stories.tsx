@@ -1,10 +1,10 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
-import UsersList from "./UsersList"
-import { User } from "./types"
+import UsersList from "~/components/users/UsersList"
+import { IUserView } from "~/features/models/users"
 
-const users: User[] = [
+const users: IUserView[] = [
     {
         id: 1,
         name: "John Doe",
@@ -25,19 +25,6 @@ const users: User[] = [
     },
 ]
 
-const meta: Meta<typeof UsersList> = {
-    component: UsersList,
-    title: "Users/Private/UsersList",
-    args: {
-        users,
-    },
-    parameters: {
-        controls: {
-            exclude: ["user", "onSelect"],
-        },
-    },
-}
-
 const SelectedTemplate: StoryFn<typeof UsersList> = args => {
     const [user, setUser] = useState(args.user)
     return <UsersList users={args.users} user={user} onSelect={setUser} />
@@ -54,4 +41,15 @@ Selected.args = { user: users.find(user => user.id === 1) }
 export const Unselected: StoryObj<typeof UsersList> = SelectedTemplate.bind({})
 Unselected.args = {}
 
-export default meta
+export default {
+    component: UsersList,
+    title: "Users/Private/UsersList",
+    args: {
+        users,
+    },
+    parameters: {
+        controls: {
+            exclude: ["user", "onSelect"],
+        },
+    },
+} as Meta<typeof UsersList>

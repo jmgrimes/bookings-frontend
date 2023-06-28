@@ -13,9 +13,9 @@ import {
     Root,
 } from "type-graphql"
 
-import { Booking } from "~/features/graphql/bookings"
-import type { Context } from "~/features/graphql/context"
-import { BookableDay, BookableSession } from "~/features/models/bookables"
+import { Booking } from "~/features/definitions/bookings"
+import type { Context } from "~/features/definitions/context"
+import { BookableDayEnum, BookableSessionEnum } from "~/features/models/bookables"
 import type { IBookable, IBookableProps } from "~/features/models/bookables"
 
 @ObjectType({
@@ -35,23 +35,29 @@ class BookablePropsBase implements IBookableProps {
         nullable: false,
     })
     title: string
-    @Field(() => [BookableSession], {
+    @Field(() => [BookableSessionEnum], {
         description: "the list of days on which the bookable resource can be booked",
         nullable: false,
     })
-    days: BookableDay[]
-    @Field(() => [BookableSession], {
+    days: BookableDayEnum[]
+    @Field(() => [BookableSessionEnum], {
         description: "the list of sessions during which the bookable resource can be booked",
         nullable: false,
     })
-    sessions: BookableSession[]
+    sessions: BookableSessionEnum[]
     @Field({
         description: "the notes about the bookable resource",
         nullable: true,
     })
     notes?: string
 
-    constructor(group: string, title: string, days: BookableDay[], sessions: BookableSession[], notes?: string) {
+    constructor(
+        group: string,
+        title: string,
+        days: BookableDayEnum[],
+        sessions: BookableSessionEnum[],
+        notes?: string,
+    ) {
         this.group = group
         this.title = title
         this.days = days
@@ -74,8 +80,8 @@ export class Bookable extends BookablePropsBase implements IBookable {
         id: number,
         group: string,
         title: string,
-        days: BookableDay[],
-        sessions: BookableSession[],
+        days: BookableDayEnum[],
+        sessions: BookableSessionEnum[],
         notes?: string,
     ) {
         super(group, title, days, sessions, notes)
@@ -98,7 +104,13 @@ export class Bookable extends BookablePropsBase implements IBookable {
     description: "data for new bookables and bookable updates",
 })
 export class BookableProps extends BookablePropsBase implements Partial<Bookable> {
-    constructor(group: string, title: string, days: BookableDay[], sessions: BookableSession[], notes?: string) {
+    constructor(
+        group: string,
+        title: string,
+        days: BookableDayEnum[],
+        sessions: BookableSessionEnum[],
+        notes?: string,
+    ) {
         super(group, title, days, sessions, notes)
     }
 
@@ -178,12 +190,12 @@ export default class BookableResolver {
     }
 }
 
-registerEnumType(BookableDay, {
+registerEnumType(BookableDayEnum, {
     name: "BookableDay",
     description: "a day on which a bookable resource can be booked",
 })
 
-registerEnumType(BookableSession, {
+registerEnumType(BookableSessionEnum, {
     name: "BookableSession",
     description: "a session during which a bookable resource can be booked",
 })

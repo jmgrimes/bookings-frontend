@@ -1,11 +1,6 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
-import LoadingMessage from "./LoadingMessage"
-
-const meta: Meta<typeof LoadingMessage> = {
-    component: LoadingMessage,
-    title: "Controls/Public/LoadingMessage",
-}
+import LoadingMessage from "~/components/controls/LoadingMessage"
 
 const Template: StoryFn<typeof LoadingMessage> = args => {
     const { message } = args
@@ -17,4 +12,7 @@ Default.args = {
     message: "This component is loading...",
 }
 
-export default meta
+export default {
+    component: LoadingMessage,
+    title: "Controls/Public/LoadingMessage",
+} as Meta<typeof LoadingMessage>

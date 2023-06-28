@@ -2,15 +2,13 @@ import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "
 
 import { Consumer } from "~/features/support"
 
-import { Booking } from "./types"
-import { UseBookingsQuery } from "./useBookings"
+import { UseBookingsQuery } from "~/features/api/bookings/useBookings"
 
 interface UseDeleteBookingData {
     deleteBooking: number
 }
 
-type UseDeleteBookingMutate = (booking: Booking) => Promise<FetchResult<UseDeleteBookingData>>
-
+type UseDeleteBookingMutate = (id: number) => Promise<FetchResult<UseDeleteBookingData>>
 type UseDeleteBookingResult = [UseDeleteBookingMutate, MutationResult<UseDeleteBookingData>]
 type UseDeleteBooking = (onSuccess: Consumer<number>) => UseDeleteBookingResult
 
@@ -30,10 +28,10 @@ const useDeleteBooking: UseDeleteBooking = onSuccess => {
             await onSuccess(data.deleteBooking)
         },
     })
-    const deleteBooking: UseDeleteBookingMutate = async booking => {
+    const deleteBooking: UseDeleteBookingMutate = async id => {
         return mutate({
             variables: {
-                id: booking.id,
+                id,
             },
         })
     }

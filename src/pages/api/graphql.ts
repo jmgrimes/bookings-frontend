@@ -2,7 +2,7 @@ import { ApolloServer } from "@apollo/server"
 import { startServerAndCreateNextHandler } from "@as-integrations/next"
 import { NextApiRequest, NextApiResponse } from "next"
 
-import { Context, GetDataSources, GetSchema } from "~/features/graphql"
+import { Context, GetDataSources, GetSchema } from "src/features/definitions"
 
 let handler: {
     (req: NextApiRequest, res: NextApiResponse): Promise<unknown>

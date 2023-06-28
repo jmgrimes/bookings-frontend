@@ -6,7 +6,8 @@ import { FunctionComponent } from "react"
 import { ThemeProvider } from "react-bootstrap"
 
 import { Navigation } from "~/components/application"
-import { SessionUserProvider, useSessionUser, useUsers } from "~/components/users"
+import { SessionUserProvider } from "~/components/users"
+import { useSessionUser, useUsers } from "~/features/api/users"
 
 import "bootstrap/dist/css/bootstrap.css"
 

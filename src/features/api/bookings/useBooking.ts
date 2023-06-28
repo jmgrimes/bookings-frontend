@@ -1,9 +1,9 @@
 import { QueryResult, gql, useQuery } from "@apollo/client"
 
-import { Booking } from "./types"
+import { IBookingView } from "~/features/models/bookings"
 
 interface UseBookingData {
-    booking: Booking | undefined
+    booking?: IBookingView
 }
 
 type UseBooking = (id: number) => QueryResult<UseBookingData>

@@ -1,12 +1,7 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
-import BookableDaysList from "./BookableDaysList"
-import { BookableDay } from "./types"
-
-const meta: Meta<typeof BookableDaysList> = {
-    component: BookableDaysList,
-    title: "Bookables/Private/BookableDaysList",
-}
+import BookableDaysList from "~/components/bookables/BookableDaysList"
+import { BookableDay } from "~/features/models/bookables"
 
 const Template: StoryFn<typeof BookableDaysList> = args => {
     return <BookableDaysList {...args} />
@@ -18,4 +13,7 @@ Default.args = { days: BookableDay.values }
 export const Empty: StoryObj<typeof BookableDaysList> = Template.bind({})
 Empty.args = { days: [] }
 
-export default meta
+export default {
+    component: BookableDaysList,
+    title: "Bookables/Private/BookableDaysList",
+} as Meta<typeof BookableDaysList>

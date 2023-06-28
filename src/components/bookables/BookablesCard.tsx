@@ -1,16 +1,15 @@
 import { ChangeEvent, FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
+import BookablesList from "~/components/bookables/BookablesList"
 import { Button, Select } from "~/components/controls"
+import { IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-import BookablesList from "./BookablesList"
-import { Bookable } from "./types"
-
 interface BookablesListCardProps {
-    bookable: Bookable
-    bookables: Bookable[]
-    onSelect: Consumer<Bookable>
+    bookable: IBookableView
+    bookables: IBookableView[]
+    onSelect: Consumer<IBookableView>
 }
 
 const BookablesCard: FunctionComponent<BookablesListCardProps> = ({ bookable, bookables, onSelect }) => {

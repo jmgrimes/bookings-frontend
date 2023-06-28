@@ -1,15 +1,13 @@
 import { QueryResult, gql, useQuery } from "@apollo/client"
-import { DateTime } from "luxon"
 
-import { Bookable } from "~/components/bookables"
-
-import { Booking } from "./types"
+import { IBookableView } from "~/features/models/bookables"
+import { IBookingView } from "~/features/models/bookings"
 
 interface UseBookingsData {
-    bookings: Booking[]
+    bookings: IBookingView[]
 }
 
-type UseBookings = (bookable: Bookable, startDate: DateTime, endDate: DateTime) => QueryResult<UseBookingsData>
+type UseBookings = (bookable: IBookableView, startDate: string, endDate: string) => QueryResult<UseBookingsData>
 
 export const UseBookingsQuery = gql`
     query useBookings($bookerId: Int, $bookableId: Int, $startDate: String, $endDate: String) {
@@ -44,8 +42,8 @@ const useBookings: UseBookings = (bookable, startDate, endDate) => {
     return useQuery<UseBookingsData>(UseBookingsQuery, {
         variables: {
             bookableId: bookable.id,
-            startDate: startDate.toISODate(),
-            endDate: endDate.toISODate(),
+            startDate: startDate,
+            endDate: endDate,
         },
     })
 }

@@ -1,26 +1,13 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 
-import UserCard from "./UserCard"
-import { User } from "./types"
+import UserCard from "~/components/users/UserCard"
+import { IUserView } from "~/features/models/users"
 
-const user: User = {
+const user: IUserView = {
     id: 1,
     name: "John Doe",
     title: "Demonstration Doctor",
     notes: "A sample user object, John Doe is the perfect demonstration persona.",
-}
-
-const meta: Meta<typeof UserCard> = {
-    component: UserCard,
-    title: "Users/Public/UserCard",
-    args: {
-        user,
-    },
-    parameters: {
-        controls: {
-            exclude: ["onEdit", "onView", "onDelete"],
-        },
-    },
 }
 
 const Template: StoryFn<typeof UserCard> = args => {
@@ -37,4 +24,15 @@ Actions.args = {
     onDelete: () => {},
 }
 
-export default meta
+export default {
+    component: UserCard,
+    title: "Users/Public/UserCard",
+    args: {
+        user,
+    },
+    parameters: {
+        controls: {
+            exclude: ["onEdit", "onView", "onDelete"],
+        },
+    },
+} as Meta<typeof UserCard>

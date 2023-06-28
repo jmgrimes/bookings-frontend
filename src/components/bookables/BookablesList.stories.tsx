@@ -1,10 +1,10 @@
 import { Meta, StoryFn, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
-import BookablesList from "./BookablesList"
-import { Bookable, BookableDay, BookableSession } from "./types"
+import BookablesList from "~/components/bookables/BookablesList"
+import { IBookableView, BookableDay, BookableSession } from "~/features/models/bookables"
 
-const bookables: Bookable[] = [
+const bookables: IBookableView[] = [
     {
         id: 1,
         title: "My Room 1",
@@ -31,19 +31,6 @@ const bookables: Bookable[] = [
     },
 ]
 
-const meta: Meta<typeof BookablesList> = {
-    component: BookablesList,
-    title: "Bookables/Private/BookablesList",
-    args: {
-        bookables,
-    },
-    parameters: {
-        controls: {
-            exclude: ["bookable", "onSelect"],
-        },
-    },
-}
-
 const SelectedTemplate: StoryFn<typeof BookablesList> = args => {
     const [bookable, setBookable] = useState(args.bookable)
     return <BookablesList bookables={args.bookables} bookable={bookable} onSelect={setBookable} />
@@ -60,4 +47,15 @@ Selected.args = { bookable: bookables.find(bookable => bookable.id === 1) }
 export const Unselected: StoryObj<typeof BookablesList> = SelectedTemplate.bind({})
 Unselected.args = {}
 
-export default meta
+export default {
+    component: BookablesList,
+    title: "Bookables/Private/BookablesList",
+    args: {
+        bookables,
+    },
+    parameters: {
+        controls: {
+            exclude: ["bookable", "onSelect"],
+        },
+    },
+} as Meta<typeof BookablesList>

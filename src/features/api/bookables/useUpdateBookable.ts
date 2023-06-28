@@ -1,20 +1,17 @@
 import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
 
+import { UseBookableQuery } from "~/features/api/bookables/useBookable"
+import { UseBookablesQuery } from "~/features/api/bookables/useBookables"
+import { IBookableProps, IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-import { Bookable } from "./types"
-import { UseBookableQuery } from "./useBookable"
-import { UseBookablesQuery } from "./useBookables"
-
 interface UseUpdateBookableData {
-    updateBookable: Bookable
+    updateBookable: IBookableView
 }
 
-type UseUpdateBookableMutate = (bookable: Bookable) => Promise<FetchResult<UseUpdateBookableData>>
-
+type UseUpdateBookableMutate = (id: number, props: IBookableProps) => Promise<FetchResult<UseUpdateBookableData>>
 type UseUpdateBookableResult = [UseUpdateBookableMutate, MutationResult<UseUpdateBookableData>]
-
-type UseUpdateBookable = (onSuccess: Consumer<Bookable>) => UseUpdateBookableResult
+type UseUpdateBookable = (onSuccess: Consumer<IBookableView>) => UseUpdateBookableResult
 
 export const UseUpdateBookableMutation = gql`
     mutation useUpdateBookable(
@@ -49,15 +46,11 @@ const useUpdateBookable: UseUpdateBookable = onSuccess => {
             await onSuccess(data.updateBookable)
         },
     })
-    const updateBookable: UseUpdateBookableMutate = async bookable => {
+    const updateBookable: UseUpdateBookableMutate = async (id, props) => {
         return mutate({
             variables: {
-                id: bookable.id,
-                title: bookable.title,
-                group: bookable.group,
-                notes: bookable.notes,
-                days: bookable.days,
-                sessions: bookable.sessions,
+                id,
+                ...props,
             },
         })
     }

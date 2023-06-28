@@ -3,7 +3,8 @@ import { Container, Nav, Navbar } from "react-bootstrap"
 import { Calendar, Collection, People } from "react-bootstrap-icons"
 
 import { ErrorMessage, LoadingMessage } from "~/components/controls"
-import { User, UserPicker } from "~/components/users"
+import { UserPicker } from "~/components/users"
+import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
 const Loading: FunctionComponent = () => {
@@ -28,9 +29,9 @@ const Failed: FunctionComponent<FailedProps> = props => {
 }
 
 interface NavigationProps {
-    users: User[]
-    user?: User
-    setUser: Consumer<User>
+    users: IUserView[]
+    user?: IUserView
+    setUser: Consumer<IUserView>
 }
 
 const Navigation: FunctionComponent<NavigationProps> = props => {
