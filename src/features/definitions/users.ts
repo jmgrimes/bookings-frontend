@@ -5,13 +5,13 @@ import { Booking } from "~/features/definitions/bookings"
 import type { Context } from "~/features/definitions/context"
 import type { IUser, IUserProps } from "~/features/models/users"
 
-@ObjectType({
+@InputType("UserPropsBase", {
     description: "abstract base class for user properties",
 })
-@InputType({
+@ObjectType("UserPropsBase", {
     description: "abstract base class for user properties",
 })
-class UserPropsBase implements IUserProps {
+abstract class UserPropsBase implements IUserProps {
     @Field({
         description: "the name of the user",
         nullable: false,
@@ -41,7 +41,7 @@ class UserPropsBase implements IUserProps {
     }
 }
 
-@ObjectType({
+@ObjectType("User", {
     description: "a user of the bookings application",
 })
 export class User extends UserPropsBase implements IUser {
@@ -61,7 +61,7 @@ export class User extends UserPropsBase implements IUser {
     }
 }
 
-@InputType({
+@InputType("UserProps", {
     description: "data for new users and user updates",
 })
 export class UserProps extends UserPropsBase implements IUserProps, Partial<User> {

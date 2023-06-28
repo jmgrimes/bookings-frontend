@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react"
 import { ButtonGroup, Card, Col, Row } from "react-bootstrap"
 
 import BookableDaysList from "~/components/bookables/BookableDaysList"
@@ -7,14 +6,15 @@ import { Button } from "~/components/controls"
 import { IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-interface BookableCardProps {
+interface IBookableCardProps {
     bookable: IBookableView
     onEdit?: Consumer<IBookableView>
     onView?: Consumer<IBookableView>
     onDelete?: Consumer<IBookableView>
 }
 
-const BookableCard: FunctionComponent<BookableCardProps> = ({ bookable, onView, onEdit, onDelete }) => {
+export default function BookableCard(props: IBookableCardProps) {
+    const { bookable, onView, onEdit, onDelete } = props
     return (
         <Card>
             <Card.Header>
@@ -44,5 +44,3 @@ const BookableCard: FunctionComponent<BookableCardProps> = ({ bookable, onView, 
         </Card>
     )
 }
-
-export default BookableCard

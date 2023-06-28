@@ -5,13 +5,14 @@ import { Person } from "react-bootstrap-icons"
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-interface UsersListProps {
+interface IUsersListProps {
     user?: IUserView
     users: IUserView[]
     onSelect?: Consumer<IUserView>
 }
 
-const UsersList: FunctionComponent<UsersListProps> = ({ user, users, onSelect }) => {
+export default function UsersList(props: IUsersListProps) {
+    const { user, users, onSelect } = props
     return (
         <ListGroup>
             {users.map(u => (
@@ -25,5 +26,3 @@ const UsersList: FunctionComponent<UsersListProps> = ({ user, users, onSelect })
         </ListGroup>
     )
 }
-
-export default UsersList

@@ -1,11 +1,12 @@
-import { FunctionComponent, PropsWithChildren, useState } from "react"
+import { PropsWithChildren, useState } from "react"
 
 import { SessionUserContext, SessionUserSetContext } from "~/features/api/users"
 import { IUserView } from "~/features/models/users"
 
-type SessionUserProviderProps = PropsWithChildren<Record<never, string>>
+type ISessionUserProviderProps = PropsWithChildren<Record<never, string>>
 
-const SessionUserProvider: FunctionComponent<SessionUserProviderProps> = ({ children }) => {
+export default function SessionUserProvider(props: ISessionUserProviderProps) {
+    const { children } = props
     const [sessionUser, setSessionUser] = useState<IUserView>()
     return (
         <SessionUserContext.Provider value={sessionUser}>
@@ -13,5 +14,3 @@ const SessionUserProvider: FunctionComponent<SessionUserProviderProps> = ({ chil
         </SessionUserContext.Provider>
     )
 }
-
-export default SessionUserProvider

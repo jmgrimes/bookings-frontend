@@ -5,8 +5,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { Context, GetDataSources, GetSchema } from "src/features/definitions"
 
 let handler: {
-    (req: NextApiRequest, res: NextApiResponse): Promise<unknown>
-    (req: Request, res?: undefined): Promise<Response>
+    (request: NextApiRequest, response: NextApiResponse): Promise<unknown>
+    (request: Request, response?: undefined): Promise<Response>
 }
 
 async function GetHandler() {

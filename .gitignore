@@ -19,6 +19,7 @@
 .DS_Store
 *.pem
 .idea
+.vscode
 
 # debug
 npm-debug.log*
@@ -28,6 +29,9 @@ yarn-error.log*
 
 # local env files
 .env*.local
+
+#
+.graphql
 
 # vercel
 .vercel

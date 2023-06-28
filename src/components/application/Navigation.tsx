@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react"
 import { Container, Nav, Navbar } from "react-bootstrap"
 import { Calendar, Collection, People } from "react-bootstrap-icons"
 
@@ -7,7 +6,7 @@ import { UserPicker } from "~/components/users"
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-const Loading: FunctionComponent = () => {
+function Loading() {
     return (
         <Container>
             <LoadingMessage message="Application navigation is loading..." />
@@ -19,7 +18,7 @@ interface FailedProps {
     failure?: Error
 }
 
-const Failed: FunctionComponent<FailedProps> = props => {
+function Failed(props: FailedProps) {
     const { failure } = props
     return (
         <Container>
@@ -28,13 +27,13 @@ const Failed: FunctionComponent<FailedProps> = props => {
     )
 }
 
-interface NavigationProps {
+interface INavigationProps {
     users: IUserView[]
     user?: IUserView
     setUser: Consumer<IUserView>
 }
 
-const Navigation: FunctionComponent<NavigationProps> = props => {
+function Navigation(props: INavigationProps) {
     const { users, user, setUser } = props
     return (
         <Navbar bg="primary" variant="dark">

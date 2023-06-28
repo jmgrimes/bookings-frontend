@@ -1,12 +1,10 @@
-import { QueryResult, gql, useQuery } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client"
 
 import { IBookableView } from "~/features/models/bookables"
 
-interface UseBookablesData {
+interface IGetBookablesView {
     bookables: IBookableView[]
 }
-
-type UseBookables = () => QueryResult<UseBookablesData>
 
 export const UseBookablesQuery = gql`
     query useBookables {
@@ -21,8 +19,6 @@ export const UseBookablesQuery = gql`
     }
 `
 
-const useBookables: UseBookables = () => {
-    return useQuery<UseBookablesData>(UseBookablesQuery)
+export default function useBookables() {
+    return useQuery<IGetBookablesView>(UseBookablesQuery)
 }
-
-export default useBookables

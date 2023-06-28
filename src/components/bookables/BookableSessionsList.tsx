@@ -1,13 +1,13 @@
-import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { Clock } from "react-bootstrap-icons"
 
 import { BookableSessionEnum } from "~/features/models/bookables"
 
-interface BookableSessionsListProps {
+interface IBookableSessionsListProps {
     sessions: BookableSessionEnum[]
 }
-const BookableSessionsList: FunctionComponent<BookableSessionsListProps> = ({ sessions }) => {
+export default function BookableSessionsList(props: IBookableSessionsListProps) {
+    const { sessions } = props
     if (sessions.length) {
         return (
             <ListGroup>
@@ -21,5 +21,3 @@ const BookableSessionsList: FunctionComponent<BookableSessionsListProps> = ({ se
     }
     return <p>No available sessions configured.</p>
 }
-
-export default BookableSessionsList

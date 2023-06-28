@@ -1,15 +1,11 @@
-import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 
 import { UseBookablesQuery } from "~/features/api/bookables/useBookables"
 import { Consumer } from "~/features/support"
 
-interface UseDeleteBookableData {
+interface IDeleteBookableView {
     deleteBookable: number
 }
-
-type UseDeleteBookableMutate = (id: number) => Promise<FetchResult<UseDeleteBookableData>>
-type UseDeleteBookableResult = [UseDeleteBookableMutate, MutationResult<UseDeleteBookableData>]
-type UseDeleteBookable = (onSuccess: Consumer<number>) => UseDeleteBookableResult
 
 export const UseDeleteBookableMutation = gql`
     mutation useDeleteBookable($id: Int!) {
@@ -17,9 +13,9 @@ export const UseDeleteBookableMutation = gql`
     }
 `
 
-const useDeleteBookable: UseDeleteBookable = onSuccess => {
+export default function useDeleteBookable(onSuccess: Consumer<number>) {
     const client = useApolloClient()
-    const [mutate, result] = useMutation<UseDeleteBookableData>(UseDeleteBookableMutation, {
+    const [mutate, result] = useMutation<IDeleteBookableView>(UseDeleteBookableMutation, {
         onCompleted: async data => {
             await client.refetchQueries({
                 include: [UseBookablesQuery],
@@ -27,7 +23,7 @@ const useDeleteBookable: UseDeleteBookable = onSuccess => {
             await onSuccess(data.deleteBookable)
         },
     })
-    const deleteBookable: UseDeleteBookableMutate = async id => {
+    async function deleteBookable(id: number) {
         return mutate({
             variables: {
                 id,
@@ -36,5 +32,3 @@ const useDeleteBookable: UseDeleteBookable = onSuccess => {
     }
     return [deleteBookable, result]
 }
-
-export default useDeleteBookable

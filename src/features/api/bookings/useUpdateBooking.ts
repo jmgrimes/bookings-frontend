@@ -1,16 +1,12 @@
-import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 
 import { UseBookingsQuery } from "~/features/api/bookings/useBookings"
 import { IBookingProps, IBookingView } from "~/features/models/bookings"
 import { Consumer } from "~/features/support"
 
-interface UseUpdateBookingData {
+interface IUpdateBookingView {
     updateBooking: IBookingView
 }
-
-type UseUpdateBookingMutate = (id: number, props: IBookingProps) => Promise<FetchResult<UseUpdateBookingData>>
-type UseUpdateBookingResult = [UseUpdateBookingMutate, MutationResult<UseUpdateBookingData>]
-type UseUpdateBooking = (onSuccess: Consumer<IBookingView>) => UseUpdateBookingResult
 
 const UseUpdateBookingMutation = gql`
     mutation useUpdateBooking(
@@ -59,9 +55,9 @@ const UseUpdateBookingMutation = gql`
     }
 `
 
-const useUpdateBooking: UseUpdateBooking = onSuccess => {
+export default function useUpdateBooking(onSuccess: Consumer<IBookingView>) {
     const client = useApolloClient()
-    const [mutate, result] = useMutation<UseUpdateBookingData>(UseUpdateBookingMutation, {
+    const [mutate, result] = useMutation<IUpdateBookingView>(UseUpdateBookingMutation, {
         onCompleted: async data => {
             await client.refetchQueries({
                 include: [UseBookingsQuery],
@@ -69,7 +65,7 @@ const useUpdateBooking: UseUpdateBooking = onSuccess => {
             await onSuccess(data.updateBooking)
         },
     })
-    const updateBooking: UseUpdateBookingMutate = async (id, props) => {
+    async function updateBooking(id: number, props: IBookingProps) {
         return mutate({
             variables: {
                 id,
@@ -79,5 +75,3 @@ const useUpdateBooking: UseUpdateBooking = onSuccess => {
     }
     return [updateBooking, result]
 }
-
-export default useUpdateBooking

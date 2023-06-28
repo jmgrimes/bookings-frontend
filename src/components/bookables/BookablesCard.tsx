@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent } from "react"
+import { ChangeEvent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
 import BookablesList from "~/components/bookables/BookablesList"
@@ -6,34 +6,35 @@ import { Button, Select } from "~/components/controls"
 import { IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-interface BookablesListCardProps {
+interface IBookablesCardProps {
     bookable: IBookableView
     bookables: IBookableView[]
     onSelect: Consumer<IBookableView>
 }
 
-const BookablesCard: FunctionComponent<BookablesListCardProps> = ({ bookable, bookables, onSelect }) => {
+export default function BookablesCard(props: IBookablesCardProps) {
+    const { bookable, bookables, onSelect } = props
     const group = bookable.group
     const groups = [...new Set(bookables.map(b => b.group))]
     const bookablesInGroup = bookables.filter(b => b.group === group)
 
-    const changeGroup = (event: ChangeEvent<{ name?: string; value: unknown }>) => {
+    const changeGroup = async (event: ChangeEvent<{ name?: string; value: unknown }>) => {
         const bookablesInSelectedGroup = bookables.filter(b => b.group === event.target.value)
-        return onSelect(bookablesInSelectedGroup[0])
+        await onSelect(bookablesInSelectedGroup[0])
     }
 
-    const nextBookable = () => {
+    const nextBookable = async () => {
         const currentIndex = bookablesInGroup.indexOf(bookable)
         const nextIndex = (currentIndex + 1) % bookablesInGroup.length
         const nextBookable = bookablesInGroup[nextIndex]
-        return onSelect(nextBookable)
+        await onSelect(nextBookable)
     }
 
-    const previousBookable = () => {
+    const previousBookable = async () => {
         const currentIndex = bookablesInGroup.indexOf(bookable)
         const previousIndex = (bookablesInGroup.length + currentIndex - 1) % bookablesInGroup.length
         const previousBookable = bookablesInGroup[previousIndex]
-        return onSelect(previousBookable)
+        await onSelect(previousBookable)
     }
 
     return (
@@ -53,5 +54,3 @@ const BookablesCard: FunctionComponent<BookablesListCardProps> = ({ bookable, bo
         </Card>
     )
 }
-
-export default BookablesCard

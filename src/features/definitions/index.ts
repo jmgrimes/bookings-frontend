@@ -1,3 +1,4 @@
+import path from "path"
 import "reflect-metadata"
 import { buildSchema } from "type-graphql"
 
@@ -10,6 +11,6 @@ export * from "./context"
 export async function GetSchema() {
     return await buildSchema({
         resolvers: [BookableResolver, BookingResolver, UserResolver],
-        emitSchemaFile: false,
+        emitSchemaFile: path.join(process.cwd(), ".graphql", "schema.gql"),
     })
 }

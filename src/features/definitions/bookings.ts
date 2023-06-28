@@ -7,13 +7,13 @@ import { User } from "~/features/definitions/users"
 import { BookableSessionEnum } from "~/features/models/bookables"
 import type { IBooking, IBookingProps, IBookingQuery } from "~/features/models/bookings"
 
-@ObjectType({
+@InputType("BookingPropsBase", {
     description: "abstract base class for booking properties",
 })
-@InputType({
+@ObjectType("BookingPropsBase", {
     description: "abstract base class for booking properties",
 })
-class BookingPropsBase implements IBookingProps {
+abstract class BookingPropsBase implements IBookingProps {
     @Field({
         description: "the id of the booking user for the booking, reservation, or appointment",
         nullable: false,
@@ -62,7 +62,7 @@ class BookingPropsBase implements IBookingProps {
     }
 }
 
-@ObjectType({
+@ObjectType("Booking", {
     description: "a booking, reservation, or appointment in the bookings application",
 })
 export class Booking extends BookingPropsBase implements IBooking {
@@ -98,7 +98,7 @@ export class Booking extends BookingPropsBase implements IBooking {
     }
 }
 
-@InputType({
+@InputType("BookingProps", {
     description: "data for new bookables and bookable updates",
 })
 export class BookingProps extends BookingPropsBase implements IBookingProps {
@@ -118,7 +118,7 @@ export class BookingProps extends BookingPropsBase implements IBookingProps {
     }
 }
 
-@InputType({
+@InputType("BookingQuery", {
     description: "query parameters for bookings",
 })
 export class BookingQuery implements IBookingQuery {

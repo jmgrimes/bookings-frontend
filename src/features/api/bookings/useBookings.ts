@@ -1,17 +1,16 @@
-import { QueryResult, gql, useQuery } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client"
 
 import { IBookableView } from "~/features/models/bookables"
 import { IBookingView } from "~/features/models/bookings"
+import { IUserView } from "~/features/models/users"
 
-interface UseBookingsData {
+interface IUseBookingsView {
     bookings: IBookingView[]
 }
 
-type UseBookings = (bookable: IBookableView, startDate: string, endDate: string) => QueryResult<UseBookingsData>
-
 export const UseBookingsQuery = gql`
     query useBookings($bookerId: Int, $bookableId: Int, $startDate: String, $endDate: String) {
-        bookings(bookerId: $bookerId, bookableId: $bookableId, startDate: $startDate, endDate: $endDate) {
+        bookings(query: { bookerId: $bookerId, bookableId: $bookableId, startDate: $startDate, endDate: $endDate }) {
             id
             booker {
                 id
@@ -38,14 +37,18 @@ export const UseBookingsQuery = gql`
     }
 `
 
-const useBookings: UseBookings = (bookable, startDate, endDate) => {
-    return useQuery<UseBookingsData>(UseBookingsQuery, {
+export default function useBookings(
+    booker?: IUserView,
+    bookable?: IBookableView,
+    startDate?: string,
+    endDate?: string,
+) {
+    return useQuery<IUseBookingsView>(UseBookingsQuery, {
         variables: {
-            bookableId: bookable.id,
+            bookerId: booker?.id,
+            bookableId: bookable?.id,
             startDate: startDate,
             endDate: endDate,
         },
     })
 }
-
-export default useBookings

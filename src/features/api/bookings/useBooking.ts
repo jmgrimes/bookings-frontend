@@ -1,16 +1,14 @@
-import { QueryResult, gql, useQuery } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client"
 
 import { IBookingView } from "~/features/models/bookings"
 
-interface UseBookingData {
+interface IUseBookingView {
     booking?: IBookingView
 }
 
-type UseBooking = (id: number) => QueryResult<UseBookingData>
-
 export const UseBookingsQuery = gql`
     query useBookings($id: Int!) {
-        bookings(id: $id) {
+        booking(id: $id) {
             id
             booker {
                 id
@@ -37,12 +35,10 @@ export const UseBookingsQuery = gql`
     }
 `
 
-const useBooking: UseBooking = id => {
-    return useQuery<UseBookingData>(UseBookingsQuery, {
+export default function useBooking(id: number) {
+    return useQuery<IUseBookingView>(UseBookingsQuery, {
         variables: {
             id,
         },
     })
 }
-
-export default useBooking

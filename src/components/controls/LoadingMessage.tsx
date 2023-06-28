@@ -1,16 +1,15 @@
-import { FunctionComponent } from "react"
 import { Alert, ProgressBar } from "react-bootstrap"
 
-interface LoadingMessageProps {
+interface ILoadingMessageProps {
     message: string
 }
-const LoadingMessage: FunctionComponent<LoadingMessageProps> = props => {
+
+export default function LoadingMessage(props: ILoadingMessageProps) {
+    const { message } = props
     return (
         <Alert variant="info">
-            <Alert.Heading>{props.message}</Alert.Heading>
+            <Alert.Heading>{message}</Alert.Heading>
             <ProgressBar now={100} animated={true} label="Please wait..." />
         </Alert>
     )
 }
-
-export default LoadingMessage

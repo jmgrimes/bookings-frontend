@@ -1,17 +1,13 @@
-import { FetchResult, MutationResult, gql, useApolloClient, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 
 import { UseBookableQuery } from "~/features/api/bookables/useBookable"
 import { UseBookablesQuery } from "~/features/api/bookables/useBookables"
 import { IBookableProps, IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-interface UseUpdateBookableData {
+interface IUpdateBookableView {
     updateBookable: IBookableView
 }
-
-type UseUpdateBookableMutate = (id: number, props: IBookableProps) => Promise<FetchResult<UseUpdateBookableData>>
-type UseUpdateBookableResult = [UseUpdateBookableMutate, MutationResult<UseUpdateBookableData>]
-type UseUpdateBookable = (onSuccess: Consumer<IBookableView>) => UseUpdateBookableResult
 
 export const UseUpdateBookableMutation = gql`
     mutation useUpdateBookable(
@@ -36,9 +32,9 @@ export const UseUpdateBookableMutation = gql`
     }
 `
 
-const useUpdateBookable: UseUpdateBookable = onSuccess => {
+export default function useUpdateBookable(onSuccess: Consumer<IBookableView>) {
     const client = useApolloClient()
-    const [mutate, result] = useMutation<UseUpdateBookableData>(UseUpdateBookableMutation, {
+    const [mutate, result] = useMutation<IUpdateBookableView>(UseUpdateBookableMutation, {
         onCompleted: async data => {
             await client.refetchQueries({
                 include: [UseBookableQuery, UseBookablesQuery],
@@ -46,7 +42,7 @@ const useUpdateBookable: UseUpdateBookable = onSuccess => {
             await onSuccess(data.updateBookable)
         },
     })
-    const updateBookable: UseUpdateBookableMutate = async (id, props) => {
+    async function updateBookable(id: number, props: IBookableProps) {
         return mutate({
             variables: {
                 id,
@@ -56,5 +52,3 @@ const useUpdateBookable: UseUpdateBookable = onSuccess => {
     }
     return [updateBookable, result]
 }
-
-export default useUpdateBookable

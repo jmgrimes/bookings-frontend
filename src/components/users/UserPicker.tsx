@@ -4,13 +4,14 @@ import { FormSelect } from "react-bootstrap"
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-interface UserPickerProps {
+interface IUserPickerProps {
     user?: IUserView
     users: IUserView[]
     setUser: Consumer<IUserView>
 }
 
-const UserPicker: FunctionComponent<UserPickerProps> = ({ users, user, setUser }) => {
+export default function UserPicker(props: IUserPickerProps) {
+    const { users, user, setUser } = props
     const changeUser = async (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedUserId = parseInt(event.target.value, 10)
         const selectedUser = users.find(u => u.id === selectedUserId)
@@ -27,5 +28,3 @@ const UserPicker: FunctionComponent<UserPickerProps> = ({ users, user, setUser }
         </FormSelect>
     )
 }
-
-export default UserPicker

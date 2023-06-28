@@ -1,14 +1,14 @@
-import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { Calendar } from "react-bootstrap-icons"
 
 import { BookableDayEnum } from "~/features/models/bookables"
 
-interface BookableDaysListProps {
+interface IBookableDaysListProps {
     days: BookableDayEnum[]
 }
 
-const BookableDaysList: FunctionComponent<BookableDaysListProps> = ({ days }) => {
+export default function BookableDaysList(props: IBookableDaysListProps) {
+    const { days } = props
     if (days.length) {
         return (
             <ListGroup>
@@ -22,5 +22,3 @@ const BookableDaysList: FunctionComponent<BookableDaysListProps> = ({ days }) =>
     }
     return <p>No available days configured.</p>
 }
-
-export default BookableDaysList

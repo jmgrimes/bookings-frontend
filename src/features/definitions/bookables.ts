@@ -18,13 +18,13 @@ import type { Context } from "~/features/definitions/context"
 import { BookableDayEnum, BookableSessionEnum } from "~/features/models/bookables"
 import type { IBookable, IBookableProps } from "~/features/models/bookables"
 
-@ObjectType({
+@InputType("BookablePropsBase", {
     description: "abstract base class for bookable properties",
 })
-@InputType({
+@ObjectType("BookablePropsBase", {
     description: "abstract base class for bookable properties",
 })
-class BookablePropsBase implements IBookableProps {
+abstract class BookablePropsBase implements IBookableProps {
     @Field({
         description: "the group of the bookable resource",
         nullable: false,
@@ -35,7 +35,7 @@ class BookablePropsBase implements IBookableProps {
         nullable: false,
     })
     title: string
-    @Field(() => [BookableSessionEnum], {
+    @Field(() => [BookableDayEnum], {
         description: "the list of days on which the bookable resource can be booked",
         nullable: false,
     })
@@ -66,7 +66,7 @@ class BookablePropsBase implements IBookableProps {
     }
 }
 
-@ObjectType({
+@ObjectType("Bookable", {
     description: "a bookable resource in the bookings application",
 })
 export class Bookable extends BookablePropsBase implements IBookable {
@@ -100,7 +100,7 @@ export class Bookable extends BookablePropsBase implements IBookable {
     }
 }
 
-@InputType({
+@InputType("BookableProps", {
     description: "data for new bookables and bookable updates",
 })
 export class BookableProps extends BookablePropsBase implements Partial<Bookable> {

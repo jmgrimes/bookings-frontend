@@ -14,7 +14,7 @@
     "app:start": "next start",
     "app:test": "jest --watch",
     "app:test-ci": "jest --ci",
-    "fmt": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md,mdx}\"",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md,mdx}\"",
     "lint": "next lint",
     "storybook:build": "storybook build",
     "storybook:start": "storybook dev -p 6006",

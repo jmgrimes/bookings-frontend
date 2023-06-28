@@ -1,4 +1,4 @@
-import { FunctionComponent, MouseEventHandler } from "react"
+import { MouseEventHandler } from "react"
 import { Button as BootstrapButton } from "react-bootstrap"
 import { ArrowLeft, ArrowRight, Icon, Pencil, Save, Search, Trash, X } from "react-bootstrap-icons"
 
@@ -19,13 +19,14 @@ const variants = new Map<Variant, VariantProps>([
     ["view", { title: "View", reverseIcon: false, IconComponent: Search }],
 ])
 
-interface ButtonProps {
+interface IButtonProps {
     title?: string
     variant: Variant
     onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-const Button: FunctionComponent<ButtonProps> = ({ title: overrideTitle, variant, onClick }) => {
+export default function Button(props: IButtonProps) {
+    const { title: overrideTitle, variant, onClick } = props
     const variantProps = variants.get(variant) as VariantProps
     const { title = overrideTitle, reverseIcon, IconComponent } = variantProps
     return (
@@ -34,5 +35,3 @@ const Button: FunctionComponent<ButtonProps> = ({ title: overrideTitle, variant,
         </BootstrapButton>
     )
 }
-
-export default Button

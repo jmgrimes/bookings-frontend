@@ -1,18 +1,18 @@
-import { FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
 import { Button } from "~/components/controls"
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-interface UserDetailsProps {
+interface IUserCardProps {
     user: IUserView
     onView?: Consumer<IUserView>
     onEdit?: Consumer<IUserView>
     onDelete?: Consumer<IUserView>
 }
 
-const UserCard: FunctionComponent<UserDetailsProps> = ({ user, onView, onEdit, onDelete }) => {
+export default function UserCard(props: IUserCardProps) {
+    const { user, onView, onEdit, onDelete } = props
     return (
         <Card>
             <Card.Header>
@@ -33,5 +33,3 @@ const UserCard: FunctionComponent<UserDetailsProps> = ({ user, onView, onEdit, o
         </Card>
     )
 }
-
-export default UserCard

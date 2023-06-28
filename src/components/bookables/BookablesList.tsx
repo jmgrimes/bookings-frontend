@@ -1,17 +1,17 @@
-import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { BoxSeam } from "react-bootstrap-icons"
 
 import { IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-interface BookablesListProps {
+interface IBookablesListProps {
     bookable?: IBookableView
     bookables: IBookableView[]
     onSelect?: Consumer<IBookableView>
 }
 
-const BookablesList: FunctionComponent<BookablesListProps> = ({ bookable, bookables, onSelect }) => {
+export default function BookablesList(props: IBookablesListProps) {
+    const { bookable, bookables, onSelect } = props
     return (
         <ListGroup>
             {bookables.map(b => (
@@ -22,5 +22,3 @@ const BookablesList: FunctionComponent<BookablesListProps> = ({ bookable, bookab
         </ListGroup>
     )
 }
-
-export default BookablesList

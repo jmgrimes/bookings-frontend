@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react"
 import { ButtonGroup, Card } from "react-bootstrap"
 
 import { Button } from "~/components/controls"
@@ -6,13 +5,14 @@ import UsersList from "~/components/users/UsersList"
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-interface UsersListCardProps {
+interface IUsersCardProps {
     user: IUserView
     users: IUserView[]
     onSelect: Consumer<IUserView>
 }
 
-const UsersCard: FunctionComponent<UsersListCardProps> = ({ user, users, onSelect }) => {
+export default function UsersCard(props: IUsersCardProps) {
+    const { user, users, onSelect } = props
     const nextUser = async () => {
         const currentIndex = users.indexOf(user)
         const nextIndex = (currentIndex + 1) % users.length
@@ -41,5 +41,3 @@ const UsersCard: FunctionComponent<UsersListCardProps> = ({ user, users, onSelec
         </Card>
     )
 }
-
-export default UsersCard
