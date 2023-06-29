@@ -12,7 +12,7 @@ const UseCreateBookingMutation = gql`
     mutation useCreateBooking(
         $bookerId: Int!
         $bookableId: Int!
-        $date: String!
+        $date: DateTime!
         $session: BookableSession!
         $title: String!
         $notes: String

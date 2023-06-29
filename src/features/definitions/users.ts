@@ -1,8 +1,10 @@
-import "reflect-metadata"
+import { DateTime } from "luxon"
 import { Arg, Ctx, Field, FieldResolver, InputType, Mutation, ObjectType, Query, Resolver, Root } from "type-graphql"
+import "reflect-metadata"
 
 import { Booking } from "~/features/definitions/bookings"
 import type { Context } from "~/features/definitions/context"
+import { DateTimeScalar } from "~/features/definitions/scalars"
 import type { IUser, IUserProps } from "~/features/models/users"
 
 @InputType("UserPropsBase", {
@@ -84,8 +86,8 @@ export default class UserResolver {
         @Ctx() context: Context,
         @Root() user: User,
         @Arg("bookableId", { nullable: true }) bookableId?: number,
-        @Arg("startDate", { nullable: true }) startDate?: string,
-        @Arg("endDate", { nullable: true }) endDate?: string,
+        @Arg("startDate", () => DateTimeScalar, { nullable: true }) startDate?: DateTime,
+        @Arg("endDate", () => DateTimeScalar, { nullable: true }) endDate?: DateTime,
     ) {
         const bookings = await context.dataSources.bookingApi.getBookings({
             bookerId: user.id,

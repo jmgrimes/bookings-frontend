@@ -1,8 +1,11 @@
-import "reflect-metadata"
+import { DateTime } from "luxon"
 import { Arg, Ctx, Field, FieldResolver, InputType, Mutation, ObjectType, Query, Resolver, Root } from "type-graphql"
+
+import "reflect-metadata"
 
 import { Bookable } from "~/features/definitions/bookables"
 import type { Context } from "~/features/definitions/context"
+import { DateTimeScalar } from "~/features/definitions/scalars"
 import { User } from "~/features/definitions/users"
 import { BookableSessionEnum } from "~/features/models/bookables"
 import type { IBooking, IBookingProps, IBookingQuery } from "~/features/models/bookings"
@@ -29,11 +32,11 @@ abstract class BookingPropsBase implements IBookingProps {
         nullable: false,
     })
     title: string
-    @Field({
+    @Field(() => DateTimeScalar, {
         description: "the date on which the booking, reservation, or appointment occurs",
         nullable: false,
     })
-    date: string
+    date: DateTime
     @Field(() => BookableSessionEnum, {
         description: "the session during which the booking, reservation, or appointment occurs",
         nullable: false,
@@ -45,11 +48,11 @@ abstract class BookingPropsBase implements IBookingProps {
     })
     notes?: string
 
-    constructor(
+    protected constructor(
         bookerId: number,
         bookableId: number,
         title: string,
-        date: string,
+        date: DateTime,
         session: BookableSessionEnum,
         notes?: string,
     ) {
@@ -77,7 +80,7 @@ export class Booking extends BookingPropsBase implements IBooking {
         bookerId: number,
         bookableId: number,
         title: string,
-        date: string,
+        date: DateTime,
         session: BookableSessionEnum,
         notes?: string,
     ) {
@@ -106,7 +109,7 @@ export class BookingProps extends BookingPropsBase implements IBookingProps {
         bookerId: number,
         bookableId: number,
         title: string,
-        date: string,
+        date: DateTime,
         session: BookableSessionEnum,
         notes?: string,
     ) {
@@ -132,18 +135,18 @@ export class BookingQuery implements IBookingQuery {
         nullable: true,
     })
     bookableId?: number
-    @Field({
+    @Field(() => DateTimeScalar, {
         description: "the date after which returned bookings, reservations, or appointments should be selected",
         nullable: true,
     })
-    startDate?: string
-    @Field({
+    startDate?: DateTime
+    @Field(() => DateTimeScalar, {
         description: "the date before which returned bookings, reservations, or appointments should be selected",
         nullable: true,
     })
-    endDate?: string
+    endDate?: DateTime
 
-    constructor(bookerId?: number, bookableId?: number, startDate?: string, endDate?: string) {
+    constructor(bookerId?: number, bookableId?: number, startDate?: DateTime, endDate?: DateTime) {
         this.bookerId = bookerId
         this.bookableId = bookableId
         this.startDate = startDate

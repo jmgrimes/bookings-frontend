@@ -10,7 +10,8 @@ export * from "./context"
 
 export async function GetSchema() {
     return await buildSchema({
-        resolvers: [BookableResolver, BookingResolver, UserResolver],
+        dateScalarMode: "isoDate",
         emitSchemaFile: path.join(process.cwd(), ".graphql", "schema.gql"),
+        resolvers: [BookableResolver, BookingResolver, UserResolver],
     })
 }

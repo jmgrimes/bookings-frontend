@@ -1,4 +1,4 @@
-import "reflect-metadata"
+import { DateTime } from "luxon"
 import {
     Arg,
     Ctx,
@@ -13,8 +13,11 @@ import {
     Root,
 } from "type-graphql"
 
+import "reflect-metadata"
+
 import { Booking } from "~/features/definitions/bookings"
 import type { Context } from "~/features/definitions/context"
+import { DateTimeScalar } from "~/features/definitions/scalars"
 import { BookableDayEnum, BookableSessionEnum } from "~/features/models/bookables"
 import type { IBookable, IBookableProps } from "~/features/models/bookables"
 
@@ -129,8 +132,8 @@ export default class BookableResolver {
         @Ctx() context: Context,
         @Root() bookable: Bookable,
         @Arg("bookerId", { nullable: true }) bookerId?: number,
-        @Arg("startDate", { nullable: true }) startDate?: string,
-        @Arg("endDate", { nullable: true }) endDate?: string,
+        @Arg("startDate", () => DateTimeScalar, { nullable: true }) startDate?: DateTime,
+        @Arg("endDate", () => DateTimeScalar, { nullable: true }) endDate?: DateTime,
     ) {
         const bookings = await context.dataSources.bookingApi.getBookings({
             bookableId: bookable.id,

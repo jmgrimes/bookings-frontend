@@ -1,18 +1,20 @@
+import { DateTime } from "luxon"
+
 import { BookableSessionEnum, IBookableView } from "~/features/models/bookables"
 import { IUserView } from "~/features/models/users"
 
 export interface IBookingQuery {
     bookerId?: number
     bookableId?: number
-    startDate?: string
-    endDate?: string
+    startDate?: DateTime
+    endDate?: DateTime
 }
 
 export interface IBookingProps {
     bookerId: number
     bookableId: number
     title: string
-    date: string
+    date: DateTime
     notes?: string
     session: BookableSessionEnum
 }
