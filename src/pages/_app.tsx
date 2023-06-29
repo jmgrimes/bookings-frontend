@@ -4,7 +4,7 @@ import Head from "next/head"
 import { ThemeProvider } from "react-bootstrap"
 
 import { Navigation } from "~/components/application"
-import { SessionUserProvider, useSessionUser } from "~/components/users"
+import { UserConsumer, UserProvider } from "~/components/users"
 import { useUsers } from "~/features/api/users"
 
 import "bootstrap/dist/css/bootstrap.css"
@@ -15,7 +15,6 @@ const apolloClient = new ApolloClient({
 })
 
 function PageNavigation() {
-    const [sessionUser, setSessionUser] = useSessionUser()
     const { data, error, loading } = useUsers()
     if (loading) {
         return <Navigation.Loading />
@@ -23,7 +22,14 @@ function PageNavigation() {
     if (error || !data) {
         return <Navigation.Failed />
     }
-    return <Navigation users={data.users} user={sessionUser} setUser={setSessionUser} />
+    return (
+        <UserConsumer>
+            {userContext => {
+                const { user, setUser } = userContext
+                return <Navigation users={data.users} user={user} setUser={setUser} />
+            }}
+        </UserConsumer>
+    )
 }
 
 export default function App(props: AppProps) {
@@ -31,13 +37,13 @@ export default function App(props: AppProps) {
     return (
         <ApolloProvider client={apolloClient}>
             <ThemeProvider>
-                <SessionUserProvider>
+                <UserProvider>
                     <Head key="viewport">
                         <meta name="viewport" content="width=device-width, initial-scale=1" />
                     </Head>
                     <PageNavigation />
                     <Page {...pageProps} />
-                </SessionUserProvider>
+                </UserProvider>
             </ThemeProvider>
         </ApolloProvider>
     )

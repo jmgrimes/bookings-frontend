@@ -1,5 +1,5 @@
-export { default as SessionUserProvider } from "~/components/users/SessionUserProvider"
+export type { IUserContext } from "~/components/users/UserContext"
+export { UserConsumer, UserProvider } from "~/components/users/UserContext"
 export { default as UserCard } from "~/components/users/UserCard"
 export { default as UserPicker } from "~/components/users/UserPicker"
 export { default as UsersCard } from "~/components/users/UsersCard"
-export { default as useSessionUser } from "~/components/users/useSessionUser"

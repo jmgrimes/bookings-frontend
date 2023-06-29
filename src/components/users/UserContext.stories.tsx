@@ -1,12 +1,12 @@
 import { Meta, StoryFn } from "@storybook/react"
-import { Fragment, FunctionComponent, useEffect } from "react"
+import { Fragment, useEffect } from "react"
 import { Container } from "react-bootstrap"
 
-import SessionUserProvider from "~/components/users/SessionUserProvider"
+import type { IUserContext } from "~/components/users/UserContext"
+import { UserConsumer, UserProvider } from "~/components/users/UserContext"
 import UserCard from "~/components/users/UserCard"
 import UserPicker from "~/components/users/UserPicker"
 import UsersCard from "~/components/users/UsersCard"
-import { useSessionUser } from "~/features/api/users"
 import { IUserView } from "~/features/models/users"
 
 const users: IUserView[] = [
@@ -30,13 +30,12 @@ const users: IUserView[] = [
     },
 ]
 
-type SetupContainerProps = {
+interface ISetupContainerProps extends IUserContext {
     users: IUserView[]
 }
 
-const SetupContainer: FunctionComponent<SetupContainerProps> = ({ users }) => {
-    const [user, setUser] = useSessionUser()
-
+function SetupContainer(props: ISetupContainerProps) {
+    const { users, user, setUser } = props
     useEffect(() => {
         if (!user) {
             setUser(users[0])
@@ -46,13 +45,12 @@ const SetupContainer: FunctionComponent<SetupContainerProps> = ({ users }) => {
     return <Fragment />
 }
 
-type UserPickerContainerProps = {
+interface IUserPickerContainerProps extends IUserContext {
     users: IUserView[]
 }
 
-const UserPickerContainer: FunctionComponent<UserPickerContainerProps> = ({ users }) => {
-    const [sessionUser, setSessionUser] = useSessionUser()
-    if (sessionUser) {
+function UserPickerContainer(props: IUserPickerContainerProps) {
+    if (props.user) {
         return (
             <Container className="p-2">
                 <h4>UserPicker Component Tree</h4>
@@ -61,20 +59,20 @@ const UserPickerContainer: FunctionComponent<UserPickerContainerProps> = ({ user
                     on changes from the UserPicker below. If another component changes the user, this component will
                     reflect this as well.
                 </p>
-                <UserPicker users={users} user={sessionUser} setUser={setSessionUser} />
+                <UserPicker {...props} />
             </Container>
         )
     }
     return <Fragment />
 }
 
-type UsersCardContainerProps = {
+interface IUsersCardContainerProps extends IUserContext {
     users: IUserView[]
 }
 
-const UsersCardContainer: FunctionComponent<UsersCardContainerProps> = ({ users }) => {
-    const [sessionUser, setSessionUser] = useSessionUser()
-    if (sessionUser) {
+function UsersCardContainer(props: IUsersCardContainerProps) {
+    const { users, user, setUser } = props
+    if (user) {
         return (
             <Container className="p-2">
                 <h4>UsersCard Component Tree</h4>
@@ -83,16 +81,20 @@ const UsersCardContainer: FunctionComponent<UsersCardContainerProps> = ({ users 
                     on changes from the UsersCard below. If another component changes the user, this component will
                     reflect this as well.
                 </p>
-                <UsersCard users={users} user={sessionUser} onSelect={setSessionUser} />
+                <UsersCard users={users} user={user} onSelect={setUser} />
             </Container>
         )
     }
     return <Fragment />
 }
 
-const UserCardContainer: FunctionComponent = () => {
-    const [sessionUser] = useSessionUser()
-    if (sessionUser) {
+interface IUserCardContainerProps {
+    user: IUserView | undefined
+}
+
+function UserCardContainer(props: IUserCardContainerProps) {
+    const { user } = props
+    if (user) {
         return (
             <Container className="p-2">
                 <h4>UserCard Component Tree</h4>
@@ -101,25 +103,34 @@ const UserCardContainer: FunctionComponent = () => {
                     the UserCard component below. It does not have direct access to the UserPicker or UsersList trees
                     above.
                 </p>
-                <UserCard user={sessionUser} />
+                <UserCard user={user} />
             </Container>
         )
     }
     return <Fragment />
 }
 
-export const Default: StoryFn<typeof UserPicker> = () => {
+export const Default: StoryFn<typeof UserProvider> = () => {
     return (
-        <SessionUserProvider>
-            <SetupContainer users={users} />
-            <UserPickerContainer users={users} />
-            <UsersCardContainer users={users} />
-            <UserCardContainer />
-        </SessionUserProvider>
+        <UserProvider>
+            <UserConsumer>
+                {userContext => {
+                    const { user, setUser } = userContext
+                    return (
+                        <>
+                            <SetupContainer users={users} user={user} setUser={setUser} />
+                            <UserPickerContainer users={users} user={user} setUser={setUser} />
+                            <UsersCardContainer users={users} user={user} setUser={setUser} />
+                            <UserCardContainer user={user} />
+                        </>
+                    )
+                }}
+            </UserConsumer>
+        </UserProvider>
     )
 }
 
 export default {
-    component: SessionUserProvider,
-    title: "Users/Public/SessionUserProvider",
-} as Meta<typeof SessionUserProvider>
+    component: UserProvider,
+    title: "Users/Public/UserContext",
+} as Meta<typeof UserProvider>
