@@ -1,32 +1,20 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"
-import { DateTime } from "luxon"
-import { AppProps, AppType } from "next/app"
+import { AppProps } from "next/app"
 import Head from "next/head"
-import { FunctionComponent } from "react"
 import { ThemeProvider } from "react-bootstrap"
 
 import { Navigation } from "~/components/application"
-import { SessionUserProvider } from "~/components/users"
-import { useSessionUser, useUsers } from "~/features/api/users"
+import { SessionUserProvider, useSessionUser } from "~/components/users"
+import { useUsers } from "~/features/api/users"
 
 import "bootstrap/dist/css/bootstrap.css"
 
 const apolloClient = new ApolloClient({
     uri: "/api/graphql",
-    cache: new InMemoryCache({
-        typePolicies: {
-            Booking: {
-                fields: {
-                    date: {
-                        read: (value: string) => DateTime.fromISO(value),
-                    },
-                },
-            },
-        },
-    }),
+    cache: new InMemoryCache(),
 })
 
-const PageNavigation: FunctionComponent = () => {
+function PageNavigation() {
     const [sessionUser, setSessionUser] = useSessionUser()
     const { data, error, loading } = useUsers()
     if (loading) {
@@ -38,15 +26,14 @@ const PageNavigation: FunctionComponent = () => {
     return <Navigation users={data.users} user={sessionUser} setUser={setSessionUser} />
 }
 
-type ApplicationProps = AppProps
-const Application: AppType<ApplicationProps> = props => {
+export default function App(props: AppProps) {
     const { Component: Page, pageProps } = props
     return (
         <ApolloProvider client={apolloClient}>
             <ThemeProvider>
                 <SessionUserProvider>
                     <Head key="viewport">
-                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     </Head>
                     <PageNavigation />
                     <Page {...pageProps} />
@@ -55,5 +42,3 @@ const Application: AppType<ApplicationProps> = props => {
         </ApolloProvider>
     )
 }
-
-export default Application

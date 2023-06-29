@@ -1,0 +1,6 @@
+.graphql
+.idea
+.next
+.vscode
+node_modules
+out

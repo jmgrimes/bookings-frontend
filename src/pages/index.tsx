@@ -2,7 +2,7 @@ import Head from "next/head"
 import Image from "next/image"
 import { Card, Col, Container, Row } from "react-bootstrap"
 
-export default function Home() {
+export default function HomePage() {
     return (
         <Container>
             <Head>

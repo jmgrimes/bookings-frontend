@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react"
 
-import { SessionUserContext, SessionUserSetContext } from "~/features/api/users"
+import { SessionUserContext, SessionUserSetContext } from "~/components/users/useSessionUser"
 import { IUserView } from "~/features/models/users"
 
 type ISessionUserProviderProps = PropsWithChildren<Record<never, string>>

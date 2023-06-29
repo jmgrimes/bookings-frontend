@@ -1,11 +1,10 @@
 import { Preview } from "@storybook/react"
 
 import "bootstrap/dist/css/bootstrap.css"
-import "bootstrap/dist/js/bootstrap.js"
 
-const preview: Preview = {
+export default {
     parameters: {
-        actions: { 
+        actions: {
             argTypesRegex: "^on[A-Z].*",
         },
         controls: {
@@ -16,10 +15,8 @@ const preview: Preview = {
         },
         options: {
             storySort: {
-                method: "alphabetical"
+                method: "alphabetical",
             },
         },
     },
-}
-
-export default preview
+} as Preview
