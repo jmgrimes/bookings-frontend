@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent } from "react"
+import { ChangeEvent } from "react"
 import { FormSelect } from "react-bootstrap"
 
 import { IUserView } from "~/features/models/users"

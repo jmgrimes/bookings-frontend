@@ -1,5 +1,3 @@
-import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
-
 import { IBookable, IBookableProps } from "~/features/models/bookables"
 
 export interface IBookableApi {
@@ -10,34 +8,62 @@ export interface IBookableApi {
     deleteBookable(id: number): Promise<number>
 }
 
-export default class BookableApi extends RESTDataSource implements IBookableApi {
-    constructor(baseURL: string, config?: DataSourceConfig) {
-        super(config)
+export default class BookableApi implements IBookableApi {
+    private baseURL: string
+    constructor(baseURL: string) {
         this.baseURL = baseURL
     }
 
     async getBookables() {
-        return this.get<IBookable[]>(`/bookables`)
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        const response = await fetch(`${this.baseURL}/bookables`, {
+            method: "GET",
+            headers,
+        })
+        return (await response.json()) as IBookable[]
     }
 
     async getBookable(id: number) {
-        return this.get<IBookable>(`/bookables/${id.toString(10)}`)
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        const response = await fetch(`${this.baseURL}/bookables/${id.toString(10)}`, {
+            method: "GET",
+            headers,
+        })
+        return (await response.json()) as IBookable
     }
 
     async createBookable(props: IBookableProps) {
-        return this.post<IBookable>(`/bookables`, {
-            body: props,
+        const body = JSON.stringify(props)
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        headers.append("Content-Type", "application/json")
+        headers.append("Content-Length", body.length.toString(10))
+        const response = await fetch(`${this.baseURL}/bookables`, {
+            method: "POST",
+            body,
+            headers,
         })
+        return (await response.json()) as IBookable
     }
 
     async updateBookable(id: number, props: IBookableProps) {
-        return this.put<IBookable>(`/bookables/${id.toString(10)}`, {
-            body: { id, ...props },
+        const body = JSON.stringify({ id, ...props })
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        headers.append("Content-Type", "application/json")
+        headers.append("Content-Length", body.length.toString(10))
+        const response = await fetch(`${this.baseURL}/bookables/${id.toString(10)}`, {
+            method: "PUT",
+            body,
+            headers,
         })
+        return (await response.json()) as IBookable
     }
 
     async deleteBookable(id: number) {
-        await this.delete(`/bookables/${id.toString(10)}`)
+        await fetch(`${this.baseURL}/bookables/${id.toString(10)}`, { method: "DELETE" })
         return id
     }
 }

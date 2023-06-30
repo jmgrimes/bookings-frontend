@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react"
 import { ListGroup } from "react-bootstrap"
 import { Person } from "react-bootstrap-icons"
 

@@ -1,5 +1,3 @@
-import { DataSourceConfig, RESTDataSource } from "@apollo/datasource-rest"
-
 import { IUser, IUserProps } from "~/features/models/users"
 
 export interface IUserApi {
@@ -10,34 +8,62 @@ export interface IUserApi {
     deleteUser(id: number): Promise<number>
 }
 
-export default class UserApi extends RESTDataSource implements IUserApi {
-    constructor(baseURL: string, config?: DataSourceConfig) {
-        super(config)
+export default class UserApi implements IUserApi {
+    private baseURL: string
+    constructor(baseURL: string) {
         this.baseURL = baseURL
     }
 
-    getUsers(): Promise<IUser[]> {
-        return this.get<IUser[]>(`/users`)
-    }
-
-    getUser(id: number): Promise<IUser> {
-        return this.get<IUser>(`/users/${id.toString(10)}`)
-    }
-
-    createUser(props: IUserProps): Promise<IUser> {
-        return this.post<IUser>(`/users`, {
-            body: props,
+    async getUsers(): Promise<IUser[]> {
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        const response = await fetch(`${this.baseURL}/users`, {
+            method: "GET",
+            headers,
         })
+        return (await response.json()) as IUser[]
     }
 
-    updateUser(id: number, props: IUserProps): Promise<IUser> {
-        return this.put<IUser>(`/users/${id.toString(10)}`, {
-            body: { id, ...props },
+    async getUser(id: number): Promise<IUser> {
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        const response = await fetch(`${this.baseURL}/users/${id.toString(10)}`, {
+            method: "GET",
+            headers,
         })
+        return (await response.json()) as IUser
+    }
+
+    async createUser(props: IUserProps): Promise<IUser> {
+        const body = JSON.stringify(props)
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        headers.append("Content-Type", "application/json")
+        headers.append("Content-Length", body.length.toString(10))
+        const response = await fetch(`${this.baseURL}/users`, {
+            method: "POST",
+            body,
+            headers,
+        })
+        return (await response.json()) as IUser
+    }
+
+    async updateUser(id: number, props: IUserProps): Promise<IUser> {
+        const body = JSON.stringify({ id, ...props })
+        const headers = new Headers()
+        headers.append("Accept", "application/json")
+        headers.append("Content-Type", "application/json")
+        headers.append("Content-Length", body.length.toString(10))
+        const response = await fetch(`${this.baseURL}/users/${id.toString(10)}`, {
+            method: "PUT",
+            body,
+            headers,
+        })
+        return (await response.json()) as IUser
     }
 
     async deleteUser(id: number): Promise<number> {
-        await this.delete(`/users/${id.toString(10)}`)
+        await fetch(`${this.baseURL}/users/${id.toString(10)}`, { method: "DELETE" })
         return id
     }
 }
