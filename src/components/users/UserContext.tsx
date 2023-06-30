@@ -1,3 +1,5 @@
+"use client"
+
 import { createContext, PropsWithChildren, useState } from "react"
 
 import { IUserView } from "~/features/models/users"

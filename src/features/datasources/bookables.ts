@@ -10,8 +10,8 @@ export interface IBookableApi {
 
 export default class BookableApi implements IBookableApi {
     private baseURL: string
-    constructor(baseURL: string) {
-        this.baseURL = baseURL
+    constructor(baseURL?: string) {
+        this.baseURL = baseURL || "http://localhost:3001"
     }
 
     async getBookables() {

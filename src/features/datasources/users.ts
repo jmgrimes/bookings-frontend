@@ -10,8 +10,8 @@ export interface IUserApi {
 
 export default class UserApi implements IUserApi {
     private baseURL: string
-    constructor(baseURL: string) {
-        this.baseURL = baseURL
+    constructor(baseURL?: string) {
+        this.baseURL = baseURL || "http://localhost:3001"
     }
 
     async getUsers(): Promise<IUser[]> {
