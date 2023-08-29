@@ -4,8 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn
-.yarnrc.yml
+.pnp.cjs
+.pnp.loader.mjs
+.yarn/cache
+.yarn/unplugged
 
 # testing
 /coverage
