@@ -1,18 +1,18 @@
-import { StorybookConfig } from "@storybook/nextjs"
+import type { StorybookConfig } from "@storybook/nextjs"
 
 export default {
-    addons: ["@storybook/addon-essentials", "@storybook/addon-interactions", "@storybook/addon-links"],
-    docs: {
-        autodocs: false,
-    },
+    stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+    addons: [
+        "@storybook/addon-links",
+        "@storybook/addon-essentials",
+        "@storybook/addon-onboarding",
+        "@storybook/addon-interactions",
+    ],
     framework: {
         name: "@storybook/nextjs",
-        options: {
-            builder: {
-                fsCache: true,
-                lazyCompilation: true,
-            },
-        },
+        options: {},
     },
-    stories: ["../src/components/**/*.mdx", "../src/components/**/*.stories.@(js|jsx|ts|tsx)"],
+    docs: {
+        autodocs: "tag",
+    },
 } as StorybookConfig
