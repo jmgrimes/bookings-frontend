@@ -1,5 +1,0 @@
-export { default as useBookable } from "~/features/api/bookables/useBookable"
-export { default as useBookables } from "~/features/api/bookables/useBookables"
-export { default as useCreateBookable } from "~/features/api/bookables/useCreateBookable"
-export { default as useDeleteBookable } from "~/features/api/bookables/useDeleteBookable"
-export { default as useUpdateBookable } from "~/features/api/bookables/useUpdateBookable"

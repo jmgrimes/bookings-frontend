@@ -1,5 +1,0 @@
-export { default as useBooking } from "~/features/api/bookings/useBooking"
-export { default as useBookings } from "~/features/api/bookings/useBookings"
-export { default as useCreateBooking } from "~/features/api/bookings/useCreateBooking"
-export { default as useDeleteBooking } from "~/features/api/bookings/useDeleteBooking"
-export { default as useUpdateBooking } from "~/features/api/bookings/useUpdateBooking"
