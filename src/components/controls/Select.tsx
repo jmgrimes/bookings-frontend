@@ -1,5 +1,4 @@
 import { ChangeEventHandler, FunctionComponent } from "react"
-import { FormSelect } from "react-bootstrap"
 
 interface SelectProps {
     value?: string
@@ -9,13 +8,13 @@ interface SelectProps {
 
 const Select: FunctionComponent<SelectProps> = ({ values, value = values[0], onChange }) => {
     return (
-        <FormSelect value={value} onChange={onChange}>
+        <select className="form-select" value={value} onChange={onChange}>
             {values.map(v => (
                 <option value={v} key={v}>
                     {v}
                 </option>
             ))}
-        </FormSelect>
+        </select>
     )
 }
 

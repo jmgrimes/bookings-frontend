@@ -1,5 +1,5 @@
-import { ListGroup } from "react-bootstrap"
-import { Person } from "react-bootstrap-icons"
+import { faPerson } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
@@ -13,15 +13,15 @@ interface IUsersListProps {
 export default function UsersList(props: IUsersListProps) {
     const { user, users, onSelect } = props
     return (
-        <ListGroup>
+        <ul className="list-group">
             {users.map(u => (
-                <ListGroup.Item
+                <li
+                    className={`list-group-item${u.id === user?.id ? " active" : ""}`}
                     key={u.id}
-                    active={u.id === user?.id}
                     onClick={async () => (onSelect ? await onSelect(u) : {})}>
-                    <Person /> {u.name}
-                </ListGroup.Item>
+                    <FontAwesomeIcon icon={faPerson} /> {u.name}
+                </li>
             ))}
-        </ListGroup>
+        </ul>
     )
 }

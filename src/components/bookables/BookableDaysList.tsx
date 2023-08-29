@@ -1,5 +1,5 @@
-import { ListGroup } from "react-bootstrap"
-import { Calendar } from "react-bootstrap-icons"
+import { faCalendar } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { BookableDayEnum } from "~/features/models/bookables"
 
@@ -11,13 +11,13 @@ export default function BookableDaysList(props: IBookableDaysListProps) {
     const { days } = props
     if (days.length) {
         return (
-            <ListGroup>
+            <ul className="list-group">
                 {days.map(day => (
-                    <ListGroup.Item key={day}>
-                        <Calendar /> {day}
-                    </ListGroup.Item>
+                    <li className="list-group-item" key={day}>
+                        <FontAwesomeIcon icon={faCalendar} /> {day}
+                    </li>
                 ))}
-            </ListGroup>
+            </ul>
         )
     }
     return <p>No available days configured.</p>

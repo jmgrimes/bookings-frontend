@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react"
-import { FormSelect } from "react-bootstrap"
 
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
@@ -19,12 +18,12 @@ export default function UserPicker(props: IUserPickerProps) {
     }
 
     return (
-        <FormSelect value={user?.id} onChange={changeUser}>
+        <select className="form-select" value={user?.id} onChange={changeUser}>
             {users.map(u => (
                 <option key={u.id} value={u.id}>
                     {u.name}
                 </option>
             ))}
-        </FormSelect>
+        </select>
     )
 }

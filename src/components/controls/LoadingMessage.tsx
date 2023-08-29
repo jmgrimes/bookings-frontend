@@ -1,5 +1,3 @@
-import { Alert, ProgressBar } from "react-bootstrap"
-
 interface ILoadingMessageProps {
     message: string
 }
@@ -7,9 +5,9 @@ interface ILoadingMessageProps {
 export default function LoadingMessage(props: ILoadingMessageProps) {
     const { message } = props
     return (
-        <Alert variant="info">
-            <Alert.Heading>{message}</Alert.Heading>
-            <ProgressBar now={100} animated={true} label="Please wait..." />
-        </Alert>
+        <div role="alert" className="fade alert alert-info show">
+            <h4 className="alert-heading h4">Component Loading</h4>
+            <p>{message}</p>
+        </div>
     )
 }

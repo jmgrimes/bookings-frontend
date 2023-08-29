@@ -1,5 +1,3 @@
-import { Alert } from "react-bootstrap"
-
 interface IErrorMessageProps {
     message: string
     error?: Error
@@ -7,9 +5,9 @@ interface IErrorMessageProps {
 export default function ErrorMessage(props: IErrorMessageProps) {
     const { message, error } = props
     return (
-        <Alert variant="danger">
-            <Alert.Heading>{message}</Alert.Heading>
+        <div role="alert" className="fade alert alert-danger show">
+            <h4 className="alert-heading h4">{message}</h4>
             {error !== undefined && <p>{error.toString()}</p>}
-        </Alert>
+        </div>
     )
 }

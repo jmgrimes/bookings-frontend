@@ -1,22 +1,31 @@
 import { MouseEventHandler } from "react"
-import { Button as BootstrapButton } from "react-bootstrap"
-import { ArrowLeft, ArrowRight, Icon, Pencil, Save, Search, Trash, X } from "react-bootstrap-icons"
+import {
+    faArrowLeft,
+    faArrowRight,
+    faPencil,
+    faSave,
+    faSearch,
+    faTrash,
+    faX,
+    IconDefinition,
+} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 type Variant = "cancel" | "delete" | "edit" | "next" | "previous" | "save" | "view"
 interface VariantProps {
     title: string
     reverseIcon: boolean
-    IconComponent: Icon
+    IconComponent: IconDefinition
 }
 
 const variants = new Map<Variant, VariantProps>([
-    ["cancel", { title: "Cancel", reverseIcon: false, IconComponent: X }],
-    ["delete", { title: "Delete", reverseIcon: false, IconComponent: Trash }],
-    ["edit", { title: "Edit", reverseIcon: false, IconComponent: Pencil }],
-    ["next", { title: "Next", reverseIcon: true, IconComponent: ArrowRight }],
-    ["previous", { title: "Previous", reverseIcon: false, IconComponent: ArrowLeft }],
-    ["save", { title: "Save", reverseIcon: false, IconComponent: Save }],
-    ["view", { title: "View", reverseIcon: false, IconComponent: Search }],
+    ["cancel", { title: "Cancel", reverseIcon: false, IconComponent: faX }],
+    ["delete", { title: "Delete", reverseIcon: false, IconComponent: faTrash }],
+    ["edit", { title: "Edit", reverseIcon: false, IconComponent: faPencil }],
+    ["next", { title: "Next", reverseIcon: true, IconComponent: faArrowRight }],
+    ["previous", { title: "Previous", reverseIcon: false, IconComponent: faArrowLeft }],
+    ["save", { title: "Save", reverseIcon: false, IconComponent: faSave }],
+    ["view", { title: "View", reverseIcon: false, IconComponent: faSearch }],
 ])
 
 interface IButtonProps {
@@ -30,8 +39,9 @@ export default function Button(props: IButtonProps) {
     const variantProps = variants.get(variant) as VariantProps
     const { title = overrideTitle, reverseIcon, IconComponent } = variantProps
     return (
-        <BootstrapButton variant="outline-primary" onClick={onClick}>
-            {!reverseIcon && <IconComponent />} {title} {reverseIcon && <IconComponent />}
-        </BootstrapButton>
+        <button type="button" className="btn btn-outline-primary" onClick={onClick}>
+            {!reverseIcon && <FontAwesomeIcon icon={IconComponent} />} {title}
+            {reverseIcon && <FontAwesomeIcon icon={IconComponent} />}
+        </button>
     )
 }

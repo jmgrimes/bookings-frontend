@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Calendar, Collection, People } from "react-bootstrap-icons"
 
 export default function Navigation() {
     return (
@@ -12,17 +11,17 @@ export default function Navigation() {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item" key="/bookings">
                             <Link className="nav-link" href="/bookings">
-                                <Calendar /> Bookings
+                                Bookings
                             </Link>
                         </li>
                         <li className="nav-item" key="/bookables">
                             <Link className="nav-link" href="/bookables">
-                                <Collection /> Bookables
+                                Bookables
                             </Link>
                         </li>
                         <li className="nav-item" key="/users">
                             <Link className="nav-link" href="/users">
-                                <People /> Users
+                                Users
                             </Link>
                         </li>
                     </ul>

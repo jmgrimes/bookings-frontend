@@ -1,5 +1,3 @@
-import { ButtonGroup, Card } from "react-bootstrap"
-
 import { Button } from "~/components/controls"
 import UsersList from "~/components/users/UsersList"
 import { IUserView } from "~/features/models/users"
@@ -28,16 +26,16 @@ export default function UsersCard(props: IUsersCardProps) {
     }
 
     return (
-        <Card>
-            <Card.Body>
+        <div className="card">
+            <div className="card-body">
                 <UsersList user={user} users={users} onSelect={onSelect} />
-            </Card.Body>
-            <Card.Footer>
-                <ButtonGroup className={"w-100"}>
+            </div>
+            <div className="card-footer">
+                <div role="group" className={"btn-group w-100"}>
                     <Button variant="previous" onClick={previousUser} />
                     <Button variant="next" onClick={nextUser} />
-                </ButtonGroup>
-            </Card.Footer>
-        </Card>
+                </div>
+            </div>
+        </div>
     )
 }

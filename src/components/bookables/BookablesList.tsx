@@ -1,5 +1,5 @@
-import { ListGroup } from "react-bootstrap"
-import { BoxSeam } from "react-bootstrap-icons"
+import { faCube } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { IBookableView } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
@@ -13,12 +13,15 @@ interface IBookablesListProps {
 export default function BookablesList(props: IBookablesListProps) {
     const { bookable, bookables, onSelect } = props
     return (
-        <ListGroup>
+        <ul className="list-group">
             {bookables.map(b => (
-                <ListGroup.Item key={b.id} active={b.id === bookable?.id} onClick={() => (onSelect ? onSelect(b) : {})}>
-                    <BoxSeam /> {b.title}
-                </ListGroup.Item>
+                <li
+                    className={`list-group-item${b.id === bookable?.id ? " active" : ""}`}
+                    key={b.id}
+                    onClick={() => (onSelect ? onSelect(b) : {})}>
+                    <FontAwesomeIcon icon={faCube} /> {b.title}
+                </li>
             ))}
-        </ListGroup>
+        </ul>
     )
 }

@@ -1,6 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react"
 import { Fragment, useEffect } from "react"
-import { Container } from "react-bootstrap"
 
 import type { IUserContext } from "~/components/users/UserContext"
 import { UserConsumer, UserProvider } from "~/components/users/UserContext"
@@ -52,7 +51,7 @@ interface IUserPickerContainerProps extends IUserContext {
 function UserPickerContainer(props: IUserPickerContainerProps) {
     if (props.user) {
         return (
-            <Container className="p-2">
+            <div className="container p-2">
                 <h4>UserPicker Component Tree</h4>
                 <p>
                     This component tree uses the UserProvider companion hook to get the contextual user and set it based
@@ -60,7 +59,7 @@ function UserPickerContainer(props: IUserPickerContainerProps) {
                     reflect this as well.
                 </p>
                 <UserPicker {...props} />
-            </Container>
+            </div>
         )
     }
     return <Fragment />
@@ -74,7 +73,7 @@ function UsersCardContainer(props: IUsersCardContainerProps) {
     const { users, user, setUser } = props
     if (user) {
         return (
-            <Container className="p-2">
+            <div className="container p-2">
                 <h4>UsersCard Component Tree</h4>
                 <p>
                     This component tree uses the UserProvider companion hook to get the contextual user and set it based
@@ -82,7 +81,7 @@ function UsersCardContainer(props: IUsersCardContainerProps) {
                     reflect this as well.
                 </p>
                 <UsersCard users={users} user={user} onSelect={setUser} />
-            </Container>
+            </div>
         )
     }
     return <Fragment />
@@ -96,7 +95,7 @@ function UserCardContainer(props: IUserCardContainerProps) {
     const { user } = props
     if (user) {
         return (
-            <Container className="p-2">
+            <div className="container p-2">
                 <h4>UserCard Component Tree</h4>
                 <p>
                     This component tree uses the UserProvider companion hook to get the contextual user for supply into
@@ -104,7 +103,7 @@ function UserCardContainer(props: IUserCardContainerProps) {
                     above.
                 </p>
                 <UserCard user={user} />
-            </Container>
+            </div>
         )
     }
     return <Fragment />

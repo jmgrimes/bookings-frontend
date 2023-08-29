@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react"
-import { ButtonGroup, Card } from "react-bootstrap"
 
 import BookablesList from "~/components/bookables/BookablesList"
 import { Button, Select } from "~/components/controls"
@@ -38,19 +37,19 @@ export default function BookablesCard(props: IBookablesCardProps) {
     }
 
     return (
-        <Card>
-            <Card.Header>
+        <div className="card">
+            <div className="card-header">
                 <Select value={group} values={groups} onChange={changeGroup} />
-            </Card.Header>
-            <Card.Body>
+            </div>
+            <div className="card-body">
                 <BookablesList bookable={bookable} bookables={bookablesInGroup} onSelect={onSelect} />
-            </Card.Body>
-            <Card.Footer>
-                <ButtonGroup className={"w-100"}>
+            </div>
+            <div className="card-footer">
+                <div className={"btn-group w-100"}>
                     <Button variant="previous" onClick={previousBookable} />
                     <Button variant="next" onClick={nextBookable} />
-                </ButtonGroup>
-            </Card.Footer>
-        </Card>
+                </div>
+            </div>
+        </div>
     )
 }
