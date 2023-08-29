@@ -1,1 +1,1 @@
-export { default as Navigation } from "~/components/application/Navigation"
+export { default as AppNavigation } from "~/components/application/AppNavigation"

@@ -1,17 +1,8 @@
-import Head from "next/head"
 import Image from "next/image"
 
 export default function HomePage() {
     return (
         <div className="container">
-            <Head>
-                <title>Bookings Application</title>
-                <meta
-                    name="description"
-                    content="Book conference rooms, projectors, and other supplies for your meetings!"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
             <div className="row p-3">
                 <div className="col text-md-center">
                     <h1>
