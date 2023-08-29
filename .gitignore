@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.yarn
+.yarnrc.yml
 
 # testing
 /coverage
@@ -20,7 +22,6 @@
 *.pem
 .idea
 .vscode
-.yarn
 
 # debug
 npm-debug.log*
