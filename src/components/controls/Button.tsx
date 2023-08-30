@@ -41,6 +41,7 @@ export default function Button(props: IButtonProps) {
     return (
         <button type="button" className="btn btn-outline-primary" onClick={onClick}>
             {!reverseIcon && <FontAwesomeIcon icon={IconComponent} />} {title}
+            {reverseIcon && " "}
             {reverseIcon && <FontAwesomeIcon icon={IconComponent} />}
         </button>
     )

@@ -1,3 +1,5 @@
+"use client"
+
 import { ChangeEvent } from "react"
 
 import BookablesList from "~/components/bookables/BookablesList"
@@ -23,14 +25,14 @@ export default function BookablesCard(props: IBookablesCardProps) {
     }
 
     const nextBookable = async () => {
-        const currentIndex = bookablesInGroup.indexOf(bookable)
+        const currentIndex = bookablesInGroup.findIndex(b => b.id === bookable.id)
         const nextIndex = (currentIndex + 1) % bookablesInGroup.length
         const nextBookable = bookablesInGroup[nextIndex]
         await onSelect(nextBookable)
     }
 
     const previousBookable = async () => {
-        const currentIndex = bookablesInGroup.indexOf(bookable)
+        const currentIndex = bookablesInGroup.findIndex(b => b.id === bookable.id)
         const previousIndex = (bookablesInGroup.length + currentIndex - 1) % bookablesInGroup.length
         const previousBookable = bookablesInGroup[previousIndex]
         await onSelect(previousBookable)

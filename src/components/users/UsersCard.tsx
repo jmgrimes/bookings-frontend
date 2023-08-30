@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "~/components/controls"
 import UsersList from "~/components/users/UsersList"
 import { IUserView } from "~/features/models/users"
@@ -12,14 +14,14 @@ interface IUsersCardProps {
 export default function UsersCard(props: IUsersCardProps) {
     const { user, users, onSelect } = props
     const nextUser = async () => {
-        const currentIndex = users.indexOf(user)
+        const currentIndex = users.findIndex(u => u.id === user.id)
         const nextIndex = (currentIndex + 1) % users.length
         const nextUser = users[nextIndex]
         await onSelect(nextUser)
     }
 
     const previousUser = async () => {
-        const currentIndex = users.indexOf(user)
+        const currentIndex = users.findIndex(u => u.id === user.id)
         const previousIndex = (users.length + currentIndex - 1) % users.length
         const previousUser = users[previousIndex]
         await onSelect(previousUser)

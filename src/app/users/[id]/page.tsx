@@ -1,4 +1,6 @@
-import { UserView } from "~/components/users"
+import { redirect } from "next/navigation"
+
+import { UserCard, UsersCard } from "~/components/users"
 import UserApi from "~/features/datasources/users"
 
 const userApi = new UserApi()
@@ -20,5 +22,23 @@ export interface UserPageProps {
 export default async function UserPage(props: UserPageProps) {
     const user = await getUser(props.params.id)
     const users = await getUsers()
-    return <UserView user={user} users={users} />
+    return (
+        <div className="container">
+            <div className="row">
+                <section className="col col-3">
+                    <UsersCard
+                        user={user}
+                        users={users}
+                        onSelect={async user => {
+                            "use server"
+                            redirect(`/users/${user.id}`)
+                        }}
+                    />
+                </section>
+                <section className="col">
+                    <UserCard user={user} />
+                </section>
+            </div>
+        </div>
+    )
 }

@@ -31,7 +31,7 @@ export default async function AppLayout(props: AppLayoutProps) {
             <body>
                 <UserProvider>
                     <AppNavigation users={users} />
-                    <main className="m-3">{props.children}</main>
+                    <main className="my-4">{props.children}</main>
                 </UserProvider>
             </body>
         </html>

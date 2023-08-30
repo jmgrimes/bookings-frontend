@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "~/components/controls"
 import { IUserView } from "~/features/models/users"
 import { Consumer } from "~/features/support"
@@ -18,7 +20,7 @@ export default function UserCard(props: IUserCardProps) {
                 <h6 className="card-subtitle h6">{user.title}</h6>
             </div>
             <div className="card-body">
-                <h6 className="card-subtitle h6">Notes</h6>
+                <h6 className="card-subtitle h6 mb-2">Notes</h6>
                 <p className="card-text">{user.notes}</p>
             </div>
             <div className="card-footer text-center">

@@ -1,4 +1,6 @@
-import { BookableView } from "~/components/bookables"
+import { redirect } from "next/navigation"
+
+import { BookableCard, BookablesCard } from "~/components/bookables"
 import BookableApi from "~/features/datasources/bookables"
 
 const bookableApi = new BookableApi()
@@ -20,5 +22,23 @@ export interface BookablePageProps {
 export default async function BookablePage(props: BookablePageProps) {
     const bookable = await getBookable(props.params.id)
     const bookables = await getBookables()
-    return <BookableView bookable={bookable} bookables={bookables} />
+    return (
+        <div className="container">
+            <div className="row">
+                <section className="col col-3">
+                    <BookablesCard
+                        bookable={bookable}
+                        bookables={bookables}
+                        onSelect={async bookable => {
+                            "use server"
+                            redirect(`/bookables/${bookable.id}`)
+                        }}
+                    />
+                </section>
+                <section className="col">
+                    <BookableCard bookable={bookable} />
+                </section>
+            </div>
+        </div>
+    )
 }
