@@ -2,9 +2,9 @@ import { Meta, StoryFn } from "@storybook/react"
 import { useState } from "react"
 
 import BookablesCard from "~/components/bookables/BookablesCard"
-import { IBookableView, BookableDay, BookableSession } from "~/features/models/bookables"
+import { Bookable, BookableDay, BookableSession } from "~/features/models/bookables"
 
-const bookables: IBookableView[] = [
+const bookables: Bookable[] = [
     {
         id: 1,
         title: "My Room 1",

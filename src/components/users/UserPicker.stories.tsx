@@ -2,9 +2,9 @@ import { Meta, StoryFn } from "@storybook/react"
 import { useState } from "react"
 
 import UserPicker from "~/components/users/UserPicker"
-import { IUserView } from "~/features/models/users"
+import { User } from "~/features/models/users"
 
-const users: IUserView[] = [
+const users: User[] = [
     {
         id: 1,
         name: "John Doe",

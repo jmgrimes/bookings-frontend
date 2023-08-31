@@ -3,11 +3,11 @@ import { faCubes, faUsers } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 
-import { IUser } from "~/features/models/users"
+import { User } from "~/features/models/users"
 import UserNavigation from "./UserNavigation"
 
 export interface AppNavigationProps {
-    users: IUser[]
+    users: User[]
 }
 
 export default function AppNavigation(props: AppNavigationProps) {

@@ -1,16 +1,16 @@
 import { faPerson } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { IUserView } from "~/features/models/users"
+import { User } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-interface IUsersListProps {
-    user?: IUserView
-    users: IUserView[]
-    onSelect?: Consumer<IUserView>
+interface UsersListProps {
+    user?: User
+    users: User[]
+    onSelect?: Consumer<User>
 }
 
-export default function UsersList(props: IUsersListProps) {
+export default function UsersList(props: UsersListProps) {
     const { user, users, onSelect } = props
     return (
         <ul className="list-group">

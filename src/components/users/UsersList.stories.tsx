@@ -2,9 +2,9 @@ import { Meta, StoryFn, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
 import UsersList from "~/components/users/UsersList"
-import { IUserView } from "~/features/models/users"
+import { User } from "~/features/models/users"
 
-const users: IUserView[] = [
+const users: User[] = [
     {
         id: 1,
         name: "John Doe",

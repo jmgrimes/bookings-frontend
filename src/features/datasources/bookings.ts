@@ -1,12 +1,12 @@
 import { DateTime } from "luxon"
 
 import { BookableSessionEnum } from "~/features/models/bookables"
-import { IBooking, IBookingProps, IBookingQuery } from "~/features/models/bookings"
+import { Booking, BookingProps, BookingQuery } from "~/features/models/bookings"
 
-type IBookingResourceProps = Omit<IBooking, "date"> & {
+type BookingResourceProps = Omit<Booking, "date"> & {
     date: string
 }
-class BookingResource implements IBooking {
+class BookingResource implements Booking {
     id: number
     bookerId: number
     bookableId: number
@@ -15,7 +15,7 @@ class BookingResource implements IBooking {
     session: BookableSessionEnum
     notes?: string
 
-    constructor(props: IBookingResourceProps) {
+    constructor(props: BookingResourceProps) {
         this.id = props.id
         this.bookerId = props.bookerId
         this.bookableId = props.bookableId
@@ -26,21 +26,13 @@ class BookingResource implements IBooking {
     }
 }
 
-export interface IBookingApi {
-    getBookings(query: IBookingQuery): Promise<IBooking[]>
-    getBooking(id: number): Promise<IBooking>
-    createBooking(props: IBookingProps): Promise<IBooking>
-    updateBooking(id: number, props: IBookingProps): Promise<IBooking>
-    deleteBooking(id: number): Promise<number>
-}
-
-export default class BookingApi implements IBookingApi {
+export default class BookingApi {
     private baseURL: string
     constructor(baseURL?: string) {
         this.baseURL = baseURL || "http://localhost:3001"
     }
 
-    async getBookings(query: IBookingQuery) {
+    async getBookings(query: BookingQuery) {
         const headers = new Headers()
         headers.append("Accept", "application/json")
         const date_gte = query.startDate?.toISODate() || undefined
@@ -54,7 +46,7 @@ export default class BookingApi implements IBookingApi {
             method: "GET",
             headers,
         })
-        const bookings = (await response.json()) as IBookingResourceProps[]
+        const bookings = (await response.json()) as BookingResourceProps[]
         return bookings.map(booking => new BookingResource(booking))
     }
 
@@ -62,11 +54,11 @@ export default class BookingApi implements IBookingApi {
         const headers = new Headers()
         headers.append("Accept", "application/json")
         const response = await fetch(`${this.baseURL}/bookings/${id.toString(10)}`)
-        const booking = (await response.json()) as IBookingResourceProps
+        const booking = (await response.json()) as BookingResourceProps
         return new BookingResource(booking)
     }
 
-    async createBooking(props: IBookingProps) {
+    async createBooking(props: BookingProps) {
         const body = JSON.stringify(props)
         const headers = new Headers()
         headers.append("Accept", "application/json")
@@ -77,11 +69,11 @@ export default class BookingApi implements IBookingApi {
             body,
             headers,
         })
-        const booking = (await response.json()) as IBookingResourceProps
+        const booking = (await response.json()) as BookingResourceProps
         return new BookingResource(booking)
     }
 
-    async updateBooking(id: number, props: IBookingProps) {
+    async updateBooking(id: number, props: BookingProps) {
         const body = JSON.stringify({ id, ...props })
         const headers = new Headers()
         headers.append("Accept", "application/json")
@@ -92,7 +84,7 @@ export default class BookingApi implements IBookingApi {
             body,
             headers,
         })
-        const booking = (await response.json()) as IBookingResourceProps
+        const booking = (await response.json()) as BookingResourceProps
         return new BookingResource(booking)
     }
 

@@ -1,8 +1,8 @@
-interface IErrorMessageProps {
+export interface ErrorMessageProps {
     message: string
     error?: Error
 }
-export default function ErrorMessage(props: IErrorMessageProps) {
+export default function ErrorMessage(props: ErrorMessageProps) {
     const { message, error } = props
     return (
         <div role="alert" className="fade alert alert-danger show">

@@ -1,40 +1,34 @@
-import { IUser, IUserProps } from "~/features/models/users"
+import { User, UserProps } from "~/features/models/users"
 
-export interface IUserApi {
-    getUsers(): Promise<IUser[]>
-    getUser(id: number): Promise<IUser>
-    createUser(props: IUserProps): Promise<IUser>
-    updateUser(id: number, props: IUserProps): Promise<IUser>
-    deleteUser(id: number): Promise<number>
-}
-
-export default class UserApi implements IUserApi {
+export default class UserApi {
     private baseURL: string
     constructor(baseURL?: string) {
         this.baseURL = baseURL || "http://localhost:3001"
     }
 
-    async getUsers(): Promise<IUser[]> {
+    async getUsers(): Promise<User[]> {
         const headers = new Headers()
         headers.append("Accept", "application/json")
         const response = await fetch(`${this.baseURL}/users`, {
             method: "GET",
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IUser[]
+        return (await response.json()) as User[]
     }
 
-    async getUser(id: number): Promise<IUser> {
+    async getUser(id: number): Promise<User> {
         const headers = new Headers()
         headers.append("Accept", "application/json")
         const response = await fetch(`${this.baseURL}/users/${id.toString(10)}`, {
             method: "GET",
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IUser
+        return (await response.json()) as User
     }
 
-    async createUser(props: IUserProps): Promise<IUser> {
+    async createUser(props: UserProps): Promise<User> {
         const body = JSON.stringify(props)
         const headers = new Headers()
         headers.append("Accept", "application/json")
@@ -44,11 +38,12 @@ export default class UserApi implements IUserApi {
             method: "POST",
             body,
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IUser
+        return (await response.json()) as User
     }
 
-    async updateUser(id: number, props: IUserProps): Promise<IUser> {
+    async updateUser(id: number, props: UserProps): Promise<User> {
         const body = JSON.stringify({ id, ...props })
         const headers = new Headers()
         headers.append("Accept", "application/json")
@@ -58,12 +53,13 @@ export default class UserApi implements IUserApi {
             method: "PUT",
             body,
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IUser
+        return (await response.json()) as User
     }
 
     async deleteUser(id: number): Promise<number> {
-        await fetch(`${this.baseURL}/users/${id.toString(10)}`, { method: "DELETE" })
+        await fetch(`${this.baseURL}/users/${id.toString(10)}`, { method: "DELETE", cache: "no-store" })
         return id
     }
 }

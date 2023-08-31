@@ -1,13 +1,13 @@
 import { faCube } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { IBookableView } from "~/features/models/bookables"
+import { Bookable } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-interface IBookablesListProps {
-    bookable?: IBookableView
-    bookables: IBookableView[]
-    onSelect?: Consumer<IBookableView>
+export interface IBookablesListProps {
+    bookable?: Bookable
+    bookables: Bookable[]
+    onSelect?: Consumer<Bookable>
 }
 
 export default function BookablesList(props: IBookablesListProps) {

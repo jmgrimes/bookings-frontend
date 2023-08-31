@@ -1,16 +1,10 @@
-import { IBookingView } from "~/features/models/bookings"
-
-export interface IUserProps {
+export interface UserProps {
     name: string
     title: string
     img?: string
     notes?: string
 }
 
-export interface IUser extends IUserProps {
+export interface User extends UserProps {
     id: number
-}
-
-export interface IUserView extends IUser {
-    bookings?: IBookingView[]
 }

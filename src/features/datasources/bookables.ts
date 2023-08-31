@@ -1,14 +1,15 @@
-import { IBookable, IBookableProps } from "~/features/models/bookables"
+import { Bookable, BookableDay, BookableProps, BookableSession } from "~/features/models/bookables"
 
-export interface IBookableApi {
-    getBookables(): Promise<IBookable[]>
-    getBookable(id: number): Promise<IBookable>
-    createBookable(props: IBookableProps): Promise<IBookable>
-    updateBookable(id: number, props: IBookableProps): Promise<IBookable>
-    deleteBookable(id: number): Promise<number>
+export interface BookableResource {
+    id: number
+    group: string
+    title: string
+    notes?: string
+    days: number[]
+    sessions: number[]
 }
 
-export default class BookableApi implements IBookableApi {
+export default class BookableApi {
     private baseURL: string
     constructor(baseURL?: string) {
         this.baseURL = baseURL || "http://localhost:3001"
@@ -20,22 +21,38 @@ export default class BookableApi implements IBookableApi {
         const response = await fetch(`${this.baseURL}/bookables`, {
             method: "GET",
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IBookable[]
+        const resources = (await response.json()) as BookableResource[]
+        return resources.map(resource => ({
+            ...resource,
+            days: resource.days.map(day => BookableDay.values[day]),
+            sessions: resource.sessions.map(session => BookableSession.values[session]),
+        })) as Bookable[]
     }
 
     async getBookable(id: number) {
         const headers = new Headers()
         headers.append("Accept", "application/json")
-        const response = await fetch(`${this.baseURL}/bookables/${id.toString(10)}`, {
+        const response = await fetch(`${this.baseURL}/bookables/${id}`, {
             method: "GET",
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IBookable
+        const resource = (await response.json()) as BookableResource
+        return {
+            ...resource,
+            days: resource.days.map(day => BookableDay.values[day]),
+            sessions: resource.sessions.map(session => BookableSession.values[session]),
+        } as Bookable
     }
 
-    async createBookable(props: IBookableProps) {
-        const body = JSON.stringify(props)
+    async createBookable(props: BookableProps) {
+        const body = JSON.stringify({
+            ...props,
+            days: props.days.map(day => BookableDay.values.findIndex(d => d.toString() === day)),
+            sessions: props.sessions.map(session => BookableSession.values.findIndex(s => s.toString() === session)),
+        })
         const headers = new Headers()
         headers.append("Accept", "application/json")
         headers.append("Content-Type", "application/json")
@@ -44,26 +61,43 @@ export default class BookableApi implements IBookableApi {
             method: "POST",
             body,
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IBookable
+        const resource = (await response.json()) as BookableResource
+        return {
+            ...resource,
+            days: resource.days.map(day => BookableDay.values[day]),
+            sessions: resource.sessions.map(session => BookableSession.values[session]),
+        } as Bookable
     }
 
-    async updateBookable(id: number, props: IBookableProps) {
-        const body = JSON.stringify({ id, ...props })
+    async updateBookable(id: number, props: BookableProps) {
+        const body = JSON.stringify({
+            id,
+            ...props,
+            days: props.days.map(day => BookableDay.values.findIndex(d => d.toString() === day)),
+            sessions: props.sessions.map(session => BookableSession.values.findIndex(s => s.toString() === session)),
+        })
         const headers = new Headers()
         headers.append("Accept", "application/json")
         headers.append("Content-Type", "application/json")
         headers.append("Content-Length", body.length.toString(10))
-        const response = await fetch(`${this.baseURL}/bookables/${id.toString(10)}`, {
+        const response = await fetch(`${this.baseURL}/bookables/${id}`, {
             method: "PUT",
             body,
             headers,
+            cache: "no-store",
         })
-        return (await response.json()) as IBookable
+        const resource = (await response.json()) as BookableResource
+        return {
+            ...resource,
+            days: resource.days.map(day => BookableDay.values[day]),
+            sessions: resource.sessions.map(session => BookableSession.values[session]),
+        } as Bookable
     }
 
     async deleteBookable(id: number) {
-        await fetch(`${this.baseURL}/bookables/${id.toString(10)}`, { method: "DELETE" })
+        await fetch(`${this.baseURL}/bookables/${id}`, { method: "DELETE", cache: "no-store" })
         return id
     }
 }

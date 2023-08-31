@@ -2,16 +2,16 @@
 
 import { Button } from "~/components/controls"
 import UsersList from "~/components/users/UsersList"
-import { IUserView } from "~/features/models/users"
+import { User } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-interface IUsersCardProps {
-    user: IUserView
-    users: IUserView[]
-    onSelect: Consumer<IUserView>
+interface UsersCardProps {
+    user: User
+    users: User[]
+    onSelect: Consumer<User>
 }
 
-export default function UsersCard(props: IUsersCardProps) {
+export default function UsersCard(props: UsersCardProps) {
     const { user, users, onSelect } = props
     const nextUser = async () => {
         const currentIndex = users.findIndex(u => u.id === user.id)

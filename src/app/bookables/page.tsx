@@ -1,6 +1,8 @@
 import { notFound, redirect } from "next/navigation"
 import BookableApi from "~/features/datasources/bookables"
 
+export const dynamic = "force-dynamic"
+
 const bookableApi = new BookableApi()
 
 async function getBookable() {

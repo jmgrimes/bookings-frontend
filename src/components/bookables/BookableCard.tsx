@@ -1,45 +1,43 @@
 "use client"
 
-import BookableDaysList from "~/components/bookables/BookableDaysList"
-import BookableSessionsList from "~/components/bookables/BookableSessionsList"
-import { Button } from "~/components/controls"
-import { IBookableView } from "~/features/models/bookables"
-import { Consumer } from "~/features/support"
+import { useState } from "react"
 
-interface IBookableCardProps {
-    bookable: IBookableView
-    onEdit?: Consumer<IBookableView>
-    onView?: Consumer<IBookableView>
-    onDelete?: Consumer<IBookableView>
+import BookableForm from "~/components/bookables/BookableForm"
+import BookableView, { BookableViewProps } from "~/components/bookables/BookableView"
+import { Bookable, BookableProps } from "~/features/models/bookables"
+
+export interface BookableCardProps {
+    bookable: Bookable
+    onSave?: (props: BookableProps) => Promise<Bookable>
+    onDelete?: () => Promise<number>
 }
 
-export default function BookableCard(props: IBookableCardProps) {
-    const { bookable, onView, onEdit, onDelete } = props
-    return (
-        <div className="card">
-            <div className="card-header">
-                <h5 className="card-title h5">{bookable.title}</h5>
-            </div>
-            <div className="card-body">
-                <h6 className="card-subtitle h6 mb-2">Notes</h6>
-                <p className="card-text">{bookable.notes}</p>
-                <h6 className="card-subtitle h6 mb-2">Availability</h6>
-                <div className="row">
-                    <div className="col">
-                        <BookableDaysList days={bookable.days} />
-                    </div>
-                    <div className="col">
-                        <BookableSessionsList sessions={bookable.sessions} />
-                    </div>
-                </div>
-            </div>
-            <div className="card-footer text-center">
-                <div role="group" className="btn-group">
-                    {onView && <Button variant="view" onClick={() => onView(bookable)} />}
-                    {onEdit && <Button variant="edit" onClick={() => onEdit(bookable)} />}
-                    {onDelete && <Button variant="delete" onClick={() => onDelete(bookable)} />}
-                </div>
-            </div>
-        </div>
-    )
+export default function BookableCard(props: BookableCardProps) {
+    const { onSave, onDelete } = props
+    const [bookable, setBookable] = useState<Bookable>(props.bookable)
+    const [isEditing, setEditing] = useState<boolean>(false)
+
+    if (isEditing && onSave) {
+        const onCancelHandler = () => setEditing(false)
+        const onSaveHandler = async (props: BookableProps) => {
+            const bookable = await onSave(props)
+            setEditing(false)
+            setBookable(bookable)
+        }
+        return <BookableForm bookable={bookable} onSave={onSaveHandler} onCancel={onCancelHandler} />
+    }
+
+    const bookableViewProps: BookableViewProps = {
+        bookable,
+        onEdit: onSave ? () => setEditing(true) : undefined,
+        onDelete: onDelete
+            ? async () => {
+                  const confirmed = confirm("Are you sure that you want to delete this bookable?")
+                  if (confirmed) {
+                      await onDelete()
+                  }
+              }
+            : undefined,
+    }
+    return <BookableView {...bookableViewProps} />
 }

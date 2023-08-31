@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { BookableDayEnum } from "~/features/models/bookables"
 
-interface IBookableDaysListProps {
+export interface BookableDaysListProps {
     days: BookableDayEnum[]
 }
 
-export default function BookableDaysList(props: IBookableDaysListProps) {
+export default function BookableDaysList(props: BookableDaysListProps) {
     const { days } = props
     if (days.length) {
         return (

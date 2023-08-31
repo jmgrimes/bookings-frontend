@@ -1,10 +1,10 @@
 "use client"
 
 import { UserConsumer, UserPicker } from "~/components/users"
-import { IUser } from "~/features/models/users"
+import { User } from "~/features/models/users"
 
 export interface UserNavigationProps {
-    users: IUser[]
+    users: User[]
 }
 
 export default function UserNavigation(props: UserNavigationProps) {

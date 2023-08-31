@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FunctionComponent } from "react"
 
-interface SelectProps {
+export interface SelectProps {
     value?: string
     values: string[]
     onChange: ChangeEventHandler<HTMLSelectElement>

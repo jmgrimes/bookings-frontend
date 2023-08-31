@@ -1,14 +1,13 @@
 import { Meta, StoryFn } from "@storybook/react"
 import { Fragment, useEffect } from "react"
 
-import type { IUserContext } from "~/components/users/UserContext"
-import { UserConsumer, UserProvider } from "~/components/users/UserContext"
+import { UserConsumer, UserContext, UserProvider } from "~/components/users/UserContext"
 import UserCard from "~/components/users/UserCard"
 import UserPicker from "~/components/users/UserPicker"
 import UsersCard from "~/components/users/UsersCard"
-import { IUserView } from "~/features/models/users"
+import { User } from "~/features/models/users"
 
-const users: IUserView[] = [
+const users: User[] = [
     {
         id: 1,
         name: "John Doe",
@@ -29,11 +28,11 @@ const users: IUserView[] = [
     },
 ]
 
-interface ISetupContainerProps extends IUserContext {
-    users: IUserView[]
+interface SetupContainerProps extends UserContext {
+    users: User[]
 }
 
-function SetupContainer(props: ISetupContainerProps) {
+function SetupContainer(props: SetupContainerProps) {
     const { users, user, setUser } = props
     useEffect(() => {
         if (!user) {
@@ -44,11 +43,11 @@ function SetupContainer(props: ISetupContainerProps) {
     return <Fragment />
 }
 
-interface IUserPickerContainerProps extends IUserContext {
-    users: IUserView[]
+interface UserPickerContainerProps extends UserContext {
+    users: User[]
 }
 
-function UserPickerContainer(props: IUserPickerContainerProps) {
+function UserPickerContainer(props: UserPickerContainerProps) {
     if (props.user) {
         return (
             <div className="container p-2">
@@ -65,11 +64,11 @@ function UserPickerContainer(props: IUserPickerContainerProps) {
     return <Fragment />
 }
 
-interface IUsersCardContainerProps extends IUserContext {
-    users: IUserView[]
+interface UsersCardContainerProps extends UserContext {
+    users: User[]
 }
 
-function UsersCardContainer(props: IUsersCardContainerProps) {
+function UsersCardContainer(props: UsersCardContainerProps) {
     const { users, user, setUser } = props
     if (user) {
         return (
@@ -87,11 +86,11 @@ function UsersCardContainer(props: IUsersCardContainerProps) {
     return <Fragment />
 }
 
-interface IUserCardContainerProps {
-    user: IUserView | undefined
+interface UserCardContainerProps {
+    user: User | undefined
 }
 
-function UserCardContainer(props: IUserCardContainerProps) {
+function UserCardContainer(props: UserCardContainerProps) {
     const { user } = props
     if (user) {
         return (

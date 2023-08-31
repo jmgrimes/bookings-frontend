@@ -1,7 +1,5 @@
 import { DateTime } from "luxon"
 
-import type { IBookingView } from "~/features/models/bookings"
-
 export enum BookableDayEnum {
     Sunday = "Sunday",
     Monday = "Monday",
@@ -12,7 +10,7 @@ export enum BookableDayEnum {
     Saturday = "Saturday",
 }
 
-export interface IBookableDayProps {
+export interface BookableDayProps {
     index: number
     day: BookableDayEnum
     date: DateTime
@@ -31,7 +29,7 @@ export const BookableDay = {
     toBookableDayProps: (weekStart: DateTime, day: BookableDayEnum) => {
         const index = BookableDay.values.indexOf(day)
         const date = weekStart.plus({ days: index })
-        return { index, day, date } as IBookableDayProps
+        return { index, day, date } as BookableDayProps
     },
 }
 
@@ -43,7 +41,7 @@ export enum BookableSessionEnum {
     Evening = "Evening",
 }
 
-export interface IBookableSessionProps {
+export interface BookableSessionProps {
     index: number
     session: BookableSessionEnum
 }
@@ -58,11 +56,11 @@ export const BookableSession = {
     ],
     toBookableSessionProps: (session: BookableSessionEnum) => {
         const index = BookableSession.values.indexOf(session)
-        return { index, session } as IBookableSessionProps
+        return { index, session } as BookableSessionProps
     },
 }
 
-export interface IBookableProps {
+export interface BookableProps {
     group: string
     title: string
     notes?: string
@@ -70,10 +68,6 @@ export interface IBookableProps {
     sessions: BookableSessionEnum[]
 }
 
-export interface IBookable extends IBookableProps {
+export interface Bookable extends BookableProps {
     id: number
-}
-
-export interface IBookableView extends IBookable {
-    bookings?: IBookingView[]
 }

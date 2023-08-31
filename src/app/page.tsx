@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export default function HomePage() {
+export default function RootPage() {
     return (
         <div className="container">
             <div className="row p-3">

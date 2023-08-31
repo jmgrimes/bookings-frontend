@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { BookableSessionEnum } from "~/features/models/bookables"
 
-interface IBookableSessionsListProps {
+export interface BookableSessionsListProps {
     sessions: BookableSessionEnum[]
 }
-export default function BookableSessionsList(props: IBookableSessionsListProps) {
+export default function BookableSessionsList(props: BookableSessionsListProps) {
     const { sessions } = props
     if (sessions.length) {
         return (

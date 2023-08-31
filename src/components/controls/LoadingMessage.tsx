@@ -1,8 +1,8 @@
-interface ILoadingMessageProps {
+export interface LoadingMessageProps {
     message: string
 }
 
-export default function LoadingMessage(props: ILoadingMessageProps) {
+export default function LoadingMessage(props: LoadingMessageProps) {
     const { message } = props
     return (
         <div role="alert" className="fade alert alert-info show">

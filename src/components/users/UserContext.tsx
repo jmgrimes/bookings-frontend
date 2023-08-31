@@ -2,24 +2,24 @@
 
 import { createContext, PropsWithChildren, useState } from "react"
 
-import { IUserView } from "~/features/models/users"
+import { User } from "~/features/models/users"
 import { Consumer } from "~/features/support"
 
-export interface IUserContext {
-    user: IUserView | undefined
-    setUser: Consumer<IUserView>
+export interface UserContext {
+    user: User | undefined
+    setUser: Consumer<User>
 }
 
-const UserContext = createContext<IUserContext>({
+const UserContext = createContext<UserContext>({
     user: undefined,
     setUser: () => {},
 })
 
-type ISessionUserProviderProps = PropsWithChildren<Record<never, string>>
+type SessionUserProviderProps = PropsWithChildren<Record<never, string>>
 
-export function UserProvider(props: ISessionUserProviderProps) {
+export function UserProvider(props: SessionUserProviderProps) {
     const { children } = props
-    const [user, setUser] = useState<IUserView>()
+    const [user, setUser] = useState<User>()
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
 }
 

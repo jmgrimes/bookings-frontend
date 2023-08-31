@@ -7,8 +7,6 @@ import UserApi from "~/features/datasources/users"
 
 import "~/styles/globals.scss"
 
-type AppLayoutProps = PropsWithChildren<Record<never, never>>
-
 async function getUsers() {
     const userApi = new UserApi()
     return await userApi.getUsers()
@@ -24,7 +22,9 @@ export async function generateMetadata() {
     } as Metadata
 }
 
-export default async function AppLayout(props: AppLayoutProps) {
+export type RootLayoutProps = PropsWithChildren<Record<never, never>>
+
+export default async function RootLayout(props: RootLayoutProps) {
     const users = await getUsers()
     return (
         <html lang="en">

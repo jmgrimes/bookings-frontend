@@ -11,14 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-type Variant = "cancel" | "delete" | "edit" | "next" | "previous" | "save" | "view"
-interface VariantProps {
-    title: string
-    reverseIcon: boolean
-    IconComponent: IconDefinition
-}
-
-const variants = new Map<Variant, VariantProps>([
+const variants = new Map<ButtonVariant, ButtonVariantProps>([
     ["cancel", { title: "Cancel", reverseIcon: false, IconComponent: faX }],
     ["delete", { title: "Delete", reverseIcon: false, IconComponent: faTrash }],
     ["edit", { title: "Edit", reverseIcon: false, IconComponent: faPencil }],
@@ -28,15 +21,23 @@ const variants = new Map<Variant, VariantProps>([
     ["view", { title: "View", reverseIcon: false, IconComponent: faSearch }],
 ])
 
-interface IButtonProps {
+export interface ButtonVariantProps {
+    title: string
+    reverseIcon: boolean
+    IconComponent: IconDefinition
+}
+
+export type ButtonVariant = "cancel" | "delete" | "edit" | "next" | "previous" | "save" | "view"
+
+export interface ButtonProps {
     title?: string
-    variant: Variant
+    variant: ButtonVariant
     onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Button(props: IButtonProps) {
+export default function Button(props: ButtonProps) {
     const { title: overrideTitle, variant, onClick } = props
-    const variantProps = variants.get(variant) as VariantProps
+    const variantProps = variants.get(variant) as ButtonVariantProps
     const { title = overrideTitle, reverseIcon, IconComponent } = variantProps
     return (
         <button type="button" className="btn btn-outline-primary" onClick={onClick}>

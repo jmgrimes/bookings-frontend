@@ -4,16 +4,16 @@ import { ChangeEvent } from "react"
 
 import BookablesList from "~/components/bookables/BookablesList"
 import { Button, Select } from "~/components/controls"
-import { IBookableView } from "~/features/models/bookables"
+import { Bookable } from "~/features/models/bookables"
 import { Consumer } from "~/features/support"
 
-interface IBookablesCardProps {
-    bookable: IBookableView
-    bookables: IBookableView[]
-    onSelect: Consumer<IBookableView>
+export interface BookablesCardProps {
+    bookable: Bookable
+    bookables: Bookable[]
+    onSelect: Consumer<Bookable>
 }
 
-export default function BookablesCard(props: IBookablesCardProps) {
+export default function BookablesCard(props: BookablesCardProps) {
     const { bookable, bookables, onSelect } = props
     const group = bookable.group
     const groups = [...new Set(bookables.map(b => b.group))]
